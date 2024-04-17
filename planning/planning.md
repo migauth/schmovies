@@ -40,3 +40,6 @@ Movies to Ratings: A one-to-many relationship. A movie can have multiple ratings
 - Proposed stack: React, Django, Postgres, Tailwind?, ML?
  
 
+# Navigation
+
+to get to admin with backend server - http://127.0.0.1:8000/admin/
