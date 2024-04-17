@@ -28,12 +28,15 @@ Movies to Ratings: A one-to-many relationship. A movie can have multiple ratings
  
 - Routes
 - Wireframe
-- Set up GitHub Together
+- ~~Set up GitHub Together~~
 - Set up the Project Structure and Naming Conventions Together
 - Decide on Workflow and Tasks
 - Each pick a task and work on it from start to finish, including backend, frontend, everything.
 - Maybe leave most styling to the end once functionality is complete.
 - Decide on Communication
 - Through discord? Have a little chat (even if it’s just through messages, doesn’t have to be video calls every day) once a day to just update each other. I heard Github has a good tool, similar to a Trello board where we can project plan and keep on track of tasks and who’s doing what.
+- Desktop / mobile
+- tailwind?
+- Proposed stack: React, Django, Postgres, Tailwind?, ML?
  
 
