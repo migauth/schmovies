@@ -35,6 +35,10 @@ class MovieListAPIView(APIView):
                         'poster_url': f"https://image.tmdb.org/t/p/w500{movie['poster_path']}"
                     }
                 )
-            return Response({"message": "Movies fetched successfully"}, status=200)
+            # Fetch the movies from the database
+            movies_from_db = Movie.objects.all()
+            # Serialize the movies to JSON
+            serializer = MovieSerializer(movies_from_db, many=True)
+            return Response(serializer.data, status=200)
         else:
             return Response({"error": response.text}, status=400)
