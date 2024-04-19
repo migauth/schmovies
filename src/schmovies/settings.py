@@ -78,6 +78,13 @@ WSGI_APPLICATION = 'schmovies.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 from decouple import config
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+TMDB_API_KEY = os.getenv('TMDB_API_KEY')
+print(TMDB_API_KEY) # Add this line to check if the key is being loaded
+
 
 DATABASES = {
     'default': {
