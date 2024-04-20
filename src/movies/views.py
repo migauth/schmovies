@@ -2,33 +2,43 @@ from django.shortcuts import render
 
 # Create your views here.
 
-from rest_framework import generics
+# from rest_framework import generics
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Movie
 from .serializers import MovieSerializer
 from rest_framework import status
+import os
+import requests
+
+TMDB_API_KEY = os.environ.get('TMDB_API_KEY')
 
 
-# class MovieListCreateView(generics.ListCreateAPIView):
-#     queryset = Movie.objects.all()
-#     serializer_class = MovieSerializer
 
 # http://127.0.0.1:8000/api/movies/?format=api for looking at the Django REST framework
 
-class MovieListCreateView(generics.ListCreateAPIView):
-    queryset = Movie.objects.all()
-    serializer_class = MovieSerializer
-    lookup_field = 'id'  # Set the lookup field to 'id'
 
-    def delete(self, request, *args, **kwargs):
-        try:
-            instance = self.get_object()
-            self.perform_destroy(instance)
-            return Response({"message": "Movie deleted successfully"}, status=status.HTTP_200_OK)
-        except Movie.DoesNotExist:
-            return Response({"error": "Movie not found"}, status=status.HTTP_404_NOT_FOUND)
-        except Exception as e:
-            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
-        
-    def perform_destroy(self, instance):
-        instance.delete()
+# view to fetch movies from tmdb api and save to db
+class MovieListAPIView(APIView):
+    def get(self, request):
+        response = requests.get(f'https://api.themoviedb.org/3/movie/popular?api_key={TMDB_API_KEY}')
+        if response.status_code == 200:
+            movies = response.json()['results']
+            for movie in movies:
+                Movie.objects.update_or_create(
+                    id=movie['id'],
+                    defaults={
+                        'title': movie['title'],
+                        'description': movie['overview'],
+                        'genre': ', '.join(map(str, movie['genre_ids'])),
+                        'release_year': movie['release_date'][:4],
+                        'poster_url': f"https://image.tmdb.org/t/p/w500{movie['poster_path']}"
+                    }
+                )
+            # Fetch the movies from the database
+            movies_from_db = Movie.objects.all()
+            # Serialize the movies to JSON
+            serializer = MovieSerializer(movies_from_db, many=True)
+            return Response(serializer.data, status=200)
+        else:
+            return Response({"error": response.text}, status=400)
