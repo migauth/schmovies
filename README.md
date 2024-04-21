@@ -3,7 +3,11 @@
 installed dependancy for postgres and python - pip install psycopg2-binary
 installed dependancy for env - pip install python-decouple
 installed django rest framework - pip install djangorestframework
+
 pip install django-cors-headers
+pip install python-dotenv
+python3 -m pip install requests
+
 
 python manage.py runserver
 
