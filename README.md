@@ -1,6 +1,12 @@
 # schmovies
 
 ## Install and run virtual environment
+
+Install virtualenv (if you haven't already):
+```
+pip3 install virtualenv
+```
+Then:
 ```
 cd schmovies
 
@@ -10,13 +16,14 @@ source venv/bin/activate
 ```
 
 ## Installed dependancies
-- installed dependancy for postgres and python - pip install psycopg2-binary
-- installed dependancy for env - pip install python-decouple
-- installed django rest framework - pip install djangorestframework
-
-- installed dependancy pip install django-cors-headers
-- installed dependancy pip install python-dotenv
-- installed dependancy python3 -m pip install requests
+```
+pip3 install psycopg2-binary
+pip3 install python-decouple
+pip3 install djangorestframework
+pip3 install django-cors-headers
+pip3 install python-dotenv
+python3 -m pip install requests
+```
 
 ## Start backend server
 ```
