@@ -7,24 +7,31 @@ Schmovies will feature a homepage displaying a list of movies, accompanied by a 
 1. Homepage with a List of Movies
   - Display a simple homepage with a list of movies.
   - Each movie item should at least have a title and maybe a small image.
-2. Search Functionality
-  - Implement a search bar on the homepage to allow visitors to search through the movie database.
-  - Search functionality should filter movies based on title or other relevant criteria.
-3. Movie Description
+
+2. Movie Description
   - Clicking on a movie title in the list should open a modal or a new page displaying the movie's description.
-4. Movie Recommendation Quiz (For Visitors)
+
+3. Movie Recommendation Quiz (For Visitors)
   - Develop a basic movie recommendation quiz.
   - The quiz should ask questions related to mood and preferences.
   - Based on the answers, suggest a movie from the database.
-5. User Authentication
+
+4. User Authentication
   - Implement a basic authentication system.
   - Users can sign up and log in to the platform.
-6. Favorite Movies List (For Authenticated Users)
+
+5. Favorite Movies List (For Authenticated Users)
   - Authenticated users should have a page where they can view their list of favorited movies.
   - Users should be able to add or remove movies from their favorites list.
-7. Movie Rating (For Authenticated Users)
+  
+6. (Stretech) Search Functionality
+  - Implement a search bar on the homepage to allow visitors to search through the movie database.
+  - Search functionality should filter movies based on title or other relevant criteria.
+
+7. (Stretech) Movie Rating (For Authenticated Users)
   - Authenticated users should be able to rate movies.
   - Ratings should be stored and displayed alongside movie details.
+  
 8. Movie Quiz (For Visitors)
   - Implement a separate movie quiz for visitors who want a recommendation without signing up.
   - This quiz should function similarly to the one for authenticated users.
