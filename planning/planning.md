@@ -32,11 +32,6 @@ Schmovies will feature a homepage displaying a list of movies, accompanied by a 
   - Authenticated users should be able to rate movies.
   - Ratings should be stored and displayed alongside movie details.
   
-8. Movie Quiz (For Visitors)
-  - Implement a separate movie quiz for visitors who want a recommendation without signing up.
-  - This quiz should function similarly to the one for authenticated users.
-
-
 ## Inspiration
 
 Movie App inspo: https://www.movierankings.net/
@@ -79,3 +74,30 @@ Movies to Ratings: A one-to-many relationship. A movie can have multiple ratings
 - Proposed stack: React, Django, Postgres, Tailwind?, ML?
  
 ## Notes from mentors
+
+- ~~fix readme~~
+
+- ~~consilidate MovieListAPIView point to one endpoint~~
+
+- (optional because we're using the api and not really using a db for movies?)  Change the name of MovieListAPIView view to be 'MovieListCreateView' and create another view like 'GetMoviesView' that divides it into two separate tasks. List view should be pulling data out of your data base and sending the front end a list. You've made a MovieListAPIView which is GETting, UPDATING and/or CREATEing. These should all be different endpoints 
+
+- (I think this is the important one) you probably will need an id field on your Movie model. all our models looks like this:
+
+class Address(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+- (not sure this matters since the data from the api looks ok?) address bad data in your Movie model (like if the api doesn't send a description or a poster_url) you should set up your field with a default value like
+
+description = models.CharField(max_length=2, default="")
+
+which will insert an empty string (rather than a None)
+
+- Also i'd change the release_year field to be a charfield as well and leave the year as a string, rather than a number. For the default reason, if it's not populated you can set it as an empty string rather than a 0 or None which can make filtering more confusing if that's a goal
+
+- i would hesitate to use empty string as the path for the endpoint where you load the data. i'm pretty sure any endpoint hit that doesn't register will default down to that so you may end up hitting that unintentionally. recommend giving it some kind of label like 
+
+path('load-db/', MovieListCreateView.as_view(), name='movie-list-create'),
+
+and then also 
+
+path('fetch-all-movies/', GetMovieListView.as_view(), name='get-all-movies')
