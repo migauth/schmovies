@@ -1,3 +1,40 @@
 body {
   margin-left: 50px;
+  background-color: black;
+  color: white;
+}
+
+.App-header {
+  text-align: center;
+}
+
+.App-header h1 {
+  margin-bottom: 0; /* Optional: Remove default margin */
+}
+
+.logo {
+  width: 500px; /* Adjust the width as needed */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.movie-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.movie-list__item {
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  width: 200px;
+}
+
+.movie-details {
+  margin-top: 10px;
+}
+
+.movie-list__item img {
+  width: 100%;
+  height: auto;
 }
