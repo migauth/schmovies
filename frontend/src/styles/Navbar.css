@@ -16,7 +16,10 @@
   text-align: center;
 }
 
+.logo {
+  justify-content: center; /* Trying to center the logo horizontally, can't figure it out */
 
+}
 .navbar_links {
   display: flex;
   gap: 1rem;
@@ -30,9 +33,7 @@
   padding: 0.5rem 1rem;
   cursor: pointer;
   border-radius: 5px;
-  font-family: 'Press Start 2P', cursive; /* Uses the Press Start 2P font */
-}
-
-.navbar_login-btn {
+  font-family: 'Press Start 2P'; /* Uses the Press Start 2P font */
   margin-left: auto; /* Pushes the Login button to the right */
 }
+
