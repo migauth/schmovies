@@ -1,21 +1,12 @@
-/* .navbar {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 8px;
-  align-items: center;
-  -webkit-box-shadow: 0 4px 6px -6px #222;
-  -moz-box-shadow: 0 4px 6px -6px #222;
-  box-shadow: 0 4px 6px -6px #222;
-  height: 72px;
-} 
-*/
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 
 /* Navbar.css */
 .navbar {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start; /* Align items to the start (top) */
+
   padding: 1rem;
   color: #fff;
 }
@@ -24,11 +15,7 @@
   flex-grow: 1;
   text-align: center;
 }
-/* 
-.logo {
-  max-width: 100px; 
-  height: auto;
-} */
+
 
 .navbar_links {
   display: flex;
@@ -37,12 +24,13 @@
 
 .navbar_about-btn,
 .navbar_login-btn {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
+  background-color: #ff0000;
+  color: black;
+  border-color: yellow;
   padding: 0.5rem 1rem;
   cursor: pointer;
-  border-radius: 5px; /* Optional: for rounded corners */
+  border-radius: 5px;
+  font-family: 'Press Start 2P', cursive; /* Uses the Press Start 2P font */
 }
 
 .navbar_login-btn {
