@@ -22,7 +22,7 @@ function MovieList() {
     }, []);
 
     const handleMovieClick = (movie) => {
-        console.log("Clicked movie:", movie); // Log the clicked movie
+            console.log("Clicked movie:", movie); // Log the clicked movie
 
         setSelectedMovie(movie);
     };
