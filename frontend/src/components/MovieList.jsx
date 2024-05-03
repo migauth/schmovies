@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import MoviePopup from './MoviePopup';
-// import './MovieList.css'; // Import your CSS file for movie list
+import '../styles/MovieList.css';
 
 function MovieList() {
     const [movies, setMovies] = useState([]);
