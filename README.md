@@ -1,4 +1,8 @@
-# schmovies
+# Schmovies
+
+## Description
+
+Schmovies is...
 
 ## Install and run virtual environment
 
