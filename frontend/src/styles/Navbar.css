@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+
+/* Navbar.css */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* Align items to the start (top) */
+
+  padding: 1rem;
+  color: #fff;
+}
+
+.App-header {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.logo {
+  justify-content: center; /* Trying to center the logo horizontally, can't figure it out */
+
+}
+.navbar_links {
+  display: flex;
+  gap: 1rem;
+}
+
+.navbar_about-btn,
+.navbar_login-btn {
+  background-color: #ff0000;
+  color: black;
+  border-color: yellow;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  font-family: 'Press Start 2P'; /* Uses the Press Start 2P font */
+  margin-left: auto; /* Pushes the Login button to the right */
+}
+
