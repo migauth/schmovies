@@ -4,27 +4,17 @@
 /* Navbar.css */
 .navbar {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start; /* Align items to the start (top) */
-
+  flex-direction: row-reverse;
   padding: 1rem;
-  color: #fff;
 }
 
-.App-header {
-  flex-grow: 1;
-  text-align: center;
-}
-
-.logo {
-  justify-content: center; /* Trying to center the logo horizontally, can't figure it out */
-
-}
 .navbar_links {
   display: flex;
   gap: 1rem;
+  align-items: flex-end;
 }
 
+.quiz-btn,
 .navbar_about-btn,
 .navbar_login-btn {
   background-color: #ff0000;
@@ -34,6 +24,11 @@
   cursor: pointer;
   border-radius: 5px;
   font-family: 'Press Start 2P'; /* Uses the Press Start 2P font */
-  margin-left: auto; /* Pushes the Login button to the right */
 }
 
+.quiz-btn:hover,
+.navbar_about-btn:hover,
+.navbar_login-btn:hover {
+  background-color: yellow;
+  color: black;
+}
