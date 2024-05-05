@@ -1,18 +1,17 @@
-import React from 'react';
-import './App.css';
-import MovieList from './components/MovieList';
-import Navbar from './components/Navbar';
+import React from "react";
+import "./App.css";
+import MovieList from "./components/MovieList";
+import Navbar from "./components/Navbar";
 
 function App() {
-    return (
-        <div className="App">
-            
-            <main>
-                <Navbar />
-                <MovieList />
-            </main>
-        </div>
-    );
+  return (
+    <div className="App">
+      <Navbar />
+      <main>
+        <MovieList />
+      </main>
+    </div>
+  );
 }
 
 export default App;

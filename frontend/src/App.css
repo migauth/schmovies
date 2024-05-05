@@ -1,1 +1,19 @@
 /* Moved to MovieList.css */
+
+body {
+  margin: 0;
+  padding: 0; /* Remove default body padding */
+  background-color: black;
+  color: white;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  width: 100%; /* Ensure the container takes up the full width */
+}
+
+.logo {
+  width: 150px; /* Adjust width as needed */
+  height: auto; /* Maintain aspect ratio */
+}
