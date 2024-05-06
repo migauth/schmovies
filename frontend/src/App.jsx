@@ -3,13 +3,15 @@ import "./App.scss";
 import Home from "./components/Home";
 import Navbar from "./components/Navbar";
 import About from "./components/About";
+import Login from "./components/Login";
 
 function App() {
   const [currentPage, setCurrentPage] = useState("home"); // State to control which page to display
 
   const pages = {
     about: <About />,
-    home: <Home/>
+    home: <Home />,
+    login: <Login />,
   };
 
   const handlePageChange = (page) => {

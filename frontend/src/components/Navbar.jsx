@@ -13,7 +13,12 @@ function Navbar({ handlePageChange }) {
           >
             About
           </button>
-          <button className="navbar_login-btn">Login</button>
+          <button
+            className="navbar_login-btn"
+            onClick={() => handlePageChange("login")}
+          >
+            Login
+          </button>
         </div>
       </nav>
       <div className="logo-container">
