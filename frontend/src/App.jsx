@@ -1,15 +1,13 @@
 import React from "react";
 import "./App.scss";
-import MovieList from "./components/MovieList";
+import Home from "./components/Home";
 import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <div className="App">
       <Navbar />
-      <main>
-        <MovieList />
-      </main>
+      <Home />
     </div>
   );
 }
