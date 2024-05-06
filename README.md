@@ -19,7 +19,7 @@ virtualenv -p python3 venv
 source venv/bin/activate
 ```
 
-## Installed dependancies
+## Installed backend dependancies
 ```
 pip3 install psycopg2-binary
 pip3 install python-decouple
@@ -27,6 +27,13 @@ pip3 install djangorestframework
 pip3 install django-cors-headers
 pip3 install python-dotenv
 python3 -m pip install requests
+```
+
+## Installed backend dependancies
+
+```
+cd frontend
+npm install sass
 ```
 
 ## Start backend server
