@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.css";
+import "./App.scss";
 import MovieList from "./components/MovieList";
 import Navbar from "./components/Navbar";
 

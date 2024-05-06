@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/MoviePopup.css'; // CSS for the pop-up component
+import '../styles/MoviePopup.scss'; // CSS for the pop-up component
 
 function MoviePopup({ movie, onClose }) { // Receive movie data and close function as props
     return (
