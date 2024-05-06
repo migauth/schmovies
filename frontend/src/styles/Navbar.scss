@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+
+/* Navbar.css */
+.navbar {
+  display: flex;
+  flex-direction: row-reverse;
+  padding: 1rem;
+}
+
+.navbar_links {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+.quiz-btn,
+.navbar_about-btn,
+.navbar_login-btn {
+  background-color: #ff0000;
+  color: black;
+  border-color: yellow;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  font-family: 'Press Start 2P'; /* Uses the Press Start 2P font */
+}
+
+.quiz-btn:hover,
+.navbar_about-btn:hover,
+.navbar_login-btn:hover {
+  background-color: yellow;
+  color: black;
+}

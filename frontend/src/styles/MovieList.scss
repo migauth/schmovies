@@ -1,8 +1,4 @@
-body {
-  margin-left: 50px;
-  background-color: black;
-  color: white;
-}
+
 
 .App-header {
   text-align: center;
@@ -13,7 +9,7 @@ body {
 }
 
 .logo {
-  width: 500px; /* Adjust the width as needed */
+  width: 500px;
   height: auto; /* Maintain aspect ratio */
 }
 
@@ -23,9 +19,21 @@ body {
   flex-wrap: wrap;
 }
 
+.movie-list-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.heading-container {
+  text-align: center;
+}
+
+
+
 .movie-list__item {
   margin: 10px;
   padding: 10px;
+  border-radius: 10px;
   border: 1px solid #ddd;
   width: 200px;
 }
