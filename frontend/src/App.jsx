@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 import "./App.scss";
-import MovieList from "./components/MovieList";
+import Home from "./components/Home";
 import Navbar from "./components/Navbar";
 import About from "./components/About";
 
 function App() {
-  const [currentPage, setCurrentPage] = useState("movieList"); // State to control which page to display
+  const [currentPage, setCurrentPage] = useState("home"); // State to control which page to display
 
   const pages = {
-    movieList: <MovieList />,
     about: <About />,
-    home: <MovieList/>
+    home: <Home/>
   };
 
   const handlePageChange = (page) => {
@@ -20,9 +19,7 @@ function App() {
   return (
     <div className="App">
       <Navbar handlePageChange={handlePageChange} />
-      <main>
-        {pages[currentPage]} {/* Render the component based on the currentPage */}
-      </main>
+      {pages[currentPage]}
     </div>
   );
 }
