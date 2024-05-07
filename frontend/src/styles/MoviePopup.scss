@@ -1,31 +1,29 @@
-
 .movie-popup__content {
-    position: fixed; /* should stay in the same place, regardless of scrolling */
-    top: 10%;
-    left: 25%;
-    height: 80%;
-    width: 55%;
-    background-color: rgb(26, 22, 22);
-    justify-content: center;
-    align-items: center;
-    overflow-y: scroll;
-
+  position: fixed; /* should stay in the same place, regardless of scrolling */
+  top: 10%;
+  left: 25%;
+  height: 80%;
+  width: 55%;
+  background-color: rgb(26, 22, 22);
+  justify-content: center;
+  align-items: center;
+  overflow-y: scroll;
 }
 
 .movie-popup__content {
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .movie-popup__close {
-    position: absolute;
-    color: white;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
+  position: absolute;
+  color: white;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
 }
 
 .movie-popup__image {

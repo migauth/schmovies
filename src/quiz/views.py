@@ -2,8 +2,12 @@ import requests
 from django.http import JsonResponse
 import json
 from .models import UserPreferences
+import os
 
 AI_MODEL_ENDPOINT = '' #API Model endpoint url should go here
+TMDB_API_KEY = os.environ.get('TMDB_API_KEY')
+
+
 
 def submit_quiz(request):
     if request.method == 'POST':
