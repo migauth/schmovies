@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
 /* Navbar.css */
 .navbar {
@@ -14,6 +13,18 @@
   align-items: flex-end;
 }
 
+.logo {
+  width: 500px;
+  height: auto; /* Maintain aspect ratio */
+  cursor: pointer;
+}
+
+.logo:hover {
+  border: solid yellow;
+  border-radius: 5px;
+  box-shadow: inset;
+}
+
 .quiz-btn,
 .navbar_about-btn,
 .navbar_login-btn {
@@ -23,7 +34,7 @@
   padding: 0.5rem 1rem;
   cursor: pointer;
   border-radius: 5px;
-  font-family: 'Press Start 2P'; /* Uses the Press Start 2P font */
+  font-family: "Press Start 2P"; /* Uses the Press Start 2P font */
 }
 
 .quiz-btn:hover,

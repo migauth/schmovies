@@ -83,7 +83,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 TMDB_API_KEY = os.getenv('TMDB_API_KEY')
+GPT_API_KEY = os.getenv('GPT_API_KEY')
 print("TMDB_API_KEY here: ",TMDB_API_KEY) # Add this line to check if the key is being loaded
+print("GPT_API_KEY here: ",GPT_API_KEY) # Add this line to check if the key is being loaded
 
 DATABASES = {
     'default': {

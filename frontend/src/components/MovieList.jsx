@@ -35,11 +35,7 @@ function MovieList() {
   return (
     <div className="movie-list-container">
       <div className="heading-container">
-        <div className="quiz">
-          <button className="quiz-btn">
-            Take a quiz to find a movie to watch!
-          </button>
-        </div>
+        
         <h1>Popular Movies</h1>
       </div>
       <div className="movie-list">
