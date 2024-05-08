@@ -1,30 +1,53 @@
-import requests
-from django.http import JsonResponse
 import json
-from .models import UserPreferences
 import os
+from openai import OpenAI
 
-AI_MODEL_ENDPOINT = '' #API Model endpoint url should go here
-TMDB_API_KEY = os.environ.get('TMDB_API_KEY')
+from django.http import JsonResponse
+from .models import UserPreferences
 
-
+# Load OpenAI API key from environment variable
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+print("OPENAI_API_KEY:", OPENAI_API_KEY)  # Print the value of the API key
+client = OpenAI(api_key=OPENAI_API_KEY)
 
 def submit_quiz(request):
     if request.method == 'POST':
-        # Get the submitted answers from the form
-        submitted_answers = json.loads(request.body)
+        try:
+            # Get the submitted answers from the request
+            submitted_answers = json.loads(request.body)
 
-        # Send user responses to AI model for movie recommendations
-        recommendations = get_movie_recommendations(submitted_answers)
+            # Generate movie recommendations using GPT-3
+            recommendations = generate_movie_recommendations(submitted_answers)
 
-        # Store user preferences in the database
-        user_preferences = UserPreferences(user=request.user, preferences=submitted_answers)
-        user_preferences.save()
+            # # Print recommendations to console
+            print("Movie recommendations:", recommendations)
 
-        return JsonResponse({'recommendations': recommendations})
+            # Store user preferences in the database
+            user_preferences = UserPreferences(user=request.user, preferences=submitted_answers)
+            user_preferences.save()
 
-def get_movie_recommendations(user_responses):
-    # Send user responses to AI model for movie recommendations
-    response = requests.post(AI_MODEL_ENDPOINT, json=user_responses)
-    recommendations = response.json().get('recommendations', [])
-    return recommendations
+            return JsonResponse({'recommendations': recommendations})
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+    else:
+        return JsonResponse({'error': 'Only POST requests are allowed'}, status=405)
+
+def generate_movie_recommendations(user_responses):
+    try:
+        # Define the prompt for GPT-3
+        prompt = "User preferences: " + json.dumps(user_responses) + "\nGenerate movie recommendations:"
+
+        # Generate movie recommendations using GPT-3
+        response = client.completions.create(engine="davinci",
+        prompt=prompt,
+        max_tokens=100,
+        temperature=0.7,
+        n=5,
+        stop="\n")
+
+        # Extract recommendations from GPT-3 response
+        recommendations = [choice['text'].strip() for choice in response.choices]
+
+        return recommendations
+    except Exception as e:
+        raise Exception("Failed to generate movie recommendations: " + str(e))

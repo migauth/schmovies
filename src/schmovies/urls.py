@@ -19,6 +19,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/movies/', include('movies.urls'))
+    path('api/movies/', include('movies.urls')),
+    path('', include('quiz.urls')),  # Include the quiz app's URLs
 ]
 

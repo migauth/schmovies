@@ -13,6 +13,7 @@ import requests
 
 TMDB_API_KEY = os.environ.get('TMDB_API_KEY')
 
+
 class MovieListAPIView(APIView):
     def get(self, request):
         # Fetch genre names from TMDB API
