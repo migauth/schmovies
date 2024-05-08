@@ -12,3 +12,6 @@ class MovieCategory(models.Model):
 class QuizResult(models.Model):
     category = models.CharField(max_length=100)
     # Add more?
+    
+class Quiz(models.Model):
+    category = models.CharField(max_length=100)

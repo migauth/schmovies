@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import '../styles/Quiz.scss'
+import axios from 'axios';
+import '../styles/Quiz.scss';
 
 const Quiz = () => {
   // Define state to store user's answer
@@ -11,21 +12,25 @@ const Quiz = () => {
   };
 
   // Function to handle form submission
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Here you can handle the submission of the answer,
-    // for example, you can send it to the backend for evaluation
-    console.log('Submitted answer:', answer);
-    // You can also reset the answer state here if needed
-    setAnswer('');
-  };
+    console.log("User answer here:", answer);
+    try {
+        const response = await axios.post('http://127.0.0.1:8000/quiz/submit-quiz/', { searchText: answer });
+        console.log('Movie recommendations:', response.data.recommendations);
+        // Update state or perform further actions with recommendations
+    } catch (error) {
+        console.error('Error:', error);
+    }
+};
 
   return (
     <div className='quiz-container'>
       <h2>Quiz</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="answer">Question: </label>
+          {/* Update the question label */}
+          <label htmlFor="answer">Enter your preference for a movie genre:</label>
           <textarea
             id="answer"
             value={answer}
