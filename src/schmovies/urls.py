@@ -20,6 +20,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/movies/', include('movies.urls')),
-    path('', include('quiz.urls')),  # Include the quiz app's URLs
+    path('quiz/', include('quiz.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
 

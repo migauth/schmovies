@@ -1,18 +1,14 @@
 from django.shortcuts import render
-
-# Create your views here.
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import Movie
-from .serializers import MovieSerializer
 from rest_framework import status
+from .models.movie import Movie
+from .serializers import MovieSerializer
 import os
 import requests
 
-
+# API key from TMDB
 TMDB_API_KEY = os.environ.get('TMDB_API_KEY')
-
 
 class MovieListAPIView(APIView):
     def get(self, request):
@@ -25,6 +21,7 @@ class MovieListAPIView(APIView):
             return Response({"error": "Failed to fetch genre data"}, status=status.HTTP_400_BAD_REQUEST)
         
         # Fetch movies from TMDB API
+        print('fetching movies')
         movies_response = requests.get(f'https://api.themoviedb.org/3/movie/popular?api_key={TMDB_API_KEY}')
         if movies_response.status_code == 200:
             movies_data = movies_response.json()['results']

@@ -16,14 +16,13 @@ const Quiz = () => {
     event.preventDefault();
     console.log("User answer here:", answer);
     try {
-        const response = await axios.post('/submit-quiz/', { searchText: answer });
+        const response = await axios.post('http://127.0.0.1:8000/quiz/submit-quiz/', { searchText: answer });
         console.log('Movie recommendations:', response.data.recommendations);
         // Update state or perform further actions with recommendations
     } catch (error) {
         console.error('Error:', error);
     }
 };
-
 
   return (
     <div className='quiz-container'>
