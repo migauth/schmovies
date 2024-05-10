@@ -1,18 +1,27 @@
 .quiz-container {
-
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
-
+  flex-direction: column;
   background-color: rgb(26, 22, 22);
-  width: 80%;
-  button {
-    background-color: #ff0000;
-    color: black;
-    border-color: yellow;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    border-radius: 5px;
-    font-family: "Press Start 2P"; /* Uses the Press Start 2P font */
-  }
+  padding: 10px;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-bottom: 10%;
 }
+
+.question_label {
+  padding-right: 1rem;
+}
+
+
+.submit-button {
+  background-color: #ff0000;
+  color: black;
+  border-color: yellow;
+  padding: 0.5rem 1rem;
+  margin: 2rem;
+  cursor: pointer;
+  border-radius: 5px;
+  font-family: "Press Start 2P"; /* Uses the Press Start 2P font */
+}
+

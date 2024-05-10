@@ -46,9 +46,9 @@ const Quiz = () => {
       <h2>Quiz</h2>
       <form onSubmit={handleSubmit}>
      
-        <div>
+        <div className='quiz-questions'>
           {/* Add input for keywords */}
-          <label htmlFor="keywords">Enter keywords:</label>
+          <label htmlFor="keywords" className='question_label'>Enter keywords:</label>
              <textarea
             id="keywords"
             value={keywords}
@@ -58,7 +58,7 @@ const Quiz = () => {
             cols={50}
           />
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" className='submit-button'>Submit</button>
       </form>
       {isPopupOpen && results.length > 0 && <QuizResultPopup movie={results[0]} onClose={closePopup} />}
     </div>
