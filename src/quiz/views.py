@@ -21,12 +21,13 @@ def submit_quiz(request):
         
         # Extract user's preferences from the request
         data = json.loads(request.body)
-        genre = data.get('searchText')
+        # genre = data.get('genre')
+        keywords = data.get('keywords')
         
-        # submitted_answers = json.loads(request.body) this is probably a better name for the data variable
+        # (naming conventions) submitted_answers = json.loads(request.body) this is probably a better name for the data variable
 
         # Call the function to get movie suggestions based on user's preference
-        recommendations = get_movie_suggestions(genre, keywords)
+        recommendations = get_movie_suggestions(keywords)
 
         # Return movie recommendations as a JSON response
         return JsonResponse({'recommendations': recommendations})
@@ -38,7 +39,13 @@ def submit_quiz(request):
     # If the request method is not POST, return an error
     return JsonResponse({'error': 'Method not allowed'}, status=405)
 
-def get_movie_suggestions(genre, keywords):
+def get_movie_suggestions(keywords):
+    
+    # additional quiz commands
+    # quiz_genre = f'a {genre} movie '
+    # quiz_mood = f'that has a {mood} mood'
+    
+    # Open ai stuff below
     
     chat_completion = client.chat.completions.create(
     messages=[
@@ -51,13 +58,13 @@ def get_movie_suggestions(genre, keywords):
 )
     keyword = chat_completion.choices[0].message.content
 
-    print(keyword)
+    print("result from open ai", keyword)
     
     # Make request to TMDb API to fetch movie suggestions based on genre
     api_key = TMDB_API_KEY
-    url2 = f'https://api.themoviedb.org/3/discover/movie?api_key=e010f27028932aac6c5b0fcdfcfc359f&language=en-US&sort_by=popularity.desc&with_genres=28&query={keyword}'
+    url = f'https://api.themoviedb.org/3/discover/movie?api_key=e010f27028932aac6c5b0fcdfcfc359f&language=en-US&sort_by=popularity.desc&with_genres=28&query={keyword}'
     
-    url = f'https://api.themoviedb.org/3/discover/movie?api_key={TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&with_genres={genre}&query={keyword}'
+    # (stretch) go into the db and comb through all the decscriptions with the keyword, then return the title of the movie - match the title to the movie in in the db (or api call?) and display it
 
     response = requests.get(url)
     if response.status_code == 200:
@@ -68,9 +75,3 @@ def get_movie_suggestions(genre, keywords):
     else:
         # If API request fails, return an empty list
         return []
-
-# def get_movie_recommendations(user_responses):
-#     # Send user responses to AI model for movie recommendations
-#     response = requests.post(AI_MODEL_ENDPOINT, json=user_responses)
-#     recommendations = response.json().get('recommendations', [])
-#     return recommendations

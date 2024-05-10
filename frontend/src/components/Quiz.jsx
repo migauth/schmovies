@@ -35,18 +35,7 @@ const Quiz = () => {
     <div className='quiz-container'>
       <h2>Quiz</h2>
       <form onSubmit={handleSubmit}>
-        <div>
-          {/* Update the question label */}
-          <label htmlFor="answer">Enter your preference for a movie genre:</label>
-          <textarea
-            id="answer"
-            value={answer}
-            onChange={handleAnswerChange}
-            required
-            rows={4}
-            cols={50}
-          />
-        </div>
+     
         <div>
           {/* Add input for keywords */}
           <label htmlFor="keywords">Enter keywords:</label>
