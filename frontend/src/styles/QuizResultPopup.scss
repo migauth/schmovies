@@ -1,0 +1,32 @@
+.movie-result__content {
+  position: fixed; /* should stay in the same place, regardless of scrolling */
+  top: 10%;
+  left: 25%;
+  height: 80%;
+  width: 55%;
+  background-color: rgb(26, 22, 22);
+  justify-content: center;
+  align-items: center;
+  overflow-y: scroll;
+}
+
+.movie-result__content {
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.movie-result__close {
+  position: absolute;
+  color: white;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.movie-result__image {
+  display: block; /* Ensures it respects margin auto */
+  margin: 0 auto; /* Center horizontally */
+}

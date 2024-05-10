@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import QuizResultPopup from './QuizResultPopup';
 import '../styles/Quiz.scss';
 
 const Quiz = () => {
   // Define state to store user's answer and keywords
   const [answer, setAnswer] = useState('');
   const [keywords, setKeywords] = useState('');
+  const [results, setResults] = useState([]);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   // Function to handle user's answer input
   const handleAnswerChange = (event) => {
     setAnswer(event.target.value);
   };
+
 
   // Function to handle form submission
   const handleSubmit = async (event) => {
@@ -20,7 +24,8 @@ const Quiz = () => {
     try {
         const response = await axios.post('http://127.0.0.1:8000/quiz/submit-quiz/', { searchText: answer, keywords: keywords });
         console.log('Movie recommendations:', response.data.recommendations);
-        // Update state or perform further actions with recommendations
+        setResults(response.data.recommendations); // updates results state
+        setIsPopupOpen(true); // Open the popup
     } catch (error) {
         console.error('Error:', error);
     }
@@ -31,6 +36,11 @@ const Quiz = () => {
     setKeywords(event.target.value);
   };
 
+  const closePopup = () => {
+    setIsPopupOpen(false); // Close the popup
+  };
+
+  // conditionally render QuizResult with the first result
   return (
     <div className='quiz-container'>
       <h2>Quiz</h2>
@@ -50,6 +60,7 @@ const Quiz = () => {
         </div>
         <button type="submit">Submit</button>
       </form>
+      {isPopupOpen && results.length > 0 && <QuizResultPopup movie={results[0]} onClose={closePopup} />}
     </div>
   );
 };
