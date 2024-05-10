@@ -58,11 +58,11 @@ def get_movie_suggestions(keywords):
 )
     keyword = chat_completion.choices[0].message.content
 
-    print("result from open ai", keyword)
+    print("result from open ai:", keyword)
     
     # Make request to TMDb API to fetch movie suggestions based on genre
-    api_key = TMDB_API_KEY
-    url = f'https://api.themoviedb.org/3/discover/movie?api_key=e010f27028932aac6c5b0fcdfcfc359f&language=en-US&sort_by=popularity.desc&with_genres=28&query={keyword}'
+    
+    url = f'https://api.themoviedb.org/3/search/movie?api_key={TMDB_API_KEY}&query={keyword}'
     
     # (stretch) go into the db and comb through all the decscriptions with the keyword, then return the title of the movie - match the title to the movie in in the db (or api call?) and display it
 
