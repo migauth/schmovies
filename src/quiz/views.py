@@ -26,7 +26,7 @@ def submit_quiz(request):
         # submitted_answers = json.loads(request.body) this is probably a better name for the data variable
 
         # Call the function to get movie suggestions based on user's preference
-        recommendations = get_movie_suggestions(genre)
+        recommendations = get_movie_suggestions(genre, keywords)
 
         # Return movie recommendations as a JSON response
         return JsonResponse({'recommendations': recommendations})
@@ -38,7 +38,7 @@ def submit_quiz(request):
     # If the request method is not POST, return an error
     return JsonResponse({'error': 'Method not allowed'}, status=405)
 
-def get_movie_suggestions(genre,keywords):
+def get_movie_suggestions(genre, keywords):
     
     chat_completion = client.chat.completions.create(
     messages=[
