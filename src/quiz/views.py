@@ -21,13 +21,14 @@ def submit_quiz(request):
         
         # Extract user's preferences from the request
         data = json.loads(request.body)
-        # genre = data.get('genre')
-        keywords = data.get('keywords')
-        
+
+        # keywords = data.get('keywords')
+        answers = data.get('answers')
+
         # (naming conventions) submitted_answers = json.loads(request.body) this is probably a better name for the data variable
 
         # Call the function to get movie suggestions based on user's preference
-        recommendations = get_movie_suggestions(keywords)
+        recommendations = get_movie_suggestions(answers)
 
         # Return movie recommendations as a JSON response
         return JsonResponse({'recommendations': recommendations})
@@ -39,11 +40,8 @@ def submit_quiz(request):
     # If the request method is not POST, return an error
     return JsonResponse({'error': 'Method not allowed'}, status=405)
 
-def get_movie_suggestions(keywords):
-    
-    # additional quiz commands
-    # quiz_genre = f'a {genre} movie '
-    # quiz_mood = f'that has a {mood} mood'
+
+def get_movie_suggestions(answers):
     
     # Open ai stuff below
     
@@ -51,7 +49,7 @@ def get_movie_suggestions(keywords):
     messages=[
         {
             "role": "user",
-            "content": f'reduce this down to one word that sums the whole thing up: {keywords}',
+            "content": f'reduce these words describing a type of movie: ({answers}) down to one word',
         }
     ],
     model="gpt-3.5-turbo",
@@ -61,7 +59,6 @@ def get_movie_suggestions(keywords):
     print("result from open ai:", keyword)
     
     # Make request to TMDb API to fetch movie suggestions based on genre
-    
     url = f'https://api.themoviedb.org/3/search/movie?api_key={TMDB_API_KEY}&query={keyword}'
     
     # (stretch) go into the db and comb through all the decscriptions with the keyword, then return the title of the movie - match the title to the movie in in the db (or api call?) and display it
