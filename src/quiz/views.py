@@ -6,6 +6,10 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import UserPreferences
 import openai
 from openai import OpenAI
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
 TMDB_API_KEY = os.environ.get('TMDB_API_KEY')
@@ -17,6 +21,8 @@ client = OpenAI(
 
 @csrf_exempt
 def submit_quiz(request):
+    logger.info("submit_quiz function")
+
     if request.method == 'POST':
         
         # Extract user's preferences from the request

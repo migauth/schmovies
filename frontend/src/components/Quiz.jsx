@@ -215,7 +215,8 @@ const Quiz = () => {
         </div>
         <button type="submit" className='submit-button'>Submit</button>
       </form>
-      {isPopupOpen && results.length > 0 && <QuizResultPopup movie={results[0]} onClose={closePopup} />}
+      {/* Conditionally render QuizResultPopup with a random movie from results */}
+      {isPopupOpen && results.length > 0 && <QuizResultPopup movie={results[Math.floor(Math.random() * results.length)]} onClose={closePopup} />}
     </div>
   );
 };
