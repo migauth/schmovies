@@ -1,11 +1,9 @@
-
-
 .App-header {
   text-align: center;
-}
 
-.App-header h1 {
-  margin-bottom: 0; /* Optional: Remove default margin */
+  h1 {
+    margin-bottom: 0; /* Optional: Remove default margin */
+  }
 }
 
 .movie-list {
@@ -23,21 +21,29 @@
   text-align: center;
 }
 
-
-
 .movie-list__item {
   margin: 10px;
   padding: 10px;
   border-radius: 10px;
   border: 1px solid #ddd;
   width: 200px;
+
+  .movie-details {
+    margin-top: 10px;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
 }
 
-.movie-details {
-  margin-top: 10px;
-}
-
-.movie-list__item img {
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: auto;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black */
 }

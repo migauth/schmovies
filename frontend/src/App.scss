@@ -15,3 +15,12 @@ body {
   width: 150px;
   height: auto;
 }
+
+.content {
+  opacity: 0; // Initially hide the content
+  transition: opacity 0.2s ease-in-out; // Apply transition on opacity change
+}
+
+.fade-in {
+  opacity: 1; // Fade in the content by setting opacity to 1
+}

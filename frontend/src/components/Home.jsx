@@ -17,6 +17,7 @@ function Home({ handlePageChange }) {
       <div className="home">
         <MovieList />
       </div>
+      <small>©</small>
     </>
   );
 }

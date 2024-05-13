@@ -56,12 +56,15 @@ function MovieList() {
         ))}
       </div>
 
-      {/* Render the pop-up if a movie is selected */}
-      {selectedMovie && (
-        <MoviePopup
-          movie={selectedMovie}
-          onClose={closePopup} // Pass the close function to the pop-up
-        />
+          {/* Render the backdrop and the pop-up if a movie is selected */}
+          {selectedMovie && (
+        <>
+          <div className="backdrop" onClick={closePopup}></div>
+          <MoviePopup
+            movie={selectedMovie}
+            onClose={closePopup} // Pass the close function to the pop-up
+          />
+        </>
       )}
     </div>
   );

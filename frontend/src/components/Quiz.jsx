@@ -24,8 +24,6 @@ const Quiz = () => {
     newAnswers[questionIndex].selectedAnswer = selectedAnswer;
     setAnswers(newAnswers);
   };
-  
-
 
   // Function to handle form submission
   const handleSubmit = async (event) => {

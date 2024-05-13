@@ -1,28 +1,57 @@
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
-/* Navbar.css */
+.navbar_links {
+  opacity: 0; /* Initially hide the buttons */
+  visibility: visible; /* Initially show the container */
+  transition: opacity 0.3s ease-in-out; /* Add transition effect */
+  display: flex; /* Ensure it's a flex container to apply gap */
+  gap: 1rem; /* Apply gap between child elements */
+  
+  &.fade-in {
+    opacity: 1; /* Show the buttons when fade-in class is applied */
+  }
+}
+
 .navbar {
   display: flex;
   flex-direction: row-reverse;
   padding: 1rem;
-}
-
-.navbar_links {
-  display: flex;
-  gap: 1rem;
-  align-items: flex-end;
+  
+  &__links {
+    display: flex;
+    align-items: flex-end;
+  }
 }
 
 .logo {
   width: 500px;
   height: auto; /* Maintain aspect ratio */
   cursor: pointer;
+  animation: wiggleLogo 0.3s ease-in-out; // Animation definition
+  
+  &:hover {
+    border: solid yellow;
+    border-radius: 5px;
+    box-shadow: inset;
+  }
 }
 
-.logo:hover {
-  border: solid yellow;
-  border-radius: 5px;
-  box-shadow: inset;
+@keyframes wiggleLogo {
+  0% {
+    transform: rotate(-2deg); // Initial state: rotate left slightly
+  }
+  25% {
+    transform: rotate(2deg); // Rotate right slightly at 25%
+  }
+  50% {
+    transform: rotate(-2deg); // Rotate left slightly at 50%
+  }
+  75% {
+    transform: rotate(2deg); // Rotate right slightly at 75%
+  }
+  100% {
+    transform: rotate(-2deg); // Final state: rotate left slightly at 100%
+  }
 }
 
 .quiz-btn,
@@ -35,11 +64,9 @@
   cursor: pointer;
   border-radius: 5px;
   font-family: "Press Start 2P"; /* Uses the Press Start 2P font */
-}
-
-.quiz-btn:hover,
-.navbar_about-btn:hover,
-.navbar_login-btn:hover {
-  background-color: yellow;
-  color: black;
+  
+  &:hover {
+    background-color: yellow;
+    color: black;
+  }
 }

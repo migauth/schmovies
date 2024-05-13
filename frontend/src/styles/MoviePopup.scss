@@ -1,32 +1,47 @@
-.movie-popup__content {
-  position: fixed; /* should stay in the same place, regardless of scrolling */
-  top: 10%;
-  left: 25%;
-  height: 80%;
-  width: 55%;
-  background-color: rgb(26, 22, 22);
-  justify-content: center;
-  align-items: center;
-  overflow-y: scroll;
-}
+.movie-popup {
+  z-index: 999; // Ensure it's above other content
 
-.movie-popup__content {
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-.movie-popup__close {
-  position: absolute;
-  color: white;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-}
+  &__content {
+    position: fixed; // should stay in the same place, regardless of scrolling
+    top: 50%; // position from the top
+    left: 50%; // position from the left
+    transform: translate(-50%, -50%); // centering trick
+    height: 80%;
+    width: 70%;
+    background-color: rgb(26, 22, 22);
+    overflow-y: scroll;
+    border-radius: 10px;
+    border: 2px solid #dddddd37;
 
-.movie-popup__image {
-  display: block; /* Ensures it respects margin auto */
-  margin: 0 auto; /* Center horizontally */
+    padding: 20px; // Moved from .movie-popup__content below
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Moved from .movie-popup__content below
+
+    .movie-popup__close {
+      position: absolute;
+      color: white;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    h2 {
+      font-size: 2.5em; // Increase font size for title
+      text-align: center; // Center align the title
+
+    }
+
+    p {
+      font-size: 1.75em; // Adjust font size for paragraphs
+      margin-bottom: 8px; // Add some space below each paragraph
+    }
+
+    .movie-popup__image {
+      display: block; // Ensures it respects margin auto
+      margin: 0 auto; // Center horizontally
+      border-radius: 5px;
+    }
+  }
 }

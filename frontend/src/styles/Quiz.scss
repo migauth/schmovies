@@ -1,27 +1,38 @@
+$mobile-font-size: 1.25em;
+$tablet-font-size: 1.5em;
+$desktop-font-size: 2em;
+
 .quiz-container {
   display: flex;
   justify-content: center;
   flex-direction: column;
   background-color: rgb(26, 22, 22);
   padding: 10px;
-  margin-left: 10%;
-  margin-right: 10%;
-  margin-bottom: 10%;
+  margin: 0 10% 10%;
+  border-radius: 10px;
+  border: 2px solid #dddddd37;
+  font-size: $mobile-font-size; // Set default font size for mobile
+
+  @media (min-width: 768px) { // Adjust for tablets
+    font-size: $tablet-font-size;
+  }
+
+  @media (min-width: 1024px) { // Adjust for desktops
+    font-size: $desktop-font-size;
+  }
+
+  .question_label {
+    padding-right: 1rem;
+  }
+
+  .submit-button {
+    background-color: #ff0000;
+    color: black;
+    border-color: yellow;
+    padding: 0.5rem 1rem;
+    margin: 2rem;
+    cursor: pointer;
+    border-radius: 5px;
+    font-family: "Press Start 2P"; // Uses the Press Start 2P font
+  }
 }
-
-.question_label {
-  padding-right: 1rem;
-}
-
-
-.submit-button {
-  background-color: #ff0000;
-  color: black;
-  border-color: yellow;
-  padding: 0.5rem 1rem;
-  margin: 2rem;
-  cursor: pointer;
-  border-radius: 5px;
-  font-family: "Press Start 2P"; /* Uses the Press Start 2P font */
-}
-
