@@ -12,6 +12,8 @@ const Quiz = () => {
     { question: "Genre Preference", selectedAnswer: "" },
     { question: "Mood", selectedAnswer: "" },
     { question: "Main Characters", selectedAnswer: "" },
+    { question: "Cheese Factor", selectedAnswer: "" },
+
     // { question: "Preferred Ending", selectedAnswer: "" },
     // { question: "Language Preference", selectedAnswer: "" },
     // { question: "Audience", selectedAnswer: "" },
@@ -59,6 +61,16 @@ const Quiz = () => {
           {answers.map((answer, index) => (
             <div key={index}>
               <p>{answer.question}</p>
+              {answer.question === "Cheese Factor" ? (
+                <input
+                  type="range"
+                  min="1"
+                  max="10"
+                  value={answer.selectedAnswer}
+                  onChange={(e) => handleAnswerChange(index, parseInt(e.target.value))}
+                />
+              ) : (
+
               <div>
               {answer.question === "Genre Preference" && (
             <>
@@ -208,6 +220,7 @@ const Quiz = () => {
                 </>
               )}
               </div>
+              )}
             </div>
           ))}
         </div>
