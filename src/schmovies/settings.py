@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'movies',
     'rest_framework',
     'corsheaders',
-    'quiz'
+    'quiz',
+    'users'
 ]
 
 MIDDLEWARE = [
