@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
 const Login = ({ onLoginSuccess }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -12,8 +18,18 @@ const Login = ({ onLoginSuccess }) => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('/accounts/login/', { username, password });
+      const csrftoken = getCookie('csrftoken');
 
+      const response = await axios.post(
+        'http://localhost:8000/accounts/login/',
+        { username, password },
+        {
+          headers: {
+            'X-CSRFToken': csrftoken,
+          },
+        }
+      );
+      
       if (response.status === 200) {
         onLoginSuccess(response.data);
       }

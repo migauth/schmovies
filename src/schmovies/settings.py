@@ -75,6 +75,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'schmovies.wsgi.application'
 
+CSRF_COOKIE_SECURE = True
+
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
