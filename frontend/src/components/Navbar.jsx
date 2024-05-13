@@ -30,6 +30,12 @@ function Navbar({ handlePageChange }) {
           >
             Login
           </button>
+          <button
+            className="navbar_register-btn"
+            onClick={() => handlePageChange("register")}
+          >
+            Register
+          </button>
         </div>
       </nav>
       <div className={`logo-container ${showContent ? "fade-in" : ""}`}>
