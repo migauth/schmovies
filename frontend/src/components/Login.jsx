@@ -21,7 +21,7 @@ const Login = ({ onLoginSuccess }) => {
       const csrftoken = getCookie('csrftoken');
 
       const response = await axios.post(
-        'http://localhost:8000/accounts/login/',
+        '/accounts/login/',
         { username, password },
         {
           headers: {
@@ -29,7 +29,7 @@ const Login = ({ onLoginSuccess }) => {
           },
         }
       );
-      
+
       if (response.status === 200) {
         onLoginSuccess(response.data);
       }
