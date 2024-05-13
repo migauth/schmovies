@@ -34,6 +34,9 @@ function MovieList() {
   const movies2024 = movies.filter((movie) => movie.release_year === "2024");
   console.log("2024 movies:", movies2024);
 
+  // randomize popular movies
+  const shuffledMovies = [...movies].sort(() => Math.random() - 0.5);
+
   return (
     <div className="movie-list">
       {/* New Releases */}
@@ -65,7 +68,7 @@ function MovieList() {
           <h2>Popular Movies</h2>
         </div>
         <div className="movie-list-container">
-          {movies.map((movie) => (
+          {shuffledMovies.map((movie) => (
             <div
               key={movie.id}
               className="movie-list__item"
