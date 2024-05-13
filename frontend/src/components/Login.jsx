@@ -5,30 +5,25 @@ const Login = ({ onLoginSuccess }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-
-  const csrfToken = document.cookie.match(/csrftoken=([^;]+)/)[1]; // Example for getting CSRF token from cookie
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+
     try {
-      const response = await axios.post(
-        '/api/login/',
-        { username, password },
-        {
-          headers: {
-            'X-CSRFToken': csrfToken,
-          },
-        }
-      );
-  
+      const response = await axios.post('/accounts/login/', { username, password });
+
       if (response.status === 200) {
         onLoginSuccess(response.data);
       }
     } catch (err) {
       setError("Your username and password didn't match. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
-  
+
   return (
     <div>
       {error && <p>{error}</p>}
@@ -51,10 +46,10 @@ const Login = ({ onLoginSuccess }) => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit">Login</button>
+        <button type="submit" disabled={isLoading}>{isLoading ? 'Logging in...' : 'Login'}</button>
       </form>
       <p>
-        <a href="/password-reset/">Lost password?</a>
+        <a href="/accounts/password-reset/">Lost password?</a>
       </p>
     </div>
   );
