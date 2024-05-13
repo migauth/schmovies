@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Limelight&display=swap');
+
+
 .App-header {
   text-align: center;
 
@@ -6,13 +9,17 @@
   }
 }
 
-
 .movie-list-container {
   display: flex;
-  flex-direction: column;
-  align-items: center; // Center the items horizontally
-  justify-content: center; // Center the items vertically
+  flex-direction: row;
+  align-items: center; /* Center the items horizontally */
+  margin: auto;
+  width: 90%;
   padding: 20px;
+  overflow:scroll;
+  overflow-x: auto; /* Add horizontal scrollbar */
+  overflow-y: hidden; /* Hide vertical scrollbar initially */
+
 }
 
 .heading-container {
@@ -23,36 +30,61 @@
   margin-bottom: 20px;
   text-align: center;
   flex-wrap: nowrap;
-
   width: 100%;
+  font-size: 1.75em;
+  font-family: "Limelight", sans-serif;
 }
 
 .movie-list {
   display: flex;
-  justify-content: flex-start; // Align items to the start of the container
-  overflow-x: auto;
+  flex-direction: column; /* Display items vertically */
   padding: 20px;
-  width: 100%;
+  width: auto;
+}
+
+.movie-list-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center; /* Center the items vertically */
+}
+
+.movie-list-container::-webkit-scrollbar {
+  height: 10px; /* Set the height of the scrollbar */
+}
+
+.movie-list-container::-webkit-scrollbar-thumb {
+  background: #000000; /* Color of the scrollbar thumb */
+  border-radius: 5px; /* Rounded corners */
+}
+
+.movie-list-container:hover::-webkit-scrollbar-thumb {
+  background: #555; /* Change thumb color on hover */
+}
+
+.movie-list-container::-webkit-scrollbar-track {
+  background: #000000; /* Color of the scrollbar track */
 }
 
 .movie-list__item {
-  flex: 0 0 auto;
+  flex: 0 0 200px;
+  height: 500px; /* Specify fixed height for each movie item */
+
   margin: 10px;
   padding: 10px;
   border-radius: 10px;
   border: 1px solid #ddd;
   width: 200px;
-  box-sizing: border-box; // Include padding and border in the element's total width and height
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
 
-  .movie-details {
-    margin-top: 10px;
-  }
+.movie-details {
+  margin-top: 10px;
+}
 
-  img {
-    width: 100%;
-    height: auto;
-    border-radius: 5px;
-  }
+img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
 }
 
 .backdrop {
@@ -63,3 +95,5 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black */
 }
+
+
