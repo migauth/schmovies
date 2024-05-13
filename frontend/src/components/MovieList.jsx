@@ -59,6 +59,7 @@ function MovieList() {
             </div>
           </div>
         ))}
+        
         <div className="movie-category-title">       
           <h2>Popular Movies</h2>
         </div>

@@ -22,13 +22,14 @@
 .movie-category-title {
   margin-bottom: 20px;
   text-align: center;
-  // width: 100%;
+  flex-wrap: nowrap;
+
+  width: 100%;
 }
 
 .movie-list {
   display: flex;
   justify-content: flex-start; // Align items to the start of the container
-  flex-wrap: nowrap;
   overflow-x: auto;
   padding: 20px;
   width: 100%;
