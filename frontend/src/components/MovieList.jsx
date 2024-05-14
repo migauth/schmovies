@@ -23,8 +23,6 @@ function MovieList() {
   }, []);
 
   const handleMovieClick = (movie) => {
-    console.log("Clicked movie:", movie); // Log the clicked movie
-
     setSelectedMovie(movie);
   };
 
@@ -32,32 +30,63 @@ function MovieList() {
     setSelectedMovie(null);
   };
 
+  // filter movies that have a release_year of 2024
+  const movies2024 = movies.filter((movie) => movie.release_year === "2024");
+  console.log("2024 movies:", movies2024);
+
+  // randomize popular movies
+  const shuffledMovies = [...movies].sort(() => Math.random() - 0.5);
+
   return (
-    <div className="movie-list-container">
-      <div className="heading-container">
-        
-        <h1>Popular Movies</h1>
-      </div>
-      <div className="movie-list">
-        {movies.map((movie) => (
-          <div
-            key={movie.id}
-            className="movie-list__item"
-            onClick={() => handleMovieClick(movie)}
-          >
-            <img src={movie.poster_url} alt={movie.title} />
-            <div className="movie-details">
-              <h2>{movie.title}</h2>
-              {/* <p>{movie.description}</p> */}
-              <p>Genre: {movie.genre}</p>
-              <p>Release Year: {movie.release_year}</p>
+    <div className="movie-list">
+      {/* New Releases */}
+      <div className="movie-category">
+        <div className="movie-category-title">
+          <h2>New Releases</h2>
+        </div>
+        <div className="movie-list-container">
+          {movies2024.map((movie) => (
+            <div
+              key={movie.id}
+              className="movie-list__item"
+              onClick={() => handleMovieClick(movie)}
+            >
+              <img src={movie.poster_url} alt={movie.title} />
+              <div className="movie-details">
+                <h2>{movie.title}</h2>
+                <p>Genre: {movie.genre}</p>
+                <p>Release Year: {movie.release_year}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
-          {/* Render the backdrop and the pop-up if a movie is selected */}
-          {selectedMovie && (
+      {/* Popular Movies */}
+      <div className="movie-category">
+        <div className="movie-category-title">
+          <h2>Popular Movies</h2>
+        </div>
+        <div className="movie-list-container">
+          {shuffledMovies.map((movie) => (
+            <div
+              key={movie.id}
+              className="movie-list__item"
+              onClick={() => handleMovieClick(movie)}
+            >
+              <img src={movie.poster_url} alt={movie.title} />
+              <div className="movie-details">
+                <h2>{movie.title}</h2>
+                <p>Genre: {movie.genre}</p>
+                <p>Release Year: {movie.release_year}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Render the backdrop and the pop-up if a movie is selected */}
+      {selectedMovie && (
         <>
           <div className="backdrop" onClick={closePopup}></div>
           <MoviePopup
