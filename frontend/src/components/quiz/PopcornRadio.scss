@@ -1,0 +1,23 @@
+/* PopcornRadio.scss */
+.popcorn-radio-label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.popcorn-kernel {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #f7d744;
+  margin-right: 10px;
+}
+
+input[type="radio"]:checked + .popcorn-radio-label .popcorn-kernel {
+  background-color: #c26507;
+}
+
+input[type="radio"] {
+  display: none;
+}

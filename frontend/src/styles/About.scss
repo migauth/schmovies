@@ -1,4 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Limelight&display=swap');
+$lime: "Limelight", sans-serif;
+
 .about-info {
-  margin-left: 20px;
-  margin-right: 20px;
+  display: flex;
+
+  margin: 0 10%;
+  font-size: 1.5em;
 }
+

@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/QuizResultPopup.scss';
+import './QuizResultPopup.scss';
 
 function QuizResultPopup({ movie, onClose }) { // Receive movie data
     // Base URL for TMDb API images

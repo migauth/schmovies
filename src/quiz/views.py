@@ -30,6 +30,7 @@ def submit_quiz(request):
 
         # keywords = data.get('keywords')
         answers = data.get('answers')
+        print(answers)
 
         # (naming conventions) submitted_answers = json.loads(request.body) this is probably a better name for the data variable
 

@@ -2,7 +2,7 @@
 
 ## Description
 
-Schmovies is...
+Schmovies is a movie suggestion generation app.
 
 ## Install and run virtual environment
 

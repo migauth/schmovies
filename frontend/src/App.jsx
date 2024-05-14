@@ -4,15 +4,16 @@ import Home from "./components/Home";
 import Navbar from "./components/Navbar";
 import About from "./components/About";
 import Login from "./components/Login";
-import Quiz from "./components/Quiz";
+import Quiz from "./components/quiz/Quiz";
+import useContentFadeIn from "./hooks/useContentFadeIn";
 
 function App() {
   const [currentPage, setCurrentPage] = useState("home"); // State to control which page to display
-  const [showContent, setShowContent] = useState(false); // State to control whether to show the content
+  const showContent = useContentFadeIn(); // Using the custom hook
 
   const handlePageChange = (page) => {
-    setCurrentPage(page); // Set currentPage to the selected page
-  };
+  setCurrentPage(page); // Set currentPage to the selected page
+};
 
   const pages = {
     about: <About />,
@@ -20,16 +21,6 @@ function App() {
     login: <Login />,
     quiz: <Quiz />,
   };
-
-  useEffect(() => {
-    // Trigger the content fade-in after a brief delay
-    const timer = setTimeout(() => {
-      setShowContent(true);
-    }, 700); // Adjust the delay as needed
-
-    // Clear the timeout on component unmount to avoid memory leaks
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <div className="App">
