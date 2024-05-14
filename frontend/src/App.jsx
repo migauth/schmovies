@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import About from "./components/About";
 import Login from "./components/Login";
 import Quiz from "./components/quiz/Quiz";
+import Register from "./components/Register";
 import useContentFadeIn from "./hooks/useContentFadeIn";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
     about: <About />,
     home: <Home handlePageChange={handlePageChange} />,
     login: <Login />,
+    register: <Register />,
     quiz: <Quiz />,
   };
 
