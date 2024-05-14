@@ -1,14 +1,14 @@
 import React from 'react';
 import './QuizResultPopup.scss';
 
-function QuizResultPopup({ movie, onClose, handleRestartQuiz }) { // Receive movie data
+function QuizResultPopup({ movie, onClose, handleRestartQuiz, closePopup }) { // Receive movie data
     // Base URL for TMDb API images
     const baseUrl = "https://image.tmdb.org/t/p/w500/";
 
     
     return (
         <>
-        <div className="backdrop"></div>
+        <div className="backdrop" onClick={closePopup}></div>
         <div className="movie-quiz-result">
             <div className="movie-result__content">
                 <button onClick={onClose} className="movie-result__close" tabIndex="0" aria-label="Close movie details">✖</button>

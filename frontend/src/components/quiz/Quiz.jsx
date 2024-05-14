@@ -105,6 +105,7 @@ const Quiz = () => {
           movie={results[Math.floor(Math.random() * results.length)]}
           onClose={closePopup}
           handleRestartQuiz={handleRestartQuiz}
+          closePopup={closePopup}
         />
       )}
     </div>
