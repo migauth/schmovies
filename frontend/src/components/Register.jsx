@@ -14,7 +14,7 @@ const Registration = ({ onRegistrationSuccess }) => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('/accounts/register/', {
+      const response = await axios.post("http://127.0.0.1:8000/accounts/register/", {
         username,
         email,
         password1,
@@ -31,6 +31,7 @@ const Registration = ({ onRegistrationSuccess }) => {
         setError(err.response.data.non_field_errors[0]);
       } else {
         setError("An error occurred during registration. Please try again.");
+        console.log("Error during registration:", err);
       }
     } finally {
       setIsLoading(false);
