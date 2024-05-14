@@ -9,12 +9,14 @@ import CheeseSlider from './CheeseSlider';
 import './Quiz.scss';
 
 const Quiz = () => {
-  const [answers, setAnswers] = useState([
+  const initialAnswers = [
     { question: "Genre Preference", selectedAnswer: "" },
     { question: "Mood", selectedAnswer: "" },
     { question: "Main Characters", selectedAnswer: "" },
     { question: "Cheese", selectedAnswer: "" },
-  ]);
+  ];
+
+  const [answers, setAnswers] = useState(initialAnswers);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [results, setResults] = useState([]);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -49,6 +51,14 @@ const Quiz = () => {
     setCurrentQuestionIndex(currentQuestionIndex - 1);
   };
 
+  const handleRestartQuiz = () => {
+    // Reset quiz state to initial values
+    setAnswers(initialAnswers);
+    setCurrentQuestionIndex(0);
+    setResults([]);
+    setIsPopupOpen(false);
+  };
+
   const closePopup = () => {
     setIsPopupOpen(false);
   };
@@ -72,7 +82,7 @@ const Quiz = () => {
 
   return (
     <div className="quiz-container">
-      <h2 className="quiz-title">Take the quiz - find a movie!</h2>
+      <h2 className="quiz-title">Take the quiz - find a movie to watch!</h2>
       <form onSubmit={handleSubmit}>
         <div className="quiz-questions">{renderCurrentQuestion()}</div>
         <div className="button-container">
@@ -94,6 +104,7 @@ const Quiz = () => {
         <QuizResultPopup
           movie={results[Math.floor(Math.random() * results.length)]}
           onClose={closePopup}
+          handleRestartQuiz={handleRestartQuiz}
         />
       )}
     </div>
