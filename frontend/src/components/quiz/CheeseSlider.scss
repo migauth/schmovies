@@ -1,0 +1,25 @@
+input[type="range"] {
+  -webkit-appearance: none; 
+  appearance: none; 
+  background-color: yellow;
+  border: none;
+  height: 5px;
+  border-radius: 10px;
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none; 
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: orange;
+    cursor: pointer;
+    &:before {
+      content: '🧀'; /* Cheese emoji */
+      font-size: 20px;
+      line-height: 25px;
+      color: white;
+      text-align: center;
+      display: block;
+    }
+  }
+}
