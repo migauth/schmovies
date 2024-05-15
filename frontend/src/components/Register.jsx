@@ -12,15 +12,24 @@ const Registration = ({ onRegistrationSuccess }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-
+  
     try {
+      // Step 1: Fetch the CSRF token
+      const csrfResponse = await axios.get("http://127.0.0.1:8000/api/csrf-token/");
+      const csrfToken = csrfResponse.data.csrfToken;
+  
+      // Step 2: Make the POST request with the CSRF token included in the headers
       const response = await axios.post("http://127.0.0.1:8000/accounts/register/", {
         username,
         email,
         password1,
         password2,
+      }, {
+        headers: {
+          'X-CSRFToken': csrfToken
+        }
       });
-
+  
       if (response.status === 201) {
         // Registration successful, perform any necessary actions (e.g., redirect to login page)
         onRegistrationSuccess();
@@ -37,6 +46,7 @@ const Registration = ({ onRegistrationSuccess }) => {
       setIsLoading(false);
     }
   };
+  
 
   return (
     <div>
