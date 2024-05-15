@@ -17,16 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, reverse_lazy
 from django.contrib.auth import views as auth_views
-from users.views import custom_register
+
+
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/movies/', include('movies.urls')),
     path('quiz/', include('quiz.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
-    path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),
-    path('accounts/register/', custom_register, name='register'),
+    path('users/', include('users.urls')),  # Include app-specific URL
+
 ]
 
