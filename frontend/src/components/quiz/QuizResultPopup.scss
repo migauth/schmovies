@@ -1,20 +1,28 @@
-
 .movie-result__content {
+  z-index: 999; // Ensure it's above other content
   position: fixed; /* should stay in the same place, regardless of scrolling */
-  top: 10%;
-  left: 25%;
+  top: 50%; // position from the top
+  left: 50%; // position from the left
+  transform: translate(-50%, -50%); // centering trick
   height: 80%;
-  width: 55%;
+  width: 70%;
   background-color: rgb(26, 22, 22);
   justify-content: center;
   align-items: center;
   overflow-y: scroll;
+  border-radius: 10px;
+  border: 2px solid #dddddd37;
 }
 
 .movie-result__content {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    text-align: center; // Center align the title
+
+  }
 }
 .movie-result__close {
   position: absolute;
@@ -27,7 +35,22 @@
   cursor: pointer;
 }
 
+
+
 .movie-result__image {
-  display: block; /* Ensures it respects margin auto */
-  margin: 0 auto; /* Center horizontally */
+  display: block; // Ensures it respects margin auto
+  margin: 0 auto; // Center horizontally
+  border-radius: 5px;
+  width: 60%;
+}
+
+.quiz-again-button {
+  background-color: #ff0000;
+  color: black;
+  border-color: yellow;
+  padding: 0.5rem 1rem;
+  margin: 2rem;
+  cursor: pointer;
+  border-radius: 5px;
+  font-family: "Press Start 2P"; // Uses the Press Start 2P font
 }

@@ -3,9 +3,16 @@ import axios from "axios";
 import MoviePopup from "./MoviePopup";
 import "../styles/MovieList.scss";
 
+const useContentFadeIn = () => {
+  const [showContent, setShowContent] = useState(false);
+}
+
 function MovieList() {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
+
+
+  
 
   useEffect(() => {
     async function fetchMovies() {
@@ -33,12 +40,11 @@ function MovieList() {
   // filter movies that have a release_year of 2024
   const movies2024 = movies.filter((movie) => movie.release_year === "2024");
   console.log("2024 movies:", movies2024);
-
-  // randomize popular movies
-  const shuffledMovies = [...movies].sort(() => Math.random() - 0.5);
-
+    // randomize popular movies
+    const shuffledMovies = [...movies].sort(() => Math.random() - 0.5);
   return (
     <div className="movie-list">
+
       {/* New Releases */}
       <div className="movie-category">
         <div className="movie-category-title">
