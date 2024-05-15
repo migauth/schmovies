@@ -40,6 +40,7 @@
   flex-direction: column; /* Display items vertically */
   padding: 20px;
   width: auto;
+  
 }
 
 .movie-list-container {
@@ -68,13 +69,18 @@
 .movie-list__item {
   flex: 0 0 200px;
   height: 500px; /* Specify fixed height for each movie item */
-
   margin: 10px;
   padding: 10px;
   border-radius: 10px;
   border: 1px solid #ddd;
   width: 200px;
   box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  cursor: pointer;
+
+  &:hover {
+    border: solid yellow;
+
+  }
 }
 
 .movie-details {
