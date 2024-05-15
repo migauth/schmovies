@@ -4,49 +4,45 @@ import axios from 'axios';
 const Login = ({ onLoginSuccess }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [csrfToken, setCsrfToken] = useState('');
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const csrfTokenElement = document.getElementById('csrf_token');
-    if (csrfTokenElement) {
-      setCsrfToken(csrfTokenElement.value);
+    const csrfTokenMetaTag = document.querySelector('meta[name="csrf-token"]');
+    if (csrfTokenMetaTag) {
+      console.log('CSRF token meta tag found:', csrfTokenMetaTag.getAttribute('content'));
     } else {
-      console.error('CSRF token element not found');
+      console.error('CSRF token meta tag not found');
     }
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setError(null);
 
     try {
-      if (!csrfToken) {
-        throw new Error('CSRF token is missing');
+      const csrfTokenMetaTag = document.querySelector('meta[name="csrf-token"]');
+      const csrftoken = csrfTokenMetaTag ? csrfTokenMetaTag.getAttribute('content') : null;
+      
+      if (!csrftoken) {
+        throw new Error('CSRF token not found');
       }
-      console.log('CSRF Token:', csrfToken);
 
       const response = await axios.post(
-        'http://localhost:3000/accounts/login/',
+        'http://localhost:8000/accounts/login/',
         { username, password },
         {
           headers: {
-            'X-CSRFToken': csrfToken,
+            'X-CSRFToken': csrftoken,
           },
         }
       );
 
-      console.log('Response:', response);
-
       if (response.status === 200) {
         onLoginSuccess(response.data);
-      } else {
-        setError('Unexpected response status: ' + response.status);
       }
     } catch (err) {
-      console.error('Login error:', err);
+      console.error(err);
       setError("Your username and password didn't match. Please try again.");
     } finally {
       setIsLoading(false);
@@ -75,9 +71,7 @@ const Login = ({ onLoginSuccess }) => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit" disabled={isLoading}>
-          {isLoading ? 'Logging in...' : 'Login'}
-        </button>
+        <button type="submit" disabled={isLoading}>{isLoading ? 'Logging in...' : 'Login'}</button>
       </form>
       <p>
         <a href="/accounts/password-reset/">Lost password?</a>
