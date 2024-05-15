@@ -1,19 +1,20 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import logout
-from django.contrib.auth.views import LoginView
+# accounts/views.py
 from django.contrib.auth.forms import UserCreationForm
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import logging
 
-def custom_register(request):
+logger = logging.getLogger(__name__)
+
+@csrf_exempt
+def register(request):
     if request.method == 'POST':
+        logger.debug('Registration request received.')
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            # Redirect to login page after successful registration
-            return redirect('login')
-    else:
-        form = UserCreationForm()
-    return render(request, 'registration/register.html', {'form': form})
-
-def user_logout(request):
-    logout(request)
-    return redirect('home')  # Redirect to the home page or any other page
+            logger.info('User registered successfully.')
+            return JsonResponse({'message': 'User registered successfully'})
+        else:
+            logger.error('Invalid registration data: %s', form.errors)
+            return JsonResponse(form.errors, status=400)
