@@ -1,43 +1,31 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-function getCookie(name) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(';').shift();
-}
-
 const Login = ({ onLoginSuccess }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
+    
 
     try {
-      const csrftoken = getCookie('csrftoken');
-
       const response = await axios.post(
-        '/accounts/login/',
-        { username, password },
-        {
-          headers: {
-            'X-CSRFToken': csrftoken,
-          },
-        }
+        'http://127.0.0.1:8000/users/login/',
+        { username, password }
       );
 
+      console.log('response here', response);
+
       if (response.status === 200) {
-        onLoginSuccess(response.data);
+
+        onLoginSuccess(response.data.user);
       }
     } catch (err) {
       setError("Your username and password didn't match. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
+    } 
   };
 
   return (
@@ -62,7 +50,7 @@ const Login = ({ onLoginSuccess }) => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit" disabled={isLoading}>{isLoading ? 'Logging in...' : 'Login'}</button>
+        <button type="submit"> Login </button>
       </form>
       <p>
         <a href="/accounts/password-reset/">Lost password?</a>

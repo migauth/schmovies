@@ -35,14 +35,23 @@ class RegisterView(APIView):
             
             return Response({'message': 'User registered successfully'}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import AuthenticationForm
 
-    # if request.method == 'POST':
-        # logger.debug('Registration request received.')
-        # form = UserCreationForm(request.POST)
-        # if form.is_valid():
-        #     form.save()
-        #     logger.info('User registered successfully.')
-        #     return JsonResponse({'message': 'User registered successfully'})
-        # else:
-        #     logger.error('Invalid registration data: %s', form.errors)
-        #     return JsonResponse(form.errors, status=400)
+class LoginView(APIView):
+    def post(self, request):
+        form = AuthenticationForm(data=request.data)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                # Include additional user data in the response
+                return JsonResponse({'message': 'Login successful', 'user': {'username': user.username}}, status=status.HTTP_200_OK)
+            else:
+                return JsonResponse({'error': 'Invalid username or password'}, status=status.HTTP_401_UNAUTHORIZED)
+        else:
+            return JsonResponse(form.errors, status=status.HTTP_400_BAD_REQUEST)
+

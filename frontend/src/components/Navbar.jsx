@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "../styles/Navbar.scss";
 
-function Navbar({ handlePageChange }) {
+function Navbar({ handlePageChange, handleLogout, currentUser }) {
   const [showContent, setShowContent] = useState(false);
+
+  console.log('User info', currentUser);
 
   useEffect(() => {
     // Trigger animation after a brief delay
@@ -33,19 +35,34 @@ function Navbar({ handlePageChange }) {
           >
             About
           </button>
-          <button
-            className="navbar_login-btn"
-            onClick={() => handlePageChange("login")}
-          >
-            Login
-          </button>
-          <button
-            className="navbar_register-btn"
-            onClick={() => handlePageChange("register")}
-          >
-            Register
-          </button>
-   
+          {currentUser ? (
+            <>
+              <button
+                className="navbar_logout-btn"
+                onClick={() => handleLogout()}
+              >
+                Logout
+              </button>
+              <span className="navbar_user-info">
+                Logged in as: {currentUser.username}
+              </span>
+            </>
+          ) : (
+            <>
+              <button
+                className="navbar_login-btn"
+                onClick={() => handlePageChange("login")}
+              >
+                Login
+              </button>
+              <button
+                className="navbar_register-btn"
+                onClick={() => handlePageChange("register")}
+              >
+                Register
+              </button>
+            </>
+          )}
         </div>
       </nav>
       <div className={`logo-container ${showContent ? "fade-in" : ""}`}>
@@ -59,6 +76,5 @@ function Navbar({ handlePageChange }) {
     </>
   );
 }
-
 
 export default Navbar;
