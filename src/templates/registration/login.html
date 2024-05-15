@@ -4,21 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <!-- Link to the bundled JavaScript file -->
+    <script src="{% static 'js/main.f239cf15.js' %}"></script>
+    <!-- Include the CSRF token as a meta tag -->
+    <meta name="csrf-token" content="{{ csrf_token }}">
 </head>
 <body>
     <h1>Login</h1>
-    <form method="post">
-        {% csrf_token %}
-        <input type="hidden" id="csrf_token" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-        <div>
-            <label for="id_username">Username:</label>
-            <input type="text" id="id_username" name="username">
-        </div>
-        <div>
-            <label for="id_password">Password:</label>
-            <input type="password" id="id_password" name="password">
-        </div>
-        <button type="submit">Login</button>
-    </form>
+    <div id="root"></div>
 </body>
 </html>
