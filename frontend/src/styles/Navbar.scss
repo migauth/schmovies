@@ -32,9 +32,9 @@
   animation: wiggleLogo 0.3s ease-in-out; // Animation definition
   
   &:hover {
-    // border: solid yellow;
-    width: 550px;
-    height: auto;
+    border: solid yellow;
+    // width: 550px;
+    // height: auto;
     border-radius: 5px;
     box-shadow: inset;
   }
