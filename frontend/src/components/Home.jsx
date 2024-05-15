@@ -1,7 +1,7 @@
 import React from "react";
 import MovieList from "./MovieList";
 
-function Home({ handlePageChange }) {
+function Home({ handlePageChange, setFavouriteMovies, favouriteMovies }) {
 
   const handleClick = () => {
     handlePageChange("quiz");
@@ -15,7 +15,7 @@ function Home({ handlePageChange }) {
         </button>
       </div>
       <div className="home">
-        <MovieList />
+        <MovieList setFavouriteMovies={setFavouriteMovies}/>
       </div>
       <small>©</small>
     </>

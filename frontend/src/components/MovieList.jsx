@@ -7,11 +7,9 @@ const useContentFadeIn = () => {
   const [showContent, setShowContent] = useState(false);
 }
 
-function MovieList() {
+function MovieList({ setFavouriteMovies, favouriteMovies }) {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
-
-
   
 
   useEffect(() => {
@@ -36,6 +34,16 @@ function MovieList() {
   const closePopup = () => {
     setSelectedMovie(null);
   };
+
+  const addToFavourites = (movie) => {
+    setFavouriteMovies(prevFavourites =>
+      prevFavourites.includes(movie)
+        ? prevFavourites.filter(m => m!== movie) // removes from favourites
+          : [...prevFavourites, movie]
+    );
+  };
+
+  console.log("Favourites:", favouriteMovies);
 
   // filter movies that have a release_year of 2024
   const movies2024 = movies.filter((movie) => movie.release_year === "2024");
@@ -63,6 +71,7 @@ function MovieList() {
                 <p>Genre: {movie.genre}</p>
                 <p>Release Year: {movie.release_year}</p>
               </div>
+              <button onClick={() => addToFavourites(movie)}>❤️</button>
             </div>
           ))}
         </div>
@@ -86,6 +95,7 @@ function MovieList() {
                 <p>Genre: {movie.genre}</p>
                 <p>Release Year: {movie.release_year}</p>
               </div>
+              <button onClick={() => addToFavourites(movie)}>❤️</button>
             </div>
           ))}
         </div>

@@ -1,15 +1,19 @@
 import React from 'react';
 // import scss
 
-function Favourites() { // needs to receive movie data from users favourites
+const Favourites = ({ favouriteMovies }) => {
     return (
-        <div className="favourites">
-            <div className="favourites__content">
-              <h1>Favourites</h1>
-            {/* Add list of favourite movies */}
-            </div>
-        </div>
+      <div>
+        <h2>Favourites</h2>
+        {favouriteMovies.map(movie => (
+          <div key={movie.id}>
+            <h3>{movie.title}</h3>
+            <p>Genre: {movie.genre}</p>
+            <p>Release Year: {movie.release_year}</p>
+          </div>
+        ))}
+      </div>
     );
-}
+  };
 
 export default Favourites;

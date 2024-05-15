@@ -12,6 +12,7 @@ import Favourites from "./components/Favourites";
 function App() {
   const [currentPage, setCurrentPage] = useState("home"); // State to control which page to display
   const [currentUser, setCurrentUser] = useState(null);
+  const [favouriteMovies, setFavouriteMovies] = useState([]);
 
   const showContent = useContentFadeIn(); // Using the custom hook
 
@@ -31,11 +32,11 @@ const handleLogout = () => {
 
   const pages = {
     about: <About />,
-    home: <Home handlePageChange={handlePageChange} />,
+    home: <Home handlePageChange={handlePageChange} setFavouriteMovies={setFavouriteMovies} favouriteMovies={favouriteMovies} />,
     login: <Login onLoginSuccess={handleLogin} />,
     register: <Register />,
     quiz: <Quiz />,
-    favourites: <Favourites />,
+    favourites: <Favourites favouriteMovies={favouriteMovies}/>,
   };
 
   return (
