@@ -1,8 +1,14 @@
+from rest_framework.permissions import AllowAny
+from rest_framework.decorators import api_view, permission_classes
+
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.forms import UserCreationForm
 
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
 def custom_register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
