@@ -1,39 +1,52 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
-function getCookie(name) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(';').shift();
-}
 
 const Login = ({ onLoginSuccess }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [csrfToken, setCsrfToken] = useState('');
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const csrfTokenElement = document.getElementById('csrf_token');
+    if (csrfTokenElement) {
+      setCsrfToken(csrfTokenElement.value);
+    } else {
+      console.error('CSRF token element not found');
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    setError(null);
 
     try {
-      const csrftoken = getCookie('csrftoken');
+      if (!csrfToken) {
+        throw new Error('CSRF token is missing');
+      }
+      console.log('CSRF Token:', csrfToken);
 
       const response = await axios.post(
-        '/accounts/login/',
+        'http://localhost:3000/accounts/login/',
         { username, password },
         {
           headers: {
-            'X-CSRFToken': csrftoken,
+            'X-CSRFToken': csrfToken,
           },
         }
       );
 
+      console.log('Response:', response);
+
       if (response.status === 200) {
         onLoginSuccess(response.data);
+      } else {
+        setError('Unexpected response status: ' + response.status);
       }
     } catch (err) {
+      console.error('Login error:', err);
       setError("Your username and password didn't match. Please try again.");
     } finally {
       setIsLoading(false);
@@ -62,7 +75,9 @@ const Login = ({ onLoginSuccess }) => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit" disabled={isLoading}>{isLoading ? 'Logging in...' : 'Login'}</button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? 'Logging in...' : 'Login'}
+        </button>
       </form>
       <p>
         <a href="/accounts/password-reset/">Lost password?</a>
