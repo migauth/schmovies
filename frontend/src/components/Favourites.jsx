@@ -1,7 +1,9 @@
 import React from 'react';
 import "../styles/Favourites.scss"; // Import the SCSS file
 
-const Favourites = ({ favouriteMovies }) => {
+const Favourites = ({ favouriteMovies, handleMovieClick }) => {
+
+    console.log("favouriteMovies:", favouriteMovies);
     return (
       <div className="favourites-container">
         <div className="heading-container">
@@ -9,7 +11,10 @@ const Favourites = ({ favouriteMovies }) => {
         </div>
         <div className="favourites-list">
           {favouriteMovies.map(movie => (
-            <div key={movie.id} className="favourites-list-item">
+            <div key={movie.id}
+              className="favourites-list-item"
+              onClick={() => handleMovieClick(movie)}
+              >
               <h3>{movie.title}</h3>
               <img src={movie.poster_url} alt={movie.title} className="favourites-image" />
               <p>Genre: {movie.genre}</p>

@@ -5,17 +5,14 @@ import PopularMovies from "./PopularMovies";
 import "../styles/MovieList.scss";
 import NewReleases from "./NewReleases";
 
-const MovieList = ({ setFavouriteMovies, favouriteMovies }) => {
+const MovieList = ({ setFavouriteMovies, favouriteMovies = [] }) => {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
-
 
   useEffect(() => {
     async function fetchMovies() {
       try {
-        const response = await axios.get(
-          "http://127.0.0.1:8000/api/movies/movies/"
-        );
+        const response = await axios.get("http://127.0.0.1:8000/api/movies/movies/");
         setMovies(response.data);
         console.log("Fetched movies:", response.data);
       } catch (error) {
@@ -34,33 +31,47 @@ const MovieList = ({ setFavouriteMovies, favouriteMovies }) => {
   };
 
   const addToFavourites = (movie) => {
-    setFavouriteMovies(prevFavourites =>
-      prevFavourites.includes(movie)
-       ? prevFavourites.filter(m => m!== movie) // Removes from favourites
-        : [...prevFavourites, movie]
-    );
+    console.log("Attempting to add to favourites:", movie.title);
+    setFavouriteMovies(prevFavourites => {
+      if (!prevFavourites.some(favMovie => favMovie.id === movie.id)) {
+        const updatedFavourites = [...prevFavourites, movie];
+        console.log("Updated favourites list:", updatedFavourites);
+        return updatedFavourites;
+      }
+      return prevFavourites;
+    });
   };
+
+  const removeFromFavourites = (movieToRemove) => {
+    console.log("Attempting to remove from favourites:", movieToRemove.title);
+    setFavouriteMovies(prevFavourites => {
+      const updatedFavourites = prevFavourites.filter(movie => movie.id !== movieToRemove.id);
+      console.log("Updated favourites list after removal:", updatedFavourites);
+      return updatedFavourites;
+    });
+  };
+
+  console.log("MovieList rendered with favouriteMovies:", favouriteMovies);
+
 
   return (
     <div className="movie-list">
-      {/* New Releases */}
       <NewReleases
         movies={movies}
         handleMovieClick={handleMovieClick}
         addToFavourites={addToFavourites}
+        removeFromFavourites={removeFromFavourites}
         favouriteMovies={favouriteMovies}
+        setFavouriteMovies={setFavouriteMovies}
       />
-
-      {/* Popular Movies */}
       <PopularMovies
         movies={movies}
         handleMovieClick={handleMovieClick}
         addToFavourites={addToFavourites}
+        removeFromFavourites={removeFromFavourites}
         favouriteMovies={favouriteMovies}
-
+        setFavouriteMovies={setFavouriteMovies}
       />
-
-      {/* Render the backdrop and the pop-up if a movie is selected */}
       {selectedMovie && (
         <>
           <div className="backdrop" onClick={closePopup}></div>
