@@ -28,6 +28,7 @@ function MovieList({ setFavouriteMovies, favouriteMovies }) {
   }, []);
 
   const handleMovieClick = (movie) => {
+    // need to add if statement? - if click event is on the favourites button do not open
     setSelectedMovie(movie);
   };
 
@@ -43,7 +44,6 @@ function MovieList({ setFavouriteMovies, favouriteMovies }) {
     );
   };
 
-  console.log("Favourites:", favouriteMovies);
 
   // filter movies that have a release_year of 2024
   const movies2024 = movies.filter((movie) => movie.release_year === "2024");
@@ -71,7 +71,7 @@ function MovieList({ setFavouriteMovies, favouriteMovies }) {
                 <p>Genre: {movie.genre}</p>
                 <p>Release Year: {movie.release_year}</p>
               </div>
-              <button onClick={() => addToFavourites(movie)}>❤️</button>
+              <button className="favourites_btn" onClick={() => addToFavourites(movie)}>❤️</button>
             </div>
           ))}
         </div>
@@ -95,7 +95,7 @@ function MovieList({ setFavouriteMovies, favouriteMovies }) {
                 <p>Genre: {movie.genre}</p>
                 <p>Release Year: {movie.release_year}</p>
               </div>
-              <button onClick={() => addToFavourites(movie)}>❤️</button>
+              <button className="favourites_btn" onClick={() => addToFavourites(movie)}>❤️</button>
             </div>
           ))}
         </div>

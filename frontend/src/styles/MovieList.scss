@@ -79,7 +79,16 @@
 
   &:hover {
     border: solid yellow;
+  }
+}
 
+.favourites_btn {
+  background-color: #000000;
+  border: #000000;
+
+  &:hover {
+    background-color: yellow;
+    cursor: pointer;
   }
 }
 
