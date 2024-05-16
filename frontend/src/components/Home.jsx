@@ -16,6 +16,7 @@ function Home({ handlePageChange, setFavouriteMovies, favouriteMovies, handleMov
       </div>
       <div className="home">
         <MovieList setFavouriteMovies={setFavouriteMovies} handleMovieClick={handleMovieClick} selectedMovie={selectedMovie} setSelectedMovie={setSelectedMovie} closePopup={closePopup} favouriteMovies={favouriteMovies} />
+        console.log("Before passing to MovieList:", favouriteMovies);
       </div>
       <small>©</small>
     </>

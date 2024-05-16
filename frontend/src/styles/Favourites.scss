@@ -27,7 +27,8 @@
 
 .favourites-list {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   padding: 20px;
   width: auto;
 }
