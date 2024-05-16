@@ -7,9 +7,8 @@ const useContentFadeIn = () => {
   const [showContent, setShowContent] = useState(false);
 }
 
-function MovieList({ setFavouriteMovies, favouriteMovies }) {
+function MovieList({ setFavouriteMovies, favouriteMovies, handleMovieClick, selectedMovie, setSelectedMovie, closePopup }) {
   const [movies, setMovies] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState(null);
   
 
   useEffect(() => {
@@ -27,14 +26,7 @@ function MovieList({ setFavouriteMovies, favouriteMovies }) {
     fetchMovies();
   }, []);
 
-  const handleMovieClick = (movie) => {
-    // need to add if statement? - if click event is on the favourites button do not open
-    setSelectedMovie(movie);
-  };
 
-  const closePopup = () => {
-    setSelectedMovie(null);
-  };
 
   const addToFavourites = (movie) => {
     setFavouriteMovies(prevFavourites =>
