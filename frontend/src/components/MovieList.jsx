@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import MoviePopup from "./MoviePopup";
+import PopularMovies from "./PopularMovies";
 import "../styles/MovieList.scss";
+import NewReleases from "./NewReleases";
 
-const useContentFadeIn = () => {
-  const [showContent, setShowContent] = useState(false);
-}
-
-function MovieList({ setFavouriteMovies, favouriteMovies }) {
+const MovieList = ({ setFavouriteMovies, favouriteMovies }) => {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
-  
 
   useEffect(() => {
     async function fetchMovies() {
@@ -19,7 +16,7 @@ function MovieList({ setFavouriteMovies, favouriteMovies }) {
           "http://127.0.0.1:8000/api/movies/movies/"
         );
         setMovies(response.data);
-        console.log("Fetched movies:", response.data); // Log fetched movies
+        console.log("Fetched movies:", response.data);
       } catch (error) {
         console.error("Error fetching movies:", error);
       }
@@ -28,7 +25,6 @@ function MovieList({ setFavouriteMovies, favouriteMovies }) {
   }, []);
 
   const handleMovieClick = (movie) => {
-    // need to add if statement? - if click event is on the favourites button do not open
     setSelectedMovie(movie);
   };
 
@@ -37,82 +33,38 @@ function MovieList({ setFavouriteMovies, favouriteMovies }) {
   };
 
   const addToFavourites = (movie) => {
-    setFavouriteMovies(prevFavourites =>
+    setFavouriteMovies((prevFavourites) =>
       prevFavourites.includes(movie)
-        ? prevFavourites.filter(m => m!== movie) // removes from favourites
-          : [...prevFavourites, movie]
+        ? prevFavourites.filter((m) => m !== movie)
+        : [...prevFavourites, movie]
     );
   };
 
-
-  // filter movies that have a release_year of 2024
-  const movies2024 = movies.filter((movie) => movie.release_year === "2024");
-  console.log("2024 movies:", movies2024);
-    // randomize popular movies
-    const shuffledMovies = [...movies].sort(() => Math.random() - 0.5);
   return (
     <div className="movie-list">
-
       {/* New Releases */}
-      <div className="movie-category">
-        <div className="movie-category-title">
-          <h2>New Releases</h2>
-        </div>
-        <div className="movie-list-container">
-          {movies2024.map((movie) => (
-            <div
-              key={movie.id}
-              className="movie-list__item"
-              onClick={() => handleMovieClick(movie)}
-            >
-              <img src={movie.poster_url} alt={movie.title} />
-              <div className="movie-details">
-                <h2>{movie.title}</h2>
-                <p>Genre: {movie.genre}</p>
-                <p>Release Year: {movie.release_year}</p>
-              </div>
-              <button className="favourites_btn" onClick={() => addToFavourites(movie)}>❤️</button>
-            </div>
-          ))}
-        </div>
-      </div>
+      <NewReleases
+        movies={movies}
+        handleMovieClick={handleMovieClick}
+        addToFavourites={addToFavourites}
+      />
 
       {/* Popular Movies */}
-      <div className="movie-category">
-        <div className="movie-category-title">
-          <h2>Popular Movies</h2>
-        </div>
-        <div className="movie-list-container">
-          {shuffledMovies.map((movie) => (
-            <div
-              key={movie.id}
-              className="movie-list__item"
-              onClick={() => handleMovieClick(movie)}
-            >
-              <img src={movie.poster_url} alt={movie.title} />
-              <div className="movie-details">
-                <h2>{movie.title}</h2>
-                <p>Genre: {movie.genre}</p>
-                <p>Release Year: {movie.release_year}</p>
-              </div>
-              <button className="favourites_btn" onClick={() => addToFavourites(movie)}>❤️</button>
-            </div>
-          ))}
-        </div>
-      </div>
+      <PopularMovies
+        movies={movies}
+        handleMovieClick={handleMovieClick}
+        addToFavourites={addToFavourites}
+      />
 
       {/* Render the backdrop and the pop-up if a movie is selected */}
       {selectedMovie && (
         <>
           <div className="backdrop" onClick={closePopup}></div>
-          <MoviePopup
-            movie={selectedMovie}
-            onClose={closePopup} // Pass the close function to the pop-up
-          />
+          <MoviePopup movie={selectedMovie} onClose={closePopup} />
         </>
       )}
     </div>
   );
-}
+};
 
 export default MovieList;

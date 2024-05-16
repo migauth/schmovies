@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Limelight&display=swap');
+
+.favourites-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  width: 90%;
+  padding: 20px;
+  overflow: scroll;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.heading-container {
+  text-align: center;
+}
+
+.favourites-title {
+  margin-bottom: 20px;
+  text-align: center;
+  flex-wrap: nowrap;
+  width: 100%;
+  font-size: 1.75em;
+  font-family: "Limelight", sans-serif;
+}
+
+.favourites-list {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  width: auto;
+}
+
+.favourites-list-item {
+  flex: 0 0 200px;
+  height: 500px;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  width: 200px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.favourites-list-item:hover {
+  border: solid yellow;
+}
+
+.favourites-details {
+  margin-top: 10px;
+}
+
+.favourites-btn {
+  background-color: #000000;
+  border: #000000;
+
+  &:hover {
+    background-color: yellow;
+    cursor: pointer;
+  }
+}
+
+.favourites-image {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
