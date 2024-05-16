@@ -15,7 +15,7 @@ function Home({ handlePageChange, setFavouriteMovies, favouriteMovies, handleMov
         </button>
       </div>
       <div className="home">
-        <MovieList setFavouriteMovies={setFavouriteMovies} handleMovieClick={handleMovieClick} selectedMovie={selectedMovie} setSelectedMovie={setSelectedMovie} closePopup={closePopup}/>
+        <MovieList setFavouriteMovies={setFavouriteMovies} handleMovieClick={handleMovieClick} selectedMovie={selectedMovie} setSelectedMovie={setSelectedMovie} closePopup={closePopup} favouriteMovies={favouriteMovies} />
       </div>
       <small>©</small>
     </>

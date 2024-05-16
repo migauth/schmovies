@@ -15,6 +15,8 @@ function App() {
   const [favouriteMovies, setFavouriteMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
 
+  console.log("Initial favouriteMovies:", favouriteMovies);
+
 
   const showContent = useContentFadeIn(); // Using the custom hook
 

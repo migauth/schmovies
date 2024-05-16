@@ -9,6 +9,7 @@ const MovieList = ({ setFavouriteMovies, favouriteMovies }) => {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
 
+
   useEffect(() => {
     async function fetchMovies() {
       try {
@@ -33,9 +34,9 @@ const MovieList = ({ setFavouriteMovies, favouriteMovies }) => {
   };
 
   const addToFavourites = (movie) => {
-    setFavouriteMovies((prevFavourites) =>
+    setFavouriteMovies(prevFavourites =>
       prevFavourites.includes(movie)
-        ? prevFavourites.filter((m) => m !== movie)
+       ? prevFavourites.filter(m => m!== movie) // Removes from favourites
         : [...prevFavourites, movie]
     );
   };
@@ -47,6 +48,7 @@ const MovieList = ({ setFavouriteMovies, favouriteMovies }) => {
         movies={movies}
         handleMovieClick={handleMovieClick}
         addToFavourites={addToFavourites}
+        favouriteMovies={favouriteMovies}
       />
 
       {/* Popular Movies */}
@@ -54,6 +56,8 @@ const MovieList = ({ setFavouriteMovies, favouriteMovies }) => {
         movies={movies}
         handleMovieClick={handleMovieClick}
         addToFavourites={addToFavourites}
+        favouriteMovies={favouriteMovies}
+
       />
 
       {/* Render the backdrop and the pop-up if a movie is selected */}
