@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Limelight&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Limelight&display=swap");
 
 .App-header {
   text-align: center;
@@ -9,6 +8,15 @@
   }
 }
 
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black */
+}
+
 .movie-list-container {
   display: flex;
   flex-direction: row;
@@ -16,10 +24,9 @@
   margin: auto;
   width: 90%;
   padding: 20px;
-  overflow:scroll;
+  overflow: scroll;
   overflow-x: auto; /* Add horizontal scrollbar */
   overflow-y: hidden; /* Hide vertical scrollbar initially */
-
 }
 
 .heading-container {
@@ -40,7 +47,6 @@
   flex-direction: column; /* Display items vertically */
   padding: 20px;
   width: auto;
-  
 }
 
 .movie-list-container {
@@ -67,14 +73,18 @@
 }
 
 .movie-list__item {
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  justify-content: space-between; /* Distribute items evenly */
+  position: relative; /* Ensure relative positioning */
   flex: 0 0 200px;
-  height: 500px; /* Specify fixed height for each movie item */
+  height: 550px;
   margin: 10px;
   padding: 10px;
   border-radius: 10px;
   border: 1px solid #ddd;
   width: 200px;
-  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  box-sizing: border-box;
   cursor: pointer;
 
   &:hover {
@@ -82,18 +92,12 @@
   }
 }
 
-.favourites_btn {
-  background-color: #000000;
-  border: #000000;
-
-  &:hover {
-    background-color: yellow;
-    cursor: pointer;
-  }
+.movie-details {
+  margin-top: auto; /* Move the movie details to the bottom */
 }
 
-.movie-details {
-  margin-top: 10px;
+.movie-title {
+  font-size: 1.5em;
 }
 
 img {
@@ -102,13 +106,17 @@ img {
   border-radius: 5px;
 }
 
-.backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black */
+.favourites_btn {
+  background-color: #fd220000;
+  border: none;
+  cursor: pointer;
+  border-radius: 50px;
+  font-family: "Press Start 2P";
+  bottom: 10px;
+  left: 10px; /* Adjust left position as needed */
+
+  &:hover {
+    background-color: yellow;
+    cursor: pointer;
+  }
 }
-
-
