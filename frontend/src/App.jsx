@@ -13,6 +13,8 @@ function App() {
   const [currentPage, setCurrentPage] = useState("home"); // State to control which page to display
   const [currentUser, setCurrentUser] = useState(null);
   const [favouriteMovies, setFavouriteMovies] = useState([]);
+  const [selectedMovie, setSelectedMovie] = useState(null);
+
 
   const showContent = useContentFadeIn(); // Using the custom hook
 
@@ -20,6 +22,14 @@ function App() {
   setCurrentPage(page); // Set currentPage to the selected page
 };
 
+const handleMovieClick = (movie) => {
+  // need to add if statement? - if click event is on the favourites button do not open
+  setSelectedMovie(movie);
+};
+
+const closePopup = () => {
+  setSelectedMovie(null);
+};
 
 const handleLogin = (user) => {
   setCurrentUser(user);
@@ -32,11 +42,11 @@ const handleLogout = () => {
 
   const pages = {
     about: <About />,
-    home: <Home handlePageChange={handlePageChange} setFavouriteMovies={setFavouriteMovies} favouriteMovies={favouriteMovies} />,
+    home: <Home handlePageChange={handlePageChange} setFavouriteMovies={setFavouriteMovies} favouriteMovies={favouriteMovies} handleMovieClick={handleMovieClick} setSelectedMovie={setSelectedMovie} selectedMovie={selectedMovie} closePopup={closePopup}/>,
     login: <Login onLoginSuccess={handleLogin} />,
     register: <Register />,
     quiz: <Quiz />,
-    favourites: <Favourites favouriteMovies={favouriteMovies}/>,
+    favourites: <Favourites favouriteMovies={favouriteMovies} selectedMovie={selectedMovie} handleMovieClick={handleMovieClick} closePopup={closePopup}/>,
   };
 
   return (
