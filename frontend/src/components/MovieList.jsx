@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import MoviePopup from "./MoviePopup";
 import PopularMovies from "./PopularMovies";
-import "../styles/MovieList.scss";
 import NewReleases from "./NewReleases";
+import "../styles/MovieList.scss";
 
 const MovieList = ({ setFavouriteMovies, handleMovieClick, addToFavourites, removeFromFavourites, selectedMovie, closePopup, favouriteMovies = [] }) => {
   const [movies, setMovies] = useState([]);

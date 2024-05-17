@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Limelight&display=swap');
+$borderColour: #ddddddab;
 
 .favourites-container {
   display: flex;
@@ -34,15 +35,23 @@
 }
 
 .favourites-list-item {
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  justify-content: space-between; /* Distribute items evenly */
+  position: relative; /* Ensure relative positioning */
   flex: 0 0 200px;
-  height: 500px;
+  height: 550px;
   margin: 10px;
   padding: 10px;
   border-radius: 10px;
-  border: 1px solid #ddd;
+  border: solid $borderColour;
   width: 200px;
   box-sizing: border-box;
   cursor: pointer;
+
+  &:hover {
+    border: solid yellow;
+  }
 }
 
 .favourites-list-item:hover {
@@ -53,17 +62,24 @@
   margin-top: 10px;
 }
 
+.favourites-item-title {
+  text-align: center;
+}
+
+
 .remove-favourites_btn {
-  background-color: #ff0000;
-  color: black;
-  border-color: yellow;
-  padding: 0.25rem 0.75rem;
+  background-color: #ff2200;
+  border: none;
   cursor: pointer;
-  border-radius: 5px;
-  
+  border-radius: 50px;
+  width: 30px;
+  height: 30px;
+  bottom: 10px;
+  left: 10px; /* Adjust left position as needed */
+
   &:hover {
     background-color: yellow;
-    color: black;
+    cursor: pointer;
   }
 }
 

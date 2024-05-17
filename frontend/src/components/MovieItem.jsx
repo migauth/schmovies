@@ -1,4 +1,8 @@
 import React from "react";
+import { faHeart as faRegularHeart } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import '../styles/MovieList.scss'; // Ensure this path is correct
+
 
 const MovieItem = ({ movie, addToFavourites, removeFromFavourites, favouriteMovies = [], handleMovieClick }) => {
    // Define the maximum length for the title before shrinking the font
@@ -34,7 +38,7 @@ const MovieItem = ({ movie, addToFavourites, removeFromFavourites, favouriteMovi
           style={{ backgroundColor: isFavourite ? "red" : "yellow" }}
           onClick={(event) => handleFavouritesClick(event)}
           >
-          ❤️
+          <FontAwesomeIcon icon={faRegularHeart} />
         </button>
       </div>
     </div>

@@ -1,6 +1,9 @@
 import React from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import "../styles/Favourites.scss"; // Import the SCSS file
 import MoviePopup from "./MoviePopup";
+
 
 const Favourites = ({ favouriteMovies, selectedMovie, closePopup, handleMovieClick, removeFromFavourites }) => {
     console.log("favouriteMovies:", favouriteMovies);
@@ -17,8 +20,8 @@ const Favourites = ({ favouriteMovies, selectedMovie, closePopup, handleMovieCli
               className="favourites-list-item"
               onClick={() => handleMovieClick(movie)}
             >
-              <h3>{movie.title}</h3>
               <img src={movie.poster_url} alt={movie.title} className="favourites-image" />
+              <h3 className="favourites-item-title">{movie.title}</h3>
               <p>Genre: {movie.genre}</p>
               <p>Release Year: {movie.release_year}</p>
               <button
@@ -28,7 +31,7 @@ const Favourites = ({ favouriteMovies, selectedMovie, closePopup, handleMovieCli
                   removeFromFavourites(movie);
                 }}
               >
-                Remove From Favourites
+                <FontAwesomeIcon icon={faTrashAlt} />
               </button>
             </div>
           ))}

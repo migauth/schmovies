@@ -72,6 +72,8 @@
   background: #000000; /* Color of the scrollbar track */
 }
 
+$borderColour: #ddddddab;
+
 .movie-list__item {
   display: flex;
   flex-direction: column; /* Stack elements vertically */
@@ -82,13 +84,13 @@
   margin: 10px;
   padding: 10px;
   border-radius: 10px;
-  border: 1px solid #ddd;
+  border: solid $borderColour;
   width: 200px;
   box-sizing: border-box;
   cursor: pointer;
 
   &:hover {
-    border: 1px solid yellow;
+    border: solid yellow;
   }
 }
 
@@ -114,9 +116,11 @@ img {
   font-family: "Press Start 2P";
   bottom: 10px;
   left: 10px; /* Adjust left position as needed */
+  width: 30px;
+  height: 30px;
 
   &:hover {
-    background-color: yellow;
+    background-color: rgb(255, 145, 0);
     cursor: pointer;
   }
 }
