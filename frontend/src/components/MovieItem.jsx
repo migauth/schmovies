@@ -12,12 +12,12 @@ const MovieItem = ({ movie, addToFavourites, removeFromFavourites, favouriteMovi
 
   const isFavourite = favouriteMovies.some(favMovie => favMovie.id === movie.id);
 
-  const handleFavouritesClick = () => {
+  const handleFavouritesClick = (event) => {
+    event.stopPropagation(); // Prevents the click event from bubbling up to parent elements
+
     if (isFavourite) {
-      console.log("Removing from favourites:", movie.title);
       removeFromFavourites(movie);
     } else {
-      console.log("Adding to favourites:", movie.title);
       addToFavourites(movie);
     }
   };
@@ -32,8 +32,8 @@ const MovieItem = ({ movie, addToFavourites, removeFromFavourites, favouriteMovi
         <button
           className="favourites_btn"
           style={{ backgroundColor: isFavourite ? "red" : "yellow" }}
-          onClick={handleFavouritesClick}
-        >
+          onClick={(event) => handleFavouritesClick(event)}
+          >
           ❤️
         </button>
       </div>

@@ -21,10 +21,9 @@ function App() {
     setCurrentPage(page); // Set currentPage to the selected page
   };
 
-  const handleMovieClick = (movie) => {
-    // need to add if statement? - if click event is on the favourites button do not open
-    setSelectedMovie(movie);
-  };
+const handleMovieClick = (movie) => {
+  setSelectedMovie(movie);
+};
 
   const closePopup = () => {
     setSelectedMovie(null);
@@ -39,6 +38,30 @@ function App() {
     setCurrentUser(null);
   };
 
+const addToFavourites = (movie) => {
+  console.log("Attempting to add to favourites:", movie.title);
+  setFavouriteMovies(prevFavourites => {
+    if (!prevFavourites.some(favMovie => favMovie.id === movie.id)) {
+      const updatedFavourites = [...prevFavourites, movie];
+      console.log("Updated favourites list:", updatedFavourites);
+      return updatedFavourites;
+    }
+    return prevFavourites;
+  });
+};
+
+const removeFromFavourites = (movieToRemove) => {
+  console.log("Attempting to remove from favourites:", movieToRemove.title);
+  setFavouriteMovies((prevFavourites) => {
+    const updatedFavourites = prevFavourites.filter(
+      (movie) => movie.id !== movieToRemove.id
+    );
+    console.log("Updated favourites list after removal:", updatedFavourites);
+    return updatedFavourites;
+  });
+};
+
+
   const pages = {
     about: <About />,
     home: (
@@ -50,6 +73,8 @@ function App() {
         setSelectedMovie={setSelectedMovie}
         selectedMovie={selectedMovie}
         closePopup={closePopup}
+        addToFavourites={addToFavourites}
+        removeFromFavourites={removeFromFavourites}
       />
     ),
     login: <Login onLoginSuccess={handleLogin} />,
@@ -61,7 +86,7 @@ function App() {
         selectedMovie={selectedMovie}
         handleMovieClick={handleMovieClick}
         closePopup={closePopup}
-        setSelectedMovie={setSelectedMovie}
+        removeFromFavourites={removeFromFavourites}
       />
     ),
   };

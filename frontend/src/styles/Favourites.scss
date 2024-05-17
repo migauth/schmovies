@@ -53,13 +53,17 @@
   margin-top: 10px;
 }
 
-.favourites-btn {
-  background-color: #000000;
-  border: #000000;
-
+.remove-favourites_btn {
+  background-color: #ff0000;
+  color: black;
+  border-color: yellow;
+  padding: 0.25rem 0.75rem;
+  cursor: pointer;
+  border-radius: 5px;
+  
   &:hover {
     background-color: yellow;
-    cursor: pointer;
+    color: black;
   }
 }
 

@@ -1,7 +1,8 @@
 import React from "react";
 import MovieList from "./MovieList";
 
-function Home({ handlePageChange, setFavouriteMovies, favouriteMovies, handleMovieClick, selectedMovie, setSelectedMovie, closePopup }) {
+function Home({ handlePageChange, setFavouriteMovies, favouriteMovies, handleMovieClick, selectedMovie, setSelectedMovie, closePopup, addToFavourites, removeFromFavourites }) {
+
   const handleClick = () => {
     handlePageChange("quiz");
   };
@@ -21,6 +22,8 @@ function Home({ handlePageChange, setFavouriteMovies, favouriteMovies, handleMov
           setSelectedMovie={setSelectedMovie}
           closePopup={closePopup}
           favouriteMovies={favouriteMovies}
+          addToFavourites={addToFavourites}
+          removeFromFavourites={removeFromFavourites}
         />
       </div>
       <small>©</small>
