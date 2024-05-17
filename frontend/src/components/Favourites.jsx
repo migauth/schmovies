@@ -2,7 +2,15 @@ import React from 'react';
 import "../styles/Favourites.scss"; // Import the SCSS file
 import MoviePopup from './MoviePopup';
 
-const Favourites = ({ favouriteMovies, selectedMovie, closePopup, handleMovieClick }) => {
+
+
+const Favourites = ({ favouriteMovies, selectedMovie, closePopup, handleMovieClick, removeFromFavourites }) => {
+
+
+    // const handleRemoveFromFavourites = (movie) => {
+    //   event.stopPropagation(); // Prevents the click event from bubbling up to parent elements
+    //     removeFromFavourites(movie);
+    // };
 
     console.log("favouriteMovies:", favouriteMovies);
     return (
@@ -21,18 +29,23 @@ const Favourites = ({ favouriteMovies, selectedMovie, closePopup, handleMovieCli
               <img src={movie.poster_url} alt={movie.title} className="favourites-image" />
               <p>Genre: {movie.genre}</p>
               <p>Release Year: {movie.release_year}</p>
+              <button
+                className="remove-favourites_btn"
+                onClick={() => removeFromFavourites(movie)}> {/* Pass the movie object here */}
+                Remove From Favourites
+              </button>
             </div>
           ))}
-                          {/* Render the backdrop and the pop-up if a movie is selected */}
-                          {selectedMovie && (
-                    <>
-                        <div className="backdrop" onClick={closePopup}></div>
-                        <MoviePopup
-                            movie={selectedMovie}
-                            onClose={closePopup} // Pass the close function to the pop-up
-                        />
-                    </>
-                )}
+            {/* Render the backdrop and the pop-up if a movie is selected */}
+            {selectedMovie && (
+              <>
+                <div className="backdrop" onClick={closePopup}></div>
+                <MoviePopup
+                  movie={selectedMovie}
+                  onClose={closePopup} // Pass the close function to the pop-up
+                />
+              </>
+            )}
         </div>
       </div>
     );

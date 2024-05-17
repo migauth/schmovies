@@ -5,9 +5,8 @@ import PopularMovies from "./PopularMovies";
 import "../styles/MovieList.scss";
 import NewReleases from "./NewReleases";
 
-const MovieList = ({ setFavouriteMovies, favouriteMovies = [] }) => {
+const MovieList = ({ setFavouriteMovies, handleMovieClick, addToFavourites, removeFromFavourites, selectedMovie, closePopup, favouriteMovies = [] }) => {
   const [movies, setMovies] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState(null);
 
   useEffect(() => {
     async function fetchMovies() {
@@ -22,37 +21,7 @@ const MovieList = ({ setFavouriteMovies, favouriteMovies = [] }) => {
     fetchMovies();
   }, []);
 
-  const handleMovieClick = (movie) => {
-    setSelectedMovie(movie);
-  };
-
-  const closePopup = () => {
-    setSelectedMovie(null);
-  };
-
-  const addToFavourites = (movie) => {
-    console.log("Attempting to add to favourites:", movie.title);
-    setFavouriteMovies(prevFavourites => {
-      if (!prevFavourites.some(favMovie => favMovie.id === movie.id)) {
-        const updatedFavourites = [...prevFavourites, movie];
-        console.log("Updated favourites list:", updatedFavourites);
-        return updatedFavourites;
-      }
-      return prevFavourites;
-    });
-  };
-
-  const removeFromFavourites = (movieToRemove) => {
-    console.log("Attempting to remove from favourites:", movieToRemove.title);
-    setFavouriteMovies(prevFavourites => {
-      const updatedFavourites = prevFavourites.filter(movie => movie.id !== movieToRemove.id);
-      console.log("Updated favourites list after removal:", updatedFavourites);
-      return updatedFavourites;
-    });
-  };
-
-  console.log("MovieList rendered with favouriteMovies:", favouriteMovies);
-
+  
 
   return (
     <div className="movie-list">

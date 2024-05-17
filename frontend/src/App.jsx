@@ -23,7 +23,6 @@ function App() {
 };
 
 const handleMovieClick = (movie) => {
-  // need to add if statement? - if click event is on the favourites button do not open
   setSelectedMovie(movie);
 };
 
@@ -40,13 +39,35 @@ const handleLogout = () => {
   setCurrentUser(null);
 };
 
+const addToFavourites = (movie) => {
+  console.log("Attempting to add to favourites:", movie.title);
+  setFavouriteMovies(prevFavourites => {
+    if (!prevFavourites.some(favMovie => favMovie.id === movie.id)) {
+      const updatedFavourites = [...prevFavourites, movie];
+      console.log("Updated favourites list:", updatedFavourites);
+      return updatedFavourites;
+    }
+    return prevFavourites;
+  });
+};
+
+const removeFromFavourites = (movieToRemove) => {
+  console.log("Attempting to remove from favourites:", movieToRemove.title);
+  setFavouriteMovies(prevFavourites => {
+    const updatedFavourites = prevFavourites.filter(movie => movie.id !== movieToRemove.id);
+    console.log("Updated favourites list after removal:", updatedFavourites);
+    return updatedFavourites;
+  });
+};
+
+
   const pages = {
     about: <About />,
-    home: <Home handlePageChange={handlePageChange} setFavouriteMovies={setFavouriteMovies} favouriteMovies={favouriteMovies} handleMovieClick={handleMovieClick} setSelectedMovie={setSelectedMovie} selectedMovie={selectedMovie} closePopup={closePopup}/>,
+    home: <Home handlePageChange={handlePageChange} setFavouriteMovies={setFavouriteMovies} favouriteMovies={favouriteMovies} handleMovieClick={handleMovieClick} setSelectedMovie={setSelectedMovie} selectedMovie={selectedMovie} closePopup={closePopup} addToFavourites={addToFavourites} removeFromFavourites={removeFromFavourites}/>,
     login: <Login onLoginSuccess={handleLogin} />,
     register: <Register />,
     quiz: <Quiz />,
-    favourites: <Favourites favouriteMovies={favouriteMovies} selectedMovie={selectedMovie} handleMovieClick={handleMovieClick} closePopup={closePopup}/>,
+    favourites: <Favourites favouriteMovies={favouriteMovies} selectedMovie={selectedMovie} handleMovieClick={handleMovieClick} closePopup={closePopup} removeFromFavourites={removeFromFavourites}/>,
   };
 
   return (
