@@ -31,7 +31,11 @@ const Favourites = ({ favouriteMovies, selectedMovie, closePopup, handleMovieCli
               <p>Release Year: {movie.release_year}</p>
               <button
                 className="remove-favourites_btn"
-                onClick={() => removeFromFavourites(movie)}> {/* Pass the movie object here */}
+                onClick={(event) => {
+                    event.stopPropagation(); // Stop the click event from propagating further
+                    removeFromFavourites(movie);
+                  }}
+                >
                 Remove From Favourites
               </button>
             </div>
