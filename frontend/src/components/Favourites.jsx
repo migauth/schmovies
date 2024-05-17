@@ -1,25 +1,17 @@
-import React from 'react';
+import React from "react";
 import "../styles/Favourites.scss"; // Import the SCSS file
-import MoviePopup from './MoviePopup';
-
-
+import MoviePopup from "./MoviePopup";
 
 const Favourites = ({ favouriteMovies, selectedMovie, closePopup, handleMovieClick, removeFromFavourites }) => {
-
-
-    // const handleRemoveFromFavourites = (movie) => {
-    //   event.stopPropagation(); // Prevents the click event from bubbling up to parent elements
-    //     removeFromFavourites(movie);
-    // };
-
     console.log("favouriteMovies:", favouriteMovies);
+
     return (
       <div className="favourites-container">
         <div className="heading-container">
           <h2 className="favourites-title">Favourites</h2>
         </div>
         <div className="favourites-list">
-          {favouriteMovies.map(movie => (
+          {favouriteMovies.map((movie) => (
             <div
               key={movie.id}
               className="favourites-list-item"
@@ -32,24 +24,24 @@ const Favourites = ({ favouriteMovies, selectedMovie, closePopup, handleMovieCli
               <button
                 className="remove-favourites_btn"
                 onClick={(event) => {
-                    event.stopPropagation(); // Stop the click event from propagating further
-                    removeFromFavourites(movie);
-                  }}
-                >
+                  event.stopPropagation(); // Stop the click event from propagating further
+                  removeFromFavourites(movie);
+                }}
+              >
                 Remove From Favourites
               </button>
             </div>
           ))}
-            {/* Render the backdrop and the pop-up if a movie is selected */}
-            {selectedMovie && (
-              <>
-                <div className="backdrop" onClick={closePopup}></div>
-                <MoviePopup
-                  movie={selectedMovie}
-                  onClose={closePopup} // Pass the close function to the pop-up
-                />
-              </>
-            )}
+          {/* Render the backdrop and the pop-up if a movie is selected */}
+          {selectedMovie && (
+            <>
+              <div className="backdrop" onClick={closePopup}></div>
+              <MoviePopup
+                movie={selectedMovie}
+                onClose={closePopup} // Pass the close function to the pop-up
+              />
+            </>
+          )}
         </div>
       </div>
     );

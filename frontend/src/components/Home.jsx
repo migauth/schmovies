@@ -6,7 +6,7 @@ function Home({ handlePageChange, setFavouriteMovies, favouriteMovies, handleMov
   const handleClick = () => {
     handlePageChange("quiz");
   };
-  
+
   return (
     <>
       <div className="heading-container">
@@ -15,7 +15,16 @@ function Home({ handlePageChange, setFavouriteMovies, favouriteMovies, handleMov
         </button>
       </div>
       <div className="home">
-        <MovieList setFavouriteMovies={setFavouriteMovies} handleMovieClick={handleMovieClick} selectedMovie={selectedMovie} setSelectedMovie={setSelectedMovie} closePopup={closePopup} favouriteMovies={favouriteMovies} addToFavourites={addToFavourites} removeFromFavourites={removeFromFavourites} />
+        <MovieList
+          setFavouriteMovies={setFavouriteMovies}
+          handleMovieClick={handleMovieClick}
+          selectedMovie={selectedMovie}
+          setSelectedMovie={setSelectedMovie}
+          closePopup={closePopup}
+          favouriteMovies={favouriteMovies}
+          addToFavourites={addToFavourites}
+          removeFromFavourites={removeFromFavourites}
+        />
       </div>
       <small>©</small>
     </>
