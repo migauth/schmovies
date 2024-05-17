@@ -20,6 +20,7 @@ function Home({ handlePageChange, setFavouriteMovies, favouriteMovies, handleMov
           selectedMovie={selectedMovie}
           setSelectedMovie={setSelectedMovie}
           closePopup={closePopup}
+          favouriteMovies={favouriteMovies}
         />
       </div>
       <small>©</small>

@@ -1,14 +1,26 @@
 import React from "react";
 
-const MovieItem = ({ movie, handleMovieClick, addToFavourites }) => {
-  // Define the maximum length for the title before shrinking the font
-  const maxLengthBeforeShrink = 30;
+const MovieItem = ({ movie, addToFavourites, removeFromFavourites, favouriteMovies = [], handleMovieClick }) => {
+   // Define the maximum length for the title before shrinking the font
+   const maxLengthBeforeShrink = 30;
 
-  // Conditionally apply a class based on the length of the title
-  const titleClass = movie.title.length > maxLengthBeforeShrink ? "shrink" : "";
+   // Conditionally apply a class based on the length of the title
+   const titleClass = movie.title.length > maxLengthBeforeShrink ? "shrink" : "";
+ 
+   // Split genres string into an array and get the first three genres
+   const genres = movie.genre.split(",").slice(0, 3).join(", ");
 
-  // Split genres string into an array and get the first three genres
-  const genres = movie.genre.split(",").slice(0, 3).join(", ");
+  const isFavourite = favouriteMovies.some(favMovie => favMovie.id === movie.id);
+
+  const handleFavouritesClick = () => {
+    if (isFavourite) {
+      console.log("Removing from favourites:", movie.title);
+      removeFromFavourites(movie);
+    } else {
+      console.log("Adding to favourites:", movie.title);
+      addToFavourites(movie);
+    }
+  };
 
   return (
     <div className="movie-list__item" onClick={() => handleMovieClick(movie)}>
@@ -19,7 +31,8 @@ const MovieItem = ({ movie, handleMovieClick, addToFavourites }) => {
         <p>Release Year: {movie.release_year}</p>
         <button
           className="favourites_btn"
-          onClick={() => addToFavourites(movie)}
+          style={{ backgroundColor: isFavourite ? "red" : "yellow" }}
+          onClick={handleFavouritesClick}
         >
           ❤️
         </button>

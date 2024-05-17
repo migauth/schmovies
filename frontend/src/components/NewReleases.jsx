@@ -1,7 +1,7 @@
 import React from "react";
 import MovieItem from "./MovieItem";
 
-const NewReleases = ({ movies, handleMovieClick, addToFavourites }) => {
+const NewReleases = ({ movies, handleMovieClick, addToFavourites, removeFromFavourites, favouriteMovies, setFavouriteMovies }) => {
   return (
     <div className="movie-category">
       <div className="movie-category-title">
@@ -14,6 +14,9 @@ const NewReleases = ({ movies, handleMovieClick, addToFavourites }) => {
             movie={movie}
             handleMovieClick={handleMovieClick}
             addToFavourites={addToFavourites}
+            removeFromFavourites={removeFromFavourites}
+            favouriteMovies={favouriteMovies}
+            setFavouriteMovies={setFavouriteMovies}
           />
         ))}
       </div>
