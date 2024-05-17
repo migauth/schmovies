@@ -75,6 +75,7 @@ const removeFromFavourites = (movieToRemove) => {
         closePopup={closePopup}
         addToFavourites={addToFavourites}
         removeFromFavourites={removeFromFavourites}
+        currentUser={currentUser}
       />
     ),
     login: <Login onLoginSuccess={handleLogin} />,

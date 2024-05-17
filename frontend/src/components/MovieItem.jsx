@@ -1,6 +1,14 @@
 import React from "react";
 
-const MovieItem = ({ movie, addToFavourites, removeFromFavourites, favouriteMovies = [], handleMovieClick }) => {
+const MovieItem = ({
+  movie,
+  addToFavourites,
+  removeFromFavourites,
+  favouriteMovies = [],
+  handleMovieClick,
+  currentUser,
+}) => {
+
    // Define the maximum length for the title before shrinking the font
    const maxLengthBeforeShrink = 30;
 
