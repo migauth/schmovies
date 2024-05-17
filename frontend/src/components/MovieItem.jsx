@@ -37,13 +37,15 @@ const MovieItem = ({
       <div className="movie-details">
         <p>Genre: {genres}</p>
         <p>Release Year: {movie.release_year}</p>
-        <button
-          className="favourites_btn"
-          style={{ backgroundColor: isFavourite ? "red" : "yellow" }}
-          onClick={(event) => handleFavouritesClick(event)}
-          >
-          ❤️
-        </button>
+        {currentUser && (
+          <button
+            className="favourites_btn"
+            style={{ backgroundColor: isFavourite ? "red" : "yellow" }}
+            onClick={(event) => handleFavouritesClick(event)}
+            >
+            ❤️
+          </button>
+        )}
       </div>
     </div>
   );

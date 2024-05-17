@@ -7,9 +7,10 @@ const NewReleases = ({
   addToFavourites,
   removeFromFavourites,
   favouriteMovies,
-  setFavouriteMovies
+  setFavouriteMovies,
+  currentUser
 }) => {
-  
+
   return (
     <div className="movie-category">
       <div className="movie-category-title">
@@ -25,6 +26,7 @@ const NewReleases = ({
             removeFromFavourites={removeFromFavourites}
             favouriteMovies={favouriteMovies}
             setFavouriteMovies={setFavouriteMovies}
+            currentUser={currentUser}
           />
         ))}
       </div>
