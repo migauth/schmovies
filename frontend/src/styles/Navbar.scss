@@ -30,11 +30,12 @@
   height: auto; /* Maintain aspect ratio */
   cursor: pointer;
   animation: wiggleLogo 0.3s ease-in-out; // Animation definition
+  border: solid rgba(255, 255, 0, 0);
   
   &:hover {
     border: solid yellow;
-    // width: 550px;
-    // height: auto;
+    width: 500px;
+    height: auto;
     border-radius: 5px;
     box-shadow: inset;
   }
@@ -77,3 +78,6 @@
     color: black;
   }
 }
+
+
+
