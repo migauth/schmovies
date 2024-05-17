@@ -88,6 +88,7 @@ const removeFromFavourites = (movieToRemove) => {
         handleMovieClick={handleMovieClick}
         closePopup={closePopup}
         removeFromFavourites={removeFromFavourites}
+        currentUser={currentUser}
       />
     ),
   };
