@@ -31,9 +31,11 @@
   cursor: pointer;
   animation: wiggleLogo 0.3s ease-in-out; // Animation definition
   border: solid rgba(255, 255, 0, 0);
+  padding-bottom: 20px;
   
   &:hover {
-    border: solid yellow;
+    // border: solid yellow;
+    animation: wiggleLogo 0.5s infinite; // Animation definition
     width: 500px;
     height: auto;
     border-radius: 5px;
