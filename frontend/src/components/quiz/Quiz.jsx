@@ -8,7 +8,10 @@ import QuizResultPopup from './QuizResultPopup';
 import CheeseSlider from './CheeseSlider';
 import './Quiz.scss';
 
-const Quiz = () => {
+const Quiz = ({
+  addToFavourites,
+  removeFromFavourites
+}) => {
   const initialAnswers = [
     { question: "Genre Preference", selectedAnswer: "" },
     { question: "Mood", selectedAnswer: "" },
@@ -20,6 +23,8 @@ const Quiz = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [results, setResults] = useState([]);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [currentResultIndex, setCurrentResultIndex] = useState(0);
+
 
   const handleAnswerChange = (selectedAnswer) => {
     const newAnswers = [...answers];
@@ -45,6 +50,10 @@ const Quiz = () => {
       // Move to the next question
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     }
+  };
+
+  const handleNextMovieResult = () => {
+    setCurrentResultIndex((prevIndex) => (prevIndex + 1) % results.length);
   };
 
   const handleGoBack = () => {
@@ -103,9 +112,11 @@ const Quiz = () => {
       {isPopupOpen && results.length > 0 && (
         <QuizResultPopup
           movie={results[Math.floor(Math.random() * results.length)]}
-          onClose={closePopup}
           handleRestartQuiz={handleRestartQuiz}
           closePopup={closePopup}
+          onNext={handleNextMovieResult}
+          removeFromFavourites={removeFromFavourites}
+          addToFavourites={addToFavourites}
         />
       )}
     </div>
