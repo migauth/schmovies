@@ -28,10 +28,15 @@ def submit_quiz(request):
 
         # keywords = data.get('keywords')
         answers = data.get('answers')
-        print(answers)
+        print('asnwers here: ', answers)
+        
+        # Extract only the selectedAnswer values
+        selected_answers = [answer['selectedAnswer'] for answer in answers]
+        print('selected answers: ', selected_answers)
+        
         
         # Call the function to get movie suggestions based on user's preference
-        recommendations = get_movie_suggestions(answers)
+        recommendations = get_movie_suggestions(selected_answers)
 
         # Return movie recommendations as a JSON response
         return JsonResponse({'recommendations': recommendations})
@@ -59,6 +64,8 @@ def get_movie_suggestions(answers):
     
     # Make request to TMDb API to fetch movie suggestions based on genre
     url = f'https://api.themoviedb.org/3/search/movie?api_key={TMDB_API_KEY}&query={keyword}&include_adult=false'
+    
+    print('filled in url ',url)
     
     response = requests.get(url)
     if response.status_code == 200:

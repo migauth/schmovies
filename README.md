@@ -43,6 +43,14 @@ cd src
 python3 manage.py runserver
 ```
 
+## Font awesome
+```
+npm install --save @fortawesome/fontawesome-svg-core
+npm install --save @fortawesome/free-solid-svg-icons
+npm install --save @fortawesome/free-regular-svg-icons
+npm install --save @fortawesome/react-fontawesome
+```
+
 ## Start frontend server
 ```
 cd frontend
