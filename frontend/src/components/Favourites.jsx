@@ -4,15 +4,25 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import "../styles/Favourites.scss"; // Import the SCSS file
 import MoviePopup from "./MoviePopup";
 
-
-const Favourites = ({ favouriteMovies, selectedMovie, closePopup, handleMovieClick, removeFromFavourites }) => {
-    console.log("favouriteMovies:", favouriteMovies);
+const Favourites = ({
+    favouriteMovies,
+    selectedMovie,
+    closePopup,
+    handleMovieClick,
+    removeFromFavourites,
+    currentUser
+}) => {
 
     return (
       <div className="favourites-container">
         <div className="heading-container">
           <h2 className="favourites-title">Favourites</h2>
         </div>
+        {!currentUser && (
+            <h5>
+                Please sign in to view your favourite movies!
+            </h5>
+        )}
         <div className="favourites-list">
           {favouriteMovies.map((movie) => (
             <div

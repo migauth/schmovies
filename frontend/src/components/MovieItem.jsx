@@ -4,7 +4,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import '../styles/MovieList.scss'; // Ensure this path is correct
 
 
-const MovieItem = ({ movie, addToFavourites, removeFromFavourites, favouriteMovies = [], handleMovieClick }) => {
+const MovieItem = ({
+  movie,
+  addToFavourites,
+  removeFromFavourites,
+  favouriteMovies = [],
+  handleMovieClick,
+  currentUser,
+}) => {
+
    // Define the maximum length for the title before shrinking the font
    const maxLengthBeforeShrink = 30;
 
@@ -33,13 +41,15 @@ const MovieItem = ({ movie, addToFavourites, removeFromFavourites, favouriteMovi
       <div className="movie-details">
         <p>Genre: {genres}</p>
         <p>Release Year: {movie.release_year}</p>
-        <button
-          className="favourites_btn"
-          style={{ backgroundColor: isFavourite ? "red" : "yellow" }}
-          onClick={(event) => handleFavouritesClick(event)}
+        {currentUser && (
+          <button
+            className="favourites_btn"
+            style={{ backgroundColor: isFavourite ? "red" : "yellow" }}
+            onClick={(event) => handleFavouritesClick(event)}
           >
-          <FontAwesomeIcon icon={faRegularHeart} />
-        </button>
+            <FontAwesomeIcon icon={faRegularHeart} />
+          </button>
+        )}
       </div>
     </div>
   );

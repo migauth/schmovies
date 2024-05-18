@@ -5,7 +5,17 @@ import PopularMovies from "./PopularMovies";
 import NewReleases from "./NewReleases";
 import "../styles/MovieList.scss";
 
-const MovieList = ({ setFavouriteMovies, handleMovieClick, addToFavourites, removeFromFavourites, selectedMovie, closePopup, favouriteMovies = [] }) => {
+const MovieList = ({
+  setFavouriteMovies,
+  handleMovieClick,
+  addToFavourites,
+  removeFromFavourites,
+  selectedMovie,
+  closePopup,
+  currentUser,
+  favouriteMovies = []
+}) => {
+
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
@@ -32,6 +42,7 @@ const MovieList = ({ setFavouriteMovies, handleMovieClick, addToFavourites, remo
         removeFromFavourites={removeFromFavourites}
         favouriteMovies={favouriteMovies}
         setFavouriteMovies={setFavouriteMovies}
+        currentUser={currentUser}
       />
       <PopularMovies
         movies={movies}
@@ -40,6 +51,7 @@ const MovieList = ({ setFavouriteMovies, handleMovieClick, addToFavourites, remo
         removeFromFavourites={removeFromFavourites}
         favouriteMovies={favouriteMovies}
         setFavouriteMovies={setFavouriteMovies}
+        currentUser={currentUser}
       />
       {selectedMovie && (
         <>

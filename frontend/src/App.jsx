@@ -21,9 +21,9 @@ function App() {
     setCurrentPage(page); // Set currentPage to the selected page
   };
 
-const handleMovieClick = (movie) => {
-  setSelectedMovie(movie);
-};
+  const handleMovieClick = (movie) => {
+    setSelectedMovie(movie);
+  };
 
   const closePopup = () => {
     setSelectedMovie(null);
@@ -38,29 +38,28 @@ const handleMovieClick = (movie) => {
     setCurrentUser(null);
   };
 
-const addToFavourites = (movie) => {
-  console.log("Attempting to add to favourites:", movie.title);
-  setFavouriteMovies(prevFavourites => {
-    if (!prevFavourites.some(favMovie => favMovie.id === movie.id)) {
-      const updatedFavourites = [...prevFavourites, movie];
-      console.log("Updated favourites list:", updatedFavourites);
+  const addToFavourites = (movie) => {
+    console.log("Attempting to add to favourites:", movie.title);
+    setFavouriteMovies((prevFavourites) => {
+      if (!prevFavourites.some((favMovie) => favMovie.id === movie.id)) {
+        const updatedFavourites = [...prevFavourites, movie];
+        console.log("Updated favourites list:", updatedFavourites);
+        return updatedFavourites;
+      }
+      return prevFavourites;
+    });
+  };
+
+  const removeFromFavourites = (movieToRemove) => {
+    console.log("Attempting to remove from favourites:", movieToRemove.title);
+    setFavouriteMovies((prevFavourites) => {
+      const updatedFavourites = prevFavourites.filter(
+        (movie) => movie.id !== movieToRemove.id
+      );
+      console.log("Updated favourites list after removal:", updatedFavourites);
       return updatedFavourites;
-    }
-    return prevFavourites;
-  });
-};
-
-const removeFromFavourites = (movieToRemove) => {
-  console.log("Attempting to remove from favourites:", movieToRemove.title);
-  setFavouriteMovies((prevFavourites) => {
-    const updatedFavourites = prevFavourites.filter(
-      (movie) => movie.id !== movieToRemove.id
-    );
-    console.log("Updated favourites list after removal:", updatedFavourites);
-    return updatedFavourites;
-  });
-};
-
+    });
+  };
 
   const pages = {
     about: <About />,
@@ -75,6 +74,7 @@ const removeFromFavourites = (movieToRemove) => {
         closePopup={closePopup}
         addToFavourites={addToFavourites}
         removeFromFavourites={removeFromFavourites}
+        currentUser={currentUser}
       />
     ),
     login: <Login onLoginSuccess={handleLogin} />,
@@ -87,6 +87,7 @@ const removeFromFavourites = (movieToRemove) => {
         handleMovieClick={handleMovieClick}
         closePopup={closePopup}
         removeFromFavourites={removeFromFavourites}
+        currentUser={currentUser}
       />
     ),
   };
