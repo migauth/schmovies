@@ -11,7 +11,6 @@ const Quiz = ({
   addToFavourites,
   removeFromFavourites,
   currentUser,
-  handleFavouritesClick,
 }) => {
   const initialAnswers = [
     { question: "Genre Preference", selectedAnswer: "" },
@@ -119,7 +118,6 @@ const Quiz = ({
           removeFromFavourites={removeFromFavourites}
           addToFavourites={addToFavourites}
           currentUser={currentUser}
-          handleFavouritesClick={handleFavouritesClick}
         />
       )}
     </div>

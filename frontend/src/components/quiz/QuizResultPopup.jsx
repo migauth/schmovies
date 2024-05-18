@@ -12,15 +12,12 @@ function QuizResultPopup({
   favouriteMovies = [],
   removeFromFavourites,
   currentUser,
-  handleFavouritesClick,
 }) {
   // Receive movie data and onNext function
   // Base URL for TMDb API images
   const baseUrl = "https://image.tmdb.org/t/p/w500/";
 
-  const isFavourite = favouriteMovies.some(
-    (favMovie) => favMovie.id === movie.id
-  );
+  const isFavourite = favouriteMovies.some(favMovie => favMovie.id === movie.id);
 
   const handleFavouritesClick = (event) => {
     event.stopPropagation(); // Prevents the click event from bubbling up to parent elements
@@ -58,7 +55,7 @@ function QuizResultPopup({
             {currentUser && (
             <button
                 className="favourites_btn"
-                // style={{ backgroundColor: isFavourite ? "red" : "yellow" }}
+                style={{ backgroundColor: isFavourite ? "red" : "yellow" }}
                 onClick={(event) => handleFavouritesClick(event)}
             >
                 <FontAwesomeIcon icon={faRegularHeart} />

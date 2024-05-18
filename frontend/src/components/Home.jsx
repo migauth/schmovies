@@ -11,7 +11,8 @@ function Home({
   closePopup,
   addToFavourites,
   removeFromFavourites,
-  currentUser
+  currentUser,
+  handleFavouritesClick
 }) {
 
   const handleClick = () => {
@@ -36,6 +37,7 @@ function Home({
           addToFavourites={addToFavourites}
           removeFromFavourites={removeFromFavourites}
           currentUser={currentUser}
+          handleFavouritesClick={handleFavouritesClick}
         />
       </div>
       <small>©</small>
