@@ -43,6 +43,20 @@
   width: 60%;
 }
 
+.quiz-results_favourites_btn {
+  border: none;
+  border-radius: 50px;
+  bottom: 10px;
+  left: 10px; /* Adjust left position as needed */
+  width: 30px;
+  height: 30px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+
 .quiz-again-button, .next-arrow {
   background-color: #ff0000;
   color: black;

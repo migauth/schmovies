@@ -1,6 +1,8 @@
 import React from 'react';
 import './QuizResultPopup.scss';
 import { faHeart as faRegularHeart } from '@fortawesome/free-regular-svg-icons';
+import { faHeart as faSolidHeart } from '@fortawesome/free-solid-svg-icons';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function QuizResultPopup({
@@ -53,13 +55,13 @@ function QuizResultPopup({
           <p>Description: {movie.overview}</p>
           <div className='quizPopupButtons'>
             {currentUser && (
-            <button
-                className="favourites_btn"
+              <button
+                className="quiz-results_favourites_btn"
                 style={{ backgroundColor: isFavourite ? "red" : "yellow" }}
-                onClick={(event) => handleFavouritesClick(event)}
-            >
-                <FontAwesomeIcon icon={faRegularHeart} />
-            </button>
+                onClick={handleFavouritesClick}
+              >
+                <FontAwesomeIcon icon={isFavourite ? faSolidHeart : faRegularHeart} />
+              </button>
             )}
             <button onClick={handleRestartQuiz} className="quiz-again-button">
               Take the quiz again
