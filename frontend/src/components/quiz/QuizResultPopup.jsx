@@ -11,6 +11,8 @@ function QuizResultPopup({
   addToFavourites,
   favouriteMovies = [],
   removeFromFavourites,
+  currentUser,
+  handleFavouritesClick,
 }) {
   // Receive movie data and onNext function
   // Base URL for TMDb API images
@@ -53,6 +55,15 @@ function QuizResultPopup({
           {/* <p>Release Year: {movie.release_year}</p> */}
           <p>Description: {movie.overview}</p>
           <div className='quizPopupButtons'>
+            {currentUser && (
+            <button
+                className="favourites_btn"
+                // style={{ backgroundColor: isFavourite ? "red" : "yellow" }}
+                onClick={(event) => handleFavouritesClick(event)}
+            >
+                <FontAwesomeIcon icon={faRegularHeart} />
+            </button>
+            )}
             <button onClick={handleRestartQuiz} className="quiz-again-button">
               Take the quiz again
             </button>

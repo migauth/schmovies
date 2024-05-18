@@ -79,7 +79,11 @@ function App() {
     ),
     login: <Login onLoginSuccess={handleLogin} />,
     register: <Register />,
-    quiz: <Quiz />,
+    quiz: <Quiz
+      currentUser={currentUser}
+      addToFavourites={addToFavourites}
+      handleFavouritesClick={handleFavouritesClick}
+    />,
     favourites: (
       <Favourites
         favouriteMovies={favouriteMovies}
