@@ -58,7 +58,7 @@ def get_movie_suggestions(answers):
     print("result from open ai:", keyword)
     
     # Make request to TMDb API to fetch movie suggestions based on genre
-    url = f'https://api.themoviedb.org/3/search/movie?api_key={TMDB_API_KEY}&query={keyword}'
+    url = f'https://api.themoviedb.org/3/search/movie?api_key={TMDB_API_KEY}&query={keyword}&include_adult=false'
     
     response = requests.get(url)
     if response.status_code == 200:
