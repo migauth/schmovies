@@ -3,8 +3,6 @@ import json
 import requests
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .models import UserPreferences
-import openai
 from openai import OpenAI
 import logging
 
@@ -31,18 +29,12 @@ def submit_quiz(request):
         # keywords = data.get('keywords')
         answers = data.get('answers')
         print(answers)
-
-        # (naming conventions) submitted_answers = json.loads(request.body) this is probably a better name for the data variable
-
+        
         # Call the function to get movie suggestions based on user's preference
         recommendations = get_movie_suggestions(answers)
 
         # Return movie recommendations as a JSON response
         return JsonResponse({'recommendations': recommendations})
-    
-        # # Store user preferences in the database
-        # user_preferences = UserPreferences(user=request.user, preferences=submitted_answers)
-        # user_preferences.save()
 
     # If the request method is not POST, return an error
     return JsonResponse({'error': 'Method not allowed'}, status=405)
@@ -66,10 +58,8 @@ def get_movie_suggestions(answers):
     print("result from open ai:", keyword)
     
     # Make request to TMDb API to fetch movie suggestions based on genre
-    url = f'https://api.themoviedb.org/3/search/movie?api_key={TMDB_API_KEY}&query={keyword}'
+    url = f'https://api.themoviedb.org/3/search/movie?api_key={TMDB_API_KEY}&query={keyword}&include_adult=false'
     
-    # (stretch) go into the db and comb through all the decscriptions with the keyword, then return the title of the movie - match the title to the movie in in the db (or api call?) and display it
-
     response = requests.get(url)
     if response.status_code == 200:
         data = response.json()

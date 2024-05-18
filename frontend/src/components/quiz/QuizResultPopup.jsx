@@ -1,30 +1,73 @@
 import React from 'react';
 import './QuizResultPopup.scss';
+import { faHeart as faRegularHeart } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-function QuizResultPopup({ movie, onClose, handleRestartQuiz, closePopup }) { // Receive movie data
-    // Base URL for TMDb API images
-    const baseUrl = "https://image.tmdb.org/t/p/w500/";
+function QuizResultPopup({
+  movie,
+  handleRestartQuiz,
+  closePopup,
+  onNext,
+  addToFavourites,
+  favouriteMovies = [],
+  removeFromFavourites,
+}) {
+  // Receive movie data and onNext function
+  // Base URL for TMDb API images
+  const baseUrl = "https://image.tmdb.org/t/p/w500/";
 
-    
-    return (
-        <>
-        <div className="backdrop" onClick={closePopup}></div>
-        <div className="movie-quiz-result">
-            <div className="movie-result__content">
-                <button onClick={onClose} className="movie-result__close" tabIndex="0" aria-label="Close movie details">✖</button>
-                <h2>{movie.title}</h2>
-                <img src={`${baseUrl}${movie.poster_path}`} alt={movie.title} className="movie-result__image" />
-                {/* <p>Genre: {movie.genre}</p> */}
-                {/* <p>Release Year: {movie.release_year}</p> */}
-                <p>Description: {movie.overview}</p>
-                <button onClick={handleRestartQuiz} className='quiz-again-button'>Take the quiz again</button>
-                <button>add to watch list</button>
-        
-            </div>
-        
+  const isFavourite = favouriteMovies.some(
+    (favMovie) => favMovie.id === movie.id
+  );
+
+  const handleFavouritesClick = (event) => {
+    event.stopPropagation(); // Prevents the click event from bubbling up to parent elements
+
+    if (isFavourite) {
+      removeFromFavourites(movie);
+    } else {
+      addToFavourites(movie);
+    }
+  };
+
+  return (
+    <>
+      <div className="backdrop" onClick={closePopup}></div>
+      <div className="movie-quiz-result">
+        <div className="movie-result__content">
+          <button
+            onClick={closePopup}
+            className="movie-result__close"
+            tabIndex="0"
+            aria-label="Close movie details"
+          >
+            ✖
+          </button>
+          <h2>{movie.title}</h2>
+          <img
+            src={`${baseUrl}${movie.poster_path}`}
+            alt={movie.title}
+            className="movie-result__image"
+          />
+          {/* <p>Genre: {movie.genre}</p> */}
+          {/* <p>Release Year: {movie.release_year}</p> */}
+          <p>Description: {movie.overview}</p>
+          <div className='quizPopupButtons'>
+            <button onClick={handleRestartQuiz} className="quiz-again-button">
+              Take the quiz again
+            </button>
+            <button
+              onClick={onNext}
+              className="next-arrow"
+              aria-label="Next movie"
+            >
+              Next movie suggestion →
+            </button>
+          </div>
         </div>
-        </>
-    );
+      </div>
+    </>
+  );
 }
 
 export default QuizResultPopup;

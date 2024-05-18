@@ -7,8 +7,7 @@
   height: 80%;
   width: 70%;
   background-color: rgb(26, 22, 22);
-  justify-content: center;
-  align-items: center;
+
   overflow-y: scroll;
   border-radius: 10px;
   border: 2px solid #dddddd37;
@@ -44,7 +43,7 @@
   width: 60%;
 }
 
-.quiz-again-button {
+.quiz-again-button, .next-arrow {
   background-color: #ff0000;
   color: black;
   border-color: yellow;
@@ -54,3 +53,10 @@
   border-radius: 5px;
   font-family: "Press Start 2P"; // Uses the Press Start 2P font
 }
+
+.quizPopupButtons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+

@@ -11,13 +11,16 @@ const NewReleases = ({
   currentUser
 }) => {
 
+  const movies2024 = movies.filter((movie) => movie.release_year === "2024");
+  console.log("2024 movies:", movies2024);
+
   return (
     <div className="movie-category">
       <div className="movie-category-title">
         <h2>New Releases</h2>
       </div>
       <div className="movie-list-container">
-        {movies.map((movie) => (
+        {movies2024.map((movie) => (
           <MovieItem
             key={movie.id}
             movie={movie}

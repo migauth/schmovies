@@ -1,4 +1,8 @@
 import React from "react";
+import { faHeart as faRegularHeart } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import '../styles/MovieList.scss'; // Ensure this path is correct
+
 
 const MovieItem = ({
   movie,
@@ -42,8 +46,8 @@ const MovieItem = ({
             className="favourites_btn"
             style={{ backgroundColor: isFavourite ? "red" : "yellow" }}
             onClick={(event) => handleFavouritesClick(event)}
-            >
-            ❤️
+          >
+            <FontAwesomeIcon icon={faRegularHeart} />
           </button>
         )}
       </div>
