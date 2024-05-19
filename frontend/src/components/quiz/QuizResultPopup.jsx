@@ -31,6 +31,9 @@ function QuizResultPopup({
     }
   };
 
+  console.log("Current favourite movies:", favouriteMovies);
+console.log("Is movie favourite:", isFavourite);
+
   return (
     <>
       <div className="backdrop" onClick={closePopup}></div>
@@ -58,8 +61,8 @@ function QuizResultPopup({
               <button
                 className="quiz-results_favourites_btn"
                 style={{ backgroundColor: isFavourite ? "red" : "yellow" }}
-                onClick={handleFavouritesClick}
-              >
+                onClick={(event) => handleFavouritesClick(event)}
+                >
                 <FontAwesomeIcon icon={isFavourite ? faSolidHeart : faRegularHeart} />
               </button>
             )}
