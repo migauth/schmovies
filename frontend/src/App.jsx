@@ -17,6 +17,7 @@ function App() {
 
   const showContent = useContentFadeIn(); // Custom hook for fade in...
 
+
   const handlePageChange = (page) => {
     setCurrentPage(page); // Set currentPage to the selected page
   };
@@ -61,6 +62,8 @@ function App() {
     });
   };
 
+
+
   const pages = {
     about: <About />,
     home: (
@@ -79,7 +82,10 @@ function App() {
     ),
     login: <Login onLoginSuccess={handleLogin} />,
     register: <Register />,
-    quiz: <Quiz />,
+    quiz: <Quiz
+      currentUser={currentUser}
+      addToFavourites={addToFavourites}
+    />,
     favourites: (
       <Favourites
         favouriteMovies={favouriteMovies}

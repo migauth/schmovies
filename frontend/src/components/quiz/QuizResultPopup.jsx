@@ -1,6 +1,8 @@
 import React from 'react';
 import './QuizResultPopup.scss';
 import { faHeart as faRegularHeart } from '@fortawesome/free-regular-svg-icons';
+import { faHeart as faSolidHeart } from '@fortawesome/free-solid-svg-icons';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function QuizResultPopup({
@@ -11,14 +13,13 @@ function QuizResultPopup({
   addToFavourites,
   favouriteMovies = [],
   removeFromFavourites,
+  currentUser,
 }) {
   // Receive movie data and onNext function
   // Base URL for TMDb API images
   const baseUrl = "https://image.tmdb.org/t/p/w500/";
 
-  const isFavourite = favouriteMovies.some(
-    (favMovie) => favMovie.id === movie.id
-  );
+  const isFavourite = favouriteMovies.some(favMovie => favMovie.id === movie.id);
 
   const handleFavouritesClick = (event) => {
     event.stopPropagation(); // Prevents the click event from bubbling up to parent elements
@@ -29,6 +30,9 @@ function QuizResultPopup({
       addToFavourites(movie);
     }
   };
+
+  console.log("Current favourite movies:", favouriteMovies);
+console.log("Is movie favourite:", isFavourite);
 
   return (
     <>
@@ -53,6 +57,15 @@ function QuizResultPopup({
           {/* <p>Release Year: {movie.release_year}</p> */}
           <p>Description: {movie.overview}</p>
           <div className='quizPopupButtons'>
+            {currentUser && (
+              <button
+                className="quiz-results_favourites_btn"
+                style={{ backgroundColor: isFavourite ? "red" : "yellow" }}
+                onClick={(event) => handleFavouritesClick(event)}
+                >
+                <FontAwesomeIcon icon={isFavourite ? faSolidHeart : faRegularHeart} />
+              </button>
+            )}
             <button onClick={handleRestartQuiz} className="quiz-again-button">
               Take the quiz again
             </button>

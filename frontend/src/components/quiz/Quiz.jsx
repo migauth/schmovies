@@ -1,4 +1,3 @@
-// Quiz.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import GenreQuestion from './GenreQuestion';
@@ -10,7 +9,8 @@ import './Quiz.scss';
 
 const Quiz = ({
   addToFavourites,
-  removeFromFavourites
+  removeFromFavourites,
+  currentUser,
 }) => {
   const initialAnswers = [
     { question: "Genre Preference", selectedAnswer: "" },
@@ -115,6 +115,7 @@ const Quiz = ({
           onNext={handleNextMovieResult}
           removeFromFavourites={removeFromFavourites}
           addToFavourites={addToFavourites}
+          currentUser={currentUser}
         />
       )}
     </div>
