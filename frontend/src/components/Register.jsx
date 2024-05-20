@@ -1,6 +1,7 @@
-// src/Registration.js
 import React, { useState } from 'react';
 import axios from 'axios';
+import '../styles/Register.scss'; // Import the SCSS file
+
 
 const Registration = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ const Registration = () => {
     password2: ''
   });
   const [error, setError] = useState('');
+  const [registered, setRegistered] = useState(false); // New state to track registration status
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,6 +24,9 @@ const Registration = () => {
     try {
       const response = await axios.post('http://127.0.0.1:8000/users/register/', formData);
       console.log('Registration successful:', response.data);
+      setRegistered(true);
+      window.location = '/'; // Redirect to the home page
+
  
     } catch (error) {
       console.error('Registration failed:', error.response.data);
@@ -30,12 +35,12 @@ const Registration = () => {
   };
 
   return (
-    <div>
-      <h2>Register</h2>
-      {error && <p>{error}</p>}
+    <div className="register-container">
+      <h2 className="register-title">Register</h2>
+      {error && <p className="register-error">{error}</p>}
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="username">Username:</label>
+          <label className="input-label" htmlFor="username">Username:</label>
           <input
             type="text"
             id="username"
@@ -46,7 +51,7 @@ const Registration = () => {
           />
         </div>
         <div>
-          <label htmlFor="email">Email:</label>
+          <label className="input-label" htmlFor="email">Email:</label>
           <input
             type="email"
             id="email"
@@ -57,7 +62,7 @@ const Registration = () => {
           />
         </div>
         <div>
-          <label htmlFor="password1">Password:</label>
+          <label className="input-label" htmlFor="password1">Password:</label>
           <input
             type="password"
             id="password1"
@@ -68,7 +73,7 @@ const Registration = () => {
           />
         </div>
         <div>
-          <label htmlFor="password2">Confirm Password:</label>
+          <label className="input-label" htmlFor="password2">Confirm Password:</label>
           <input
             type="password"
             id="password2"
@@ -78,7 +83,7 @@ const Registration = () => {
             required
           />
         </div>
-        <button type="submit">Register</button>
+        <button className="submit-button" type="submit">Register</button>
       </form>
     </div>
   );

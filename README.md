@@ -1,8 +1,12 @@
+
+
+!["Schmovies logo"](https://github.com/migauth/schmovies/blob/main/frontend/public/schmovies.png?raw=true)
+
 # Schmovies
 
 ## Description
 
-Schmovies is a movie suggestion generation app.
+Schmovies is a movie suggestion generation app. 
 
 ![Screenshot of home page](/frontend/public/images/Schmovies_home.png)
 
@@ -51,6 +55,14 @@ npm install sass
 ```
 cd src
 python3 manage.py runserver
+```
+
+## Font awesome
+```
+npm install --save @fortawesome/fontawesome-svg-core
+npm install --save @fortawesome/free-solid-svg-icons
+npm install --save @fortawesome/free-regular-svg-icons
+npm install --save @fortawesome/react-fontawesome
 ```
 
 ## Start frontend server

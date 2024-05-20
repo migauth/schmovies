@@ -4,8 +4,6 @@ import "../styles/Navbar.scss";
 function Navbar({ handlePageChange, handleLogout, currentUser }) {
   const [showContent, setShowContent] = useState(false);
 
-  console.log('User info', currentUser);
-
   useEffect(() => {
     // Trigger animation after a brief delay
     const timer = setTimeout(() => {

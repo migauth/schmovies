@@ -23,15 +23,12 @@ const MovieList = ({
       try {
         const response = await axios.get("http://127.0.0.1:8000/api/movies/movies/");
         setMovies(response.data);
-        console.log("Fetched movies:", response.data);
       } catch (error) {
         console.error("Error fetching movies:", error);
       }
     }
     fetchMovies();
   }, []);
-
-  
 
   return (
     <div className="movie-list">

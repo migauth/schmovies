@@ -12,7 +12,6 @@ const NewReleases = ({
 }) => {
 
   const movies2024 = movies.filter((movie) => movie.release_year === "2024");
-  console.log("2024 movies:", movies2024);
 
   return (
     <div className="movie-category">

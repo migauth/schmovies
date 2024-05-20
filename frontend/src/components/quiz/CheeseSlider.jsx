@@ -1,9 +1,20 @@
-// CheeseSlider.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './CheeseSlider.scss';
 
-const CheeseSlider = () => {
+const CheeseSlider = ({ question, onChange }) => {
   const [cheeseLevel, setCheeseLevel] = useState(0);
+
+  const cheeseDescriptions = [
+    "highbrow",
+    "decent",
+    "average",
+    "silly",
+    "cheesy"
+  ];
+
+  useEffect(() => {
+    onChange(cheeseDescriptions[cheeseLevel]);
+  }, [cheeseLevel]);
 
   const handleSliderChange = (event) => {
     setCheeseLevel(event.target.value);
@@ -15,12 +26,11 @@ const CheeseSlider = () => {
       <input
         type="range"
         min="0"
-        max="10"
+        max="4"
         value={cheeseLevel}
         onChange={handleSliderChange}
         className="custom-slider" // Add a custom class for styling
       />
-      <p>Cheese Level: {cheeseLevel}</p>
     </div>
   );
 };

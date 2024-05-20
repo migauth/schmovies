@@ -34,13 +34,11 @@ const Quiz = ({
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("User answers here:", answers);
 
     // Check if it's the last question
     if (currentQuestionIndex === answers.length - 1) {
       try {
         const response = await axios.post('http://127.0.0.1:8000/quiz/submit-quiz/', { answers: answers });
-        console.log('Movie recommendations:', response.data.recommendations);
         setResults(response.data.recommendations);
         setIsPopupOpen(true);
       } catch (error) {
