@@ -4,15 +4,15 @@
 
 Schmovies is a movie suggestion generation app.
 
-![Screenshot of home page](../schmovies/frontend/public/Schmovies_home.png)
+![Screenshot of home page](../schmovies/frontend/public/images/Schmovies_home.png)
 
 Browse through our movie categories:
 
-![Screenshot of new releases](../schmovies/frontend/public/Schmovies_new_releases.png)
+![Screenshot of new releases](../schmovies/frontend/public/images/Schmovies_new_releases.png)
 
 Or take the quiz to find out which is the perfect movie for you to watch!
 
-![Screenshot of quiz](../schmovies/frontend/public/Schmovies_quiz.png)
+![Screenshot of quiz](../schmovies/frontend/public/images/Schmovies_quiz.png)
 
 ## Install and run virtual environment
 
