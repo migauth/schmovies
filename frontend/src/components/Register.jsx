@@ -34,10 +34,6 @@ const Registration = () => {
     }
   };
 
-  if (registered) {
-    return <p>Registration successful. Redirecting to home page...</p>;
-  }
-
   return (
     <div className="register-container">
       <h2 className="register-title">Register</h2>

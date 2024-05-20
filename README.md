@@ -1,8 +1,12 @@
+
+
+!["Schmovies logo"](https://github.com/migauth/schmovies/blob/main/frontend/public/schmovies.png?raw=true)
+
 # Schmovies
 
 ## Description
 
-Schmovies is a movie suggestion generation app.
+Schmovies is a movie suggestion generation app. 
 
 ## Install and run virtual environment
 
