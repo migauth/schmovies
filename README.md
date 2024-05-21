@@ -3,7 +3,7 @@
 !["Schmovies logo"](https://github.com/migauth/schmovies/blob/main/frontend/public/images/github-logo.png?raw=true)
 
 
-# A Movie Suggestion App
+# The Movie Suggestion App
 
 ## Stack
 
