@@ -57,7 +57,7 @@ console.log("Is movie favourite:", isFavourite);
           {/* <p>Release Year: {movie.release_year}</p> */}
           <p>Description: {movie.overview}</p>
           <div className='quizPopupButtons'>
-            {currentUser && (
+            {/* {currentUser && (
               <button
                 className="quiz-results_favourites_btn"
                 style={{ backgroundColor: isFavourite ? "red" : "yellow" }}
@@ -65,7 +65,7 @@ console.log("Is movie favourite:", isFavourite);
                 >
                 <FontAwesomeIcon icon={isFavourite ? faSolidHeart : faRegularHeart} />
               </button>
-            )}
+            )} */}
             <button onClick={handleRestartQuiz} className="quiz-again-button">
               Take the quiz again
             </button>
