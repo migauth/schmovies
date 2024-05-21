@@ -1,6 +1,6 @@
 
 
-!["Schmovies logo"](https://github.com/migauth/schmovies/blob/main/frontend/public/schmovies.png?raw=true)
+!["Schmovies logo"](https://github.com/migauth/schmovies/blob/main/frontend/public/images/github-schmovies.png?raw=true)
 
 # Schmovies
 
