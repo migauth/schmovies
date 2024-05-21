@@ -2,11 +2,16 @@
 
 !["Schmovies logo"](https://github.com/migauth/schmovies/blob/main/frontend/public/images/github-logo.png?raw=true)
 
-# Schmovies
 
-## Description
+## A movie suggestion generation app that uses OpenAI to find movies to watch!
 
-Schmovies is a movie suggestion generation app. 
+## Stack
+
+ReactJS, Django, PostgreSQL
+
+## Screenshots
+
+Homepage
 
 ![Screenshot of home page](/frontend/public/images/Schmovies_home.png)
 
@@ -18,7 +23,17 @@ Or take the quiz to find out which is the perfect movie for you to watch!
 
 ![Screenshot of quiz](/frontend/public/images/Schmovies_quiz.png)
 
-## Install and run virtual environment
+## How to setup
+
+Clone this repo
+
+# Install and run virtual environment
+
+Make sure you have Django installed:
+
+```
+pip3 install django
+```
 
 Install virtualenv (if you haven't already):
 ```
@@ -40,14 +55,18 @@ pip3 install python-decouple
 pip3 install djangorestframework
 pip3 install django-cors-headers
 pip3 install python-dotenv
-python3 -m pip install requests
+pip3 install requests
 ```
 
-## Installed backend dependancies
+## Installed frontend dependancies
 
 ```
 cd frontend
 npm install sass
+npm install --save @fortawesome/fontawesome-svg-core
+npm install --save @fortawesome/free-solid-svg-icons
+npm install --save @fortawesome/free-regular-svg-icons
+npm install --save @fortawesome/react-fontawesome
 ```
 
 
@@ -55,14 +74,6 @@ npm install sass
 ```
 cd src
 python3 manage.py runserver
-```
-
-## Font awesome
-```
-npm install --save @fortawesome/fontawesome-svg-core
-npm install --save @fortawesome/free-solid-svg-icons
-npm install --save @fortawesome/free-regular-svg-icons
-npm install --save @fortawesome/react-fontawesome
 ```
 
 ## Start frontend server

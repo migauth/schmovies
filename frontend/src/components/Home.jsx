@@ -40,7 +40,6 @@ function Home({
           handleFavouritesClick={handleFavouritesClick}
         />
       </div>
-      <small>©</small>
     </>
   );
 }
