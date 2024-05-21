@@ -3,7 +3,7 @@
 !["Schmovies logo"](https://github.com/migauth/schmovies/blob/main/frontend/public/images/github-logo.png?raw=true)
 
 
-## A movie suggestion generation app that uses OpenAI to find movies to watch!
+# A Movie Suggestion Spp
 
 ## Stack
 
@@ -82,10 +82,8 @@ cd frontend
 npm start
 ```
 
-## Server links
+## Contributers
 
-http://127.0.0.1:8000/admin/
-
-http://127.0.0.1:8000/api/movies/
-
-http://127.0.0.1:8000/api/movies/?format=api
+- Michael Gauthier [migauth](https://github.com/migauth)
+- Charli Steketee [Charlisteketee](https://github.com/Charlisteketee)
+- Luiza Leao [lmleao](https://github.com/lmleao)
