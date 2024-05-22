@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './CheeseSlider.scss';
+import './styles/CheeseSlider.scss';
 
 const CheeseSlider = ({ question, onChange }) => {
   const [cheeseLevel, setCheeseLevel] = useState(0);

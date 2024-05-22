@@ -5,7 +5,7 @@ import MoodQuestion from './MoodQuestion';
 import CharactersQuestion from './CharactersQuestion';
 import QuizResultPopup from './QuizResultPopup';
 import CheeseSlider from './CheeseSlider';
-import './Quiz.scss';
+import './styles/Quiz.scss';
 
 const Quiz = ({
   addToFavourites,

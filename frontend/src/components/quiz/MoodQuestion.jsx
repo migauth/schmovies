@@ -1,6 +1,6 @@
 // MoodQuestion.js
 import React from 'react';
-import './PopcornRadio.scss';
+import './styles/PopcornRadio.scss';
 
 const MoodQuestion = ({ question, onChange }) => {
   return (
