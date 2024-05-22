@@ -1,6 +1,6 @@
 // GenreQuestion.js
 import React from 'react';
-import './PopcornRadio.scss';
+import './styles/PopcornRadio.scss';
 
 const GenreQuestion = ({ question, onChange }) => {
   return (

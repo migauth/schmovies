@@ -1,38 +1,24 @@
 import React from 'react';
-import './QuizResultPopup.scss';
-import { faHeart as faRegularHeart } from '@fortawesome/free-regular-svg-icons';
-import { faHeart as faSolidHeart } from '@fortawesome/free-solid-svg-icons';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import './styles/QuizResultPopup.scss';
 
 function QuizResultPopup({
   movie,
   handleRestartQuiz,
   closePopup,
   onNext,
-  addToFavourites,
   favouriteMovies = [],
-  removeFromFavourites,
-  currentUser,
 }) {
   // Receive movie data and onNext function
   // Base URL for TMDb API images
   const baseUrl = "https://image.tmdb.org/t/p/w500/";
 
-  const isFavourite = favouriteMovies.some(favMovie => favMovie.id === movie.id);
+  console.log(movie);
 
-  const handleFavouritesClick = (event) => {
-    event.stopPropagation(); // Prevents the click event from bubbling up to parent elements
+  // Fallback image path
+  const fallbackImage = "/images/reelAndHeartIcon2.png";
 
-    if (isFavourite) {
-      removeFromFavourites(movie);
-    } else {
-      addToFavourites(movie);
-    }
-  };
-
-  console.log("Current favourite movies:", favouriteMovies);
-console.log("Is movie favourite:", isFavourite);
+  // Fallback description
+  const fallbackDescription = "No description available";
 
   return (
     <>
@@ -49,23 +35,13 @@ console.log("Is movie favourite:", isFavourite);
           </button>
           <h2>{movie.title}</h2>
           <img
-            src={`${baseUrl}${movie.poster_path}`}
+            src={movie.poster_path ? `${baseUrl}${movie.poster_path}` : fallbackImage}
             alt={movie.title}
             className="movie-result__image"
           />
-          {/* <p>Genre: {movie.genre}</p> */}
-          {/* <p>Release Year: {movie.release_year}</p> */}
-          <p>Description: {movie.overview}</p>
-          <div className='quizPopupButtons'>
-            {/* {currentUser && (
-              <button
-                className="quiz-results_favourites_btn"
-                style={{ backgroundColor: isFavourite ? "red" : "yellow" }}
-                onClick={(event) => handleFavouritesClick(event)}
-                >
-                <FontAwesomeIcon icon={isFavourite ? faSolidHeart : faRegularHeart} />
-              </button>
-            )} */}
+          <p>Release Year: {movie.release_date.slice(0,4)}</p>
+          <p>Description: {movie.overview ? movie.overview : fallbackDescription}</p>
+          <div className="quizPopupButtons">
             <button onClick={handleRestartQuiz} className="quiz-again-button">
               Take the quiz again
             </button>

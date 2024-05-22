@@ -1,6 +1,6 @@
 // CharactersQuestion.js
 import React from 'react';
-import './PopcornRadio.scss';
+import './styles/PopcornRadio.scss';
 
 const CharactersQuestion = ({ question, onChange }) => {
   return (
