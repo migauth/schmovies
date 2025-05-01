@@ -14,7 +14,7 @@ const MovieItem = ({
 }) => {
 
    // Define the maximum length for the title before shrinking the font
-   const maxLengthBeforeShrink = 30;
+   const maxLengthBeforeShrink = 20;
 
    // Conditionally apply a class based on the length of the title
    const titleClass = movie.title.length > maxLengthBeforeShrink ? "shrink" : "";
