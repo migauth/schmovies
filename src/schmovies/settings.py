@@ -20,10 +20,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-d%xu6!rp-8lq=7m9szn(b3d^4cx3$mdm!o8v0#kf3+@4yw%e=v'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-d%xu6!rp-8lq=7m9szn(b3d^4cx3$mdm!o8v0#kf3+@4yw%e=v')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
 
@@ -94,11 +94,11 @@ print("OPENAI_API_KEY here: ",OPENAI_API_KEY) # Add this line to check if the ke
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),
-        'PORT': config('DB_PORT'),
+        'NAME': os.environ.get('DB_NAME', config('DB_NAME')),
+        'USER': os.environ.get('DB_USER', config('DB_USER')),
+        'PASSWORD': os.environ.get('DB_PASSWORD', config('DB_PASSWORD')),
+        'HOST': os.environ.get('DB_HOST', config('DB_HOST')),
+        'PORT': os.environ.get('DB_PORT', config('DB_PORT')),
     }
 }
 
@@ -141,11 +141,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = os.environ.get('RAILWAY_STATIC_URL', 'static/')
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Create the directory if it doesn't exist
 os.makedirs(STATIC_ROOT, exist_ok=True)
+
+# Configure media files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

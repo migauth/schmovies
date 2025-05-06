@@ -21,7 +21,11 @@ const MovieList = ({
   useEffect(() => {
     async function fetchMovies() {
       try {
-        const response = await axios.get("/api/movies/movies/");
+        // Determine API URL based on environment
+const apiUrl = process.env.NODE_ENV === 'production' 
+  ? "/api/movies/movies/" 
+  : "http://localhost:8000/api/movies/movies/";
+const response = await axios.get(apiUrl);
         setMovies(response.data);
       } catch (error) {
         console.error("Error fetching movies:", error);

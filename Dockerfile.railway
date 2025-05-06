@@ -1,0 +1,58 @@
+FROM node:18 as frontend-builder
+
+WORKDIR /app/frontend
+COPY frontend/package*.json ./
+RUN npm install
+COPY frontend/ .
+RUN npm run build
+
+FROM python:3.10-slim
+
+# Install dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    gcc \
+    python3-dev \
+    libpq-dev \
+    nginx \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Create directories for static files and media
+RUN mkdir -p /app/staticfiles /app/media /app/static
+
+# Copy backend code
+COPY src/ /app/
+
+# Install Python dependencies
+COPY src/requirements.txt .
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt && \
+    pip install psycopg2-binary gunicorn
+
+# Copy built frontend from first stage
+COPY --from=frontend-builder /app/frontend/build /app/static/
+
+# Copy nginx config
+COPY nginx/default.conf /etc/nginx/conf.d/default.conf
+RUN ln -sf /etc/nginx/conf.d/default.conf /etc/nginx/sites-enabled/default
+
+# Setup environment
+ENV PYTHONUNBUFFERED=1
+ENV DJANGO_SETTINGS_MODULE=schmovies.settings
+ENV PORT=8000
+
+# Create start script
+RUN echo '#!/bin/bash\n\
+python manage.py migrate\n\
+python manage.py collectstatic --noinput\n\
+python manage_db.py\n\
+gunicorn schmovies.wsgi:application --bind 0.0.0.0:$PORT & nginx -g "daemon off;"\n\
+' > /app/start.sh && chmod +x /app/start.sh
+
+# Expose port
+EXPOSE 8000
+
+# Start services
+CMD ["/app/start.sh"]
