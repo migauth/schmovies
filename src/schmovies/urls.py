@@ -17,15 +17,29 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, reverse_lazy
 from django.contrib.auth import views as auth_views
+from django.http import HttpResponse
+from django.conf import settings
+from django.conf.urls.static import static
+from django.views.generic import TemplateView
 
-
-
+# Simple health check view
+def health_check(request):
+    return HttpResponse("OK")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/movies/', include('movies.urls')),
     path('quiz/', include('quiz.urls')),
-    path('users/', include('users.urls')),  # Include app-specific URL
-
+    path('users/', include('users.urls')),
+    path('health/', health_check, name='health_check'),
 ]
+
+# Serve static files in development
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# Serve frontend in production
+if not settings.DEBUG:
+    urlpatterns.append(path('', TemplateView.as_view(template_name='index.html')))
 

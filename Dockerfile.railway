@@ -43,16 +43,32 @@ ENV PYTHONUNBUFFERED=1
 ENV DJANGO_SETTINGS_MODULE=schmovies.settings
 ENV PORT=8000
 
-# Create start script
+# Create start script and health check
 RUN echo '#!/bin/bash\n\
+echo "Starting application..."\n\
 python manage.py migrate\n\
+echo "Collecting static files..."\n\
 python manage.py collectstatic --noinput\n\
-python manage_db.py\n\
-gunicorn schmovies.wsgi:application --bind 0.0.0.0:$PORT & nginx -g "daemon off;"\n\
+echo "Setting up static file server for health checks..."\n\
+mkdir -p /app/static\n\
+echo "OK" > /app/static/health.txt\n\
+echo "Initializing database..."\n\
+python manage_db.py || true\n\
+echo "Starting Gunicorn and Nginx..."\n\
+gunicorn schmovies.wsgi:application --bind 0.0.0.0:$PORT --timeout 120 --access-logfile - --error-logfile - & \n\
+echo "Starting health check..."\n\
+sleep 10\n\
+python ready_check.py\n\
+echo "Server ready, starting Nginx..."\n\
+nginx -g "daemon off;"\n\
 ' > /app/start.sh && chmod +x /app/start.sh
 
 # Expose port
 EXPOSE 8000
+
+# Add health check script
+COPY src/ready_check.py /app/ready_check.py
+RUN chmod +x /app/ready_check.py
 
 # Start services
 CMD ["/app/start.sh"]
