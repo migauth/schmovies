@@ -1,0 +1,9 @@
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "docker-compose.production.yml"
+
+[deploy]
+startCommand = "docker-compose -f docker-compose.production.yml up -d"
+healthcheckPath = "/"
+healthcheckTimeout = 300
+restartPolicyType = "ON_FAILURE"

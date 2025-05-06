@@ -1,0 +1,35 @@
+services:
+  - type: web
+    name: schmovies
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    envVars:
+      - key: DB_NAME
+        value: schmovies
+      - key: DB_USER
+        value: postgres
+      - key: DB_PASSWORD
+        sync: false
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "0"
+      - key: ALLOWED_HOSTS
+        value: ".onrender.com,localhost"
+      - key: TMDB_API_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: DB_HOST
+        fromDatabase:
+          name: schmovies-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: schmovies-db
+          property: port
+
+databases:
+  - name: schmovies-db
+    plan: free
