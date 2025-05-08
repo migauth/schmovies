@@ -24,6 +24,7 @@ const Quiz = ({
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [results, setResults] = useState([]);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [currentResultIndex, setCurrentResultIndex] = useState(0);
 
 

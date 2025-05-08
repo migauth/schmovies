@@ -12,6 +12,7 @@ const Registration = () => {
     password2: ''
   });
   const [error, setError] = useState('');
+  // eslint-disable-next-line no-unused-vars
   const [registered, setRegistered] = useState(false); // New state to track registration status
 
   const handleChange = (e) => {

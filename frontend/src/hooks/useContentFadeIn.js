@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 export default function useContentFadeIn() {
   const [showContent, setShowContent] = useState(false);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     // Trigger the content fade-in after a brief delay
     const timer = setTimeout(() => {

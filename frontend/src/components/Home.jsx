@@ -1,6 +1,7 @@
 import React from "react";
 import MovieList from "./MovieList";
 
+// eslint-disable-next-line no-unused-vars
 function Home({
   handlePageChange,
   setFavouriteMovies,

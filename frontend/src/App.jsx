@@ -64,6 +64,7 @@ function App() {
 
 
 
+  // eslint-disable-next-line no-unused-vars
   const pages = {
     about: <About />,
     home: (

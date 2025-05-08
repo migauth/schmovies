@@ -19,6 +19,7 @@ const MovieList = ({
 
   const [movies, setMovies] = useState([]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     async function fetchMovies() {
       try {

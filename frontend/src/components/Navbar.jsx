@@ -4,6 +4,7 @@ import "../styles/Navbar.scss";
 function Navbar({ handlePageChange, handleLogout, currentUser }) {
   const [showContent, setShowContent] = useState(false);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     // Trigger animation after a brief delay
     const timer = setTimeout(() => {

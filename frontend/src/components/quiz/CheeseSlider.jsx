@@ -12,6 +12,7 @@ const CheeseSlider = ({ question, onChange }) => {
     "cheesy"
   ];
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     onChange(cheeseDescriptions[cheeseLevel]);
   }, [cheeseLevel]);
