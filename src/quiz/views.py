@@ -82,46 +82,92 @@ def get_movie_suggestions(answers):
     try:
         # Try to use OpenAI if available
         if client:
-            chat_completion = client.chat.completions.create(
-                messages=[
-                    {
-                        "role": "user",
-                        "content": f'reduce these words describing a type of movie: ({answers}) down to one word',
-                    }
-                ],
-                model="gpt-3.5-turbo",
-            )
-            keyword = chat_completion.choices[0].message.content
-            logger.info(f"OpenAI generated keyword: {keyword}")
+            try:
+                chat_completion = client.chat.completions.create(
+                    messages=[
+                        {
+                            "role": "user",
+                            "content": f'reduce these words describing a type of movie: ({answers}) down to one word',
+                        }
+                    ],
+                    model="gpt-3.5-turbo",
+                )
+                keyword = chat_completion.choices[0].message.content
+                logger.info(f"OpenAI generated keyword: {keyword}")
+            except Exception as openai_error:
+                logger.error(f"OpenAI request failed: {str(openai_error)}")
+                # Use fallback approach
+                keyword = use_fallback_approach(answers, common_mappings, fallback_keywords)
         else:
-            # Try to use the mapping for known answers
-            for answer in answers:
-                if answer in common_mappings:
-                    keyword = common_mappings[answer]
-                    logger.info(f"Using mapped keyword for '{answer}': {keyword}")
-                    break
-            else:
-                # If no mapping found, use a random fallback keyword
-                keyword = random.choice(fallback_keywords)
-                logger.info(f"Using random fallback keyword: {keyword}")
+            # Use fallback approach if OpenAI client is not available
+            keyword = use_fallback_approach(answers, common_mappings, fallback_keywords)
     except Exception as e:
-        # If there's any error with OpenAI, use a fallback approach
-        logger.error(f"Error using OpenAI: {str(e)}")
-        
-        # Try to use mappings first
-        for answer in answers:
-            if answer in common_mappings:
-                keyword = common_mappings[answer]
-                logger.info(f"Using fallback mapped keyword for '{answer}': {keyword}")
-                break
-        else:
-            # If all else fails, pick a random keyword
-            keyword = random.choice(fallback_keywords)
-            logger.info(f"Using random fallback keyword due to error: {keyword}")
+        logger.error(f"Error in get_movie_suggestions: {str(e)}")
+        keyword = random.choice(fallback_keywords)
+        logger.info(f"Using random fallback keyword due to error: {keyword}")
     
-    # Make request to TMDb API to fetch movie suggestions based on genre
+    # Try to get movies from database first (much faster than API call)
+    try:
+        from movies.models.movie import Movie
+        
+        # Filter movies that match the keyword in title or genre
+        db_movies = list(Movie.objects.filter(
+            genre__icontains=keyword
+        ).values())[:10]  # Limit to 10 movies
+        
+        # If we found movies in the database, return them
+        if db_movies:
+            logger.info(f"Found {len(db_movies)} movies in database matching keyword: {keyword}")
+            return db_movies
+        
+        # If no genre match, try title
+        db_movies = list(Movie.objects.filter(
+            title__icontains=keyword
+        ).values())[:10]
+        
+        if db_movies:
+            logger.info(f"Found {len(db_movies)} movies in database with title matching keyword: {keyword}")
+            return db_movies
+            
+        # If nothing found by genre or title, return random movies
+        all_movies = list(Movie.objects.all().values())
+        if all_movies:
+            random_selection = random.sample(all_movies, min(10, len(all_movies)))
+            logger.info(f"Returning {len(random_selection)} random movies from database")
+            return random_selection
+    except Exception as db_error:
+        logger.error(f"Error fetching movies from database: {str(db_error)}")
+    
+    # If no movies in database or error occurred, try TMDB API
+    return fetch_from_tmdb_api(keyword)
+
+def use_fallback_approach(answers, common_mappings, fallback_keywords):
+    """Helper function to get a keyword without OpenAI"""
+    # Try to use the mapping for known answers
+    for answer in answers:
+        if answer in common_mappings:
+            keyword = common_mappings[answer]
+            logger.info(f"Using mapped keyword for '{answer}': {keyword}")
+            return keyword
+    
+    # If no mapping found, use a combination of answers or a fallback
+    if len(answers) > 0:
+        # Use the first non-empty answer as keyword
+        for answer in answers:
+            if answer and len(answer) > 0:
+                logger.info(f"Using answer as keyword: {answer}")
+                return answer
+    
+    # If all else fails, use a random fallback keyword
+    keyword = random.choice(fallback_keywords)
+    logger.info(f"Using random fallback keyword: {keyword}")
+    return keyword
+
+def fetch_from_tmdb_api(keyword):
+    """Helper function to fetch movies from TMDB API"""
+    # Skip API call if TMDB key not available
     if not TMDB_API_KEY:
-        logger.error("TMDB_API_KEY not provided, cannot fetch movies")
+        logger.error("TMDB_API_KEY not provided, cannot fetch movies from API")
         return []
         
     try:

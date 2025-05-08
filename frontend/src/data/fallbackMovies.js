@@ -1,5 +1,48 @@
 // Fallback movie data to use when API is unavailable
 const fallbackMovies = [
+  // 2024 movies for the "New Releases" section
+  {
+    id: 101,
+    title: "Dune: Part Two",
+    description: "Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family.",
+    genre: "Science Fiction, Adventure",
+    release_year: "2024",
+    poster_url: "https://image.tmdb.org/t/p/w500/8b8R8l88Qje9dn9OE8PY05Nxl1X.jpg"
+  },
+  {
+    id: 102,
+    title: "Kingdom of the Planet of the Apes",
+    description: "Many years after the reign of Caesar, a young ape goes on a journey that will lead him to question everything he's been taught about the past.",
+    genre: "Science Fiction, Adventure",
+    release_year: "2024",
+    poster_url: "https://image.tmdb.org/t/p/w500/gVCqOhD8vUJoXoJb05jYJLVA2cd.jpg"
+  },
+  {
+    id: 103,
+    title: "The Fall Guy",
+    description: "A stuntman is hired to work on a film directed by his ex-girlfriend and the star he was a stunt double for in the past. Things take a turn when the star goes missing.",
+    genre: "Action, Comedy",
+    release_year: "2024",
+    poster_url: "https://image.tmdb.org/t/p/w500/xXBg6NXV1OJpjnUOw41RjnpP526.jpg"
+  },
+  {
+    id: 104,
+    title: "Inside Out 2",
+    description: "Joy, Sadness, Anger, Fear and Disgust are joined by new emotions as Riley enters adolescence.",
+    genre: "Animation, Comedy, Family",
+    release_year: "2024",
+    poster_url: "https://image.tmdb.org/t/p/w500/4KHchupuz4euygJ9MnjlZmRyStM.jpg"
+  },
+  {
+    id: 105,
+    title: "Godzilla x Kong: The New Empire",
+    description: "Godzilla and the mighty Kong face a colossal threat hidden deep within the planet, challenging their very existence and the survival of the human race.",
+    genre: "Action, Science Fiction",
+    release_year: "2024",
+    poster_url: "https://image.tmdb.org/t/p/w500/bQ2ygkiKhDuynJFrfGJ8G01nNG2.jpg"
+  },
+  
+  // Classic movies for the "Popular Movies" section
   {
     id: 1,
     title: "The Shawshank Redemption",
@@ -63,22 +106,6 @@ const fallbackMovies = [
     genre: "Action, Science Fiction",
     release_year: "1999",
     poster_url: "https://image.tmdb.org/t/p/w500/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg"
-  },
-  {
-    id: 9,
-    title: "Goodfellas",
-    description: "The story of Henry Hill and his life in the mob, covering his relationship with his wife Karen Hill and his mob partners Jimmy Conway and Tommy DeVito in the Italian-American crime syndicate.",
-    genre: "Crime, Drama",
-    release_year: "1990",
-    poster_url: "https://image.tmdb.org/t/p/w500/aKuFiU82s5ISJpGZp7YkIr3kCUd.jpg"
-  },
-  {
-    id: 10,
-    title: "The Silence of the Lambs",
-    description: "A young F.B.I. cadet must receive the help of an incarcerated and manipulative cannibal killer to help catch another serial killer, a madman who skins his victims.",
-    genre: "Crime, Drama, Thriller",
-    release_year: "1991",
-    poster_url: "https://image.tmdb.org/t/p/w500/rplLJ2hPcOQmkFhTqUte0MkEaO2.jpg"
   }
 ];
 
