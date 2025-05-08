@@ -1,0 +1,17 @@
+build:
+  dockerfile: ./src/Dockerfile
+env:
+  - name: DB_HOST
+    value: ${PGHOST}
+  - name: DB_NAME
+    value: ${PGDATABASE}
+  - name: DB_USER
+    value: ${PGUSER}
+  - name: DB_PASSWORD
+    value: ${PGPASSWORD}
+  - name: DB_PORT
+    value: ${PGPORT}
+  - name: DEBUG
+    value: "False"
+  - name: ALLOWED_HOSTS
+    value: "*.up.railway.app,*.railway.app"

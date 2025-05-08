@@ -9,18 +9,23 @@ import logging
 logger = logging.getLogger(__name__)
 
 # Get API keys from environment
-OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
-TMDB_API_KEY = os.environ.get('TMDB_API_KEY')
+OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY', '')
+TMDB_API_KEY = os.environ.get('TMDB_API_KEY', '')
+
+logger.info(f"TMDB API key available: {bool(TMDB_API_KEY)}")
+logger.info(f"OpenAI API key available: {bool(OPENAI_API_KEY)}")
 
 # Initialize OpenAI client only if API key is available
 client = None
 if OPENAI_API_KEY:
     try:
+        logger.info("Initializing OpenAI client")
         from openai import OpenAI
         client = OpenAI(api_key=OPENAI_API_KEY)
         logger.info("OpenAI client initialized successfully")
     except Exception as e:
         logger.error(f"Failed to initialize OpenAI client: {str(e)}")
+        logger.error("Continuing without OpenAI functionality")
 else:
     logger.warning("OPENAI_API_KEY not provided, OpenAI features will be disabled")
 

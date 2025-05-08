@@ -149,3 +149,19 @@ CORS_ALLOW_HEADERS = [
 # API Keys - for movie data
 TMDB_API_KEY = os.environ.get('TMDB_API_KEY', '')
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY', '')
+
+# Database configuration - special handling for Railway
+if os.environ.get('RAILWAY_ENVIRONMENT'):
+    import dj_database_url
+    DATABASES = {
+        'default': dj_database_url.config(default='postgresql://postgres:postgres@localhost:5432/postgres')
+    }
+    
+    # Log the database configuration (without password)
+    db_config = dict(DATABASES['default'])
+    if 'PASSWORD' in db_config:
+        db_config['PASSWORD'] = '********'
+    print(f"Database configuration on Railway: {db_config}")
+    
+    # Allow the Railway domain
+    ALLOWED_HOSTS.append('.up.railway.app')
