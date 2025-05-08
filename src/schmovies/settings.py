@@ -11,10 +11,15 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+from decouple import config
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -84,24 +89,41 @@ SECURE_SSL_REDIRECT = False  # Disable SSL redirect as Railway handles it
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-from decouple import config
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
+# API Keys
 TMDB_API_KEY = os.getenv('TMDB_API_KEY')
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
-print("TMDB_API_KEY here: ",TMDB_API_KEY) # Add this line to check if the key is being loaded
-print("OPENAI_API_KEY here: ",OPENAI_API_KEY) # Add this line to check if the key is being loaded
+
+# Set up Database configuration
+DB_NAME = os.environ.get('DB_NAME')
+DB_USER = os.environ.get('DB_USER')
+DB_PASSWORD = os.environ.get('DB_PASSWORD')
+DB_HOST = os.environ.get('DB_HOST')
+DB_PORT = os.environ.get('DB_PORT')
+
+# If any environment variables are missing, fall back to config values with defaults
+if not all([DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT]):
+    try:
+        DB_NAME = DB_NAME or config('DB_NAME', default='postgres')
+        DB_USER = DB_USER or config('DB_USER', default='postgres')
+        DB_PASSWORD = DB_PASSWORD or config('DB_PASSWORD', default='postgres')
+        DB_HOST = DB_HOST or config('DB_HOST', default='localhost')
+        DB_PORT = DB_PORT or config('DB_PORT', default='5432')
+    except:
+        # If config fails, use these defaults for Railway
+        DB_NAME = DB_NAME or 'postgres'
+        DB_USER = DB_USER or 'postgres'
+        DB_PASSWORD = DB_PASSWORD or 'postgres'
+        DB_HOST = DB_HOST or 'localhost'
+        DB_PORT = DB_PORT or '5432'
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DB_NAME', config('DB_NAME')),
-        'USER': os.environ.get('DB_USER', config('DB_USER')),
-        'PASSWORD': os.environ.get('DB_PASSWORD', config('DB_PASSWORD')),
-        'HOST': os.environ.get('DB_HOST', config('DB_HOST')),
-        'PORT': os.environ.get('DB_PORT', config('DB_PORT')),
+        'NAME': DB_NAME,
+        'USER': DB_USER,
+        'PASSWORD': DB_PASSWORD,
+        'HOST': DB_HOST,
+        'PORT': DB_PORT,
     }
 }
 

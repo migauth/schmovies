@@ -6,6 +6,7 @@ RUN apt-get update && \
     gcc \
     python3-dev \
     libpq-dev \
+    postgresql-client \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -13,12 +14,33 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
+# Set env vars with defaults
+ENV DEBUG=False
+ENV ALLOWED_HOSTS=*
+ENV SECRET_KEY="django-default-secret-key-for-railway-deployment"
+ENV DB_NAME=postgres
+ENV DB_USER=postgres
+ENV DB_PASSWORD=postgres
+ENV DB_HOST=localhost
+ENV DB_PORT=5432
+
 COPY . .
 
 # Create a non-root user
 RUN useradd -m appuser && chown -R appuser:appuser /app
 USER appuser
 
-EXPOSE 8000
+# Railway uses PORT environment variable
+ENV PORT=${PORT:-8000}
 
-CMD ["gunicorn", "schmovies.wsgi:application", "--bind", "0.0.0.0:8000"]
+EXPOSE ${PORT}
+
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
+# Switch back to root to fix permissions
+USER root
+RUN chmod +x /app/entrypoint.sh
+USER appuser
+
+CMD ["/app/entrypoint.sh"]
