@@ -41,71 +41,67 @@ const Quiz = ({
 
     // Check if it's the last question
     if (currentQuestionIndex === answers.length - 1) {
-      try {
-        const apiBaseUrl = getApiBaseUrl();
-        
-        // Try with CORS proxy first
-        try {
-          console.log("Submitting quiz using CORS proxy");
-          const url = `${apiBaseUrl}/quiz/submit-quiz/`;
-          
-          // Use fetch directly with the proxy for POST request
-          const proxyUrl = `https://corsproxy.io/?${url}`;
-          const proxyResponse = await fetch(proxyUrl, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ answers: answers })
-          });
-          
-          if (!proxyResponse.ok) {
-            throw new Error(`Proxy request failed with status ${proxyResponse.status}`);
-          }
-          
-          const proxyData = await proxyResponse.json();
-          console.log("Successfully submitted quiz via proxy", proxyData);
-          setResults(proxyData.recommendations);
-          setIsPopupOpen(true);
-          return;
-        } catch (proxyError) {
-          console.warn("Failed to submit quiz via proxy:", proxyError);
-          
-          // Try direct request
-          try {
-            console.log("Trying direct API request");
-            const response = await axios.post(`${apiBaseUrl}/quiz/submit-quiz/`, 
-              { answers: answers },
-              {
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Accept': 'application/json',
-                  'Origin': window.location.origin
-                },
-                timeout: 5000
-              }
-            );
-            console.log("Quiz submission successful:", response.data);
-            setResults(response.data.recommendations);
-            setIsPopupOpen(true);
-            return;
-          } catch (directError) {
-            console.warn("Direct API request failed:", directError);
-            throw directError; // Re-throw to trigger fallback
-          }
-        }
-      } catch (error) {
-        console.error('All quiz submission attempts failed:', error);
-        // Use fallback movie recommendations
-        console.log("Using fallback movie recommendations");
-        // Filter sci-fi and action movies as fallback quiz results
-        const quizResults = fallbackMovies.filter(movie => 
-          movie.genre.toLowerCase().includes('sci-fi') || 
-          movie.genre.toLowerCase().includes('action')
+      console.log("Quiz completed, using fallback recommendations");
+      
+      // Get relevant movies based on the user's answers
+      let filteredMovies = [];
+      
+      // Check what genre the user selected
+      const genreAnswer = answers[0].selectedAnswer.toLowerCase();
+      if (genreAnswer.includes('action') || genreAnswer.includes('adventure')) {
+        filteredMovies = fallbackMovies.filter(movie => 
+          movie.genre.toLowerCase().includes('action') || 
+          movie.genre.toLowerCase().includes('adventure')
         );
-        setResults(quizResults.length > 0 ? quizResults : fallbackMovies.slice(0, 5));
-        setIsPopupOpen(true);
+      } else if (genreAnswer.includes('comedy')) {
+        filteredMovies = fallbackMovies.filter(movie => 
+          movie.genre.toLowerCase().includes('comedy')
+        );
+      } else if (genreAnswer.includes('drama')) {
+        filteredMovies = fallbackMovies.filter(movie => 
+          movie.genre.toLowerCase().includes('drama')
+        );
+      } else if (genreAnswer.includes('sci') || genreAnswer.includes('fantasy')) {
+        filteredMovies = fallbackMovies.filter(movie => 
+          movie.genre.toLowerCase().includes('sci-fi') || 
+          movie.genre.toLowerCase().includes('fantasy')
+        );
       }
+      
+      // If no matches or too few matches, use cheese level to determine
+      if (filteredMovies.length < 3) {
+        const cheeseAnswer = answers[3].selectedAnswer.toLowerCase();
+        if (cheeseAnswer === 'cheesy' || cheeseAnswer === 'silly') {
+          filteredMovies = fallbackMovies.filter(movie => 
+            movie.genre.toLowerCase().includes('comedy')
+          );
+        } else if (cheeseAnswer === 'highbrow') {
+          filteredMovies = fallbackMovies.filter(movie => 
+            movie.genre.toLowerCase().includes('drama')
+          );
+        }
+      }
+      
+      // If still no matches, just use all movies
+      if (filteredMovies.length < 3) {
+        filteredMovies = fallbackMovies;
+      }
+      
+      // Limit to 5 random results
+      let quizResults = filteredMovies;
+      if (filteredMovies.length > 5) {
+        // Get 5 random movies from the filtered list
+        quizResults = [];
+        const indices = new Set();
+        while (indices.size < 5) {
+          indices.add(Math.floor(Math.random() * filteredMovies.length));
+        }
+        indices.forEach(index => quizResults.push(filteredMovies[index]));
+      }
+      
+      console.log(`Selected ${quizResults.length} movies for quiz results`);
+      setResults(quizResults);
+      setIsPopupOpen(true);
     } else {
       // Move to the next question
       setCurrentQuestionIndex(currentQuestionIndex + 1);
