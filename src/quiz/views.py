@@ -1,21 +1,28 @@
 import os
 import json
 import requests
+import random
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from openai import OpenAI
 import logging
 
 logger = logging.getLogger(__name__)
 
-
+# Get API keys from environment
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
 TMDB_API_KEY = os.environ.get('TMDB_API_KEY')
 
-client = OpenAI(
-    # This is the default and can be omitted
-    api_key=OPENAI_API_KEY,
-)
+# Initialize OpenAI client only if API key is available
+client = None
+if OPENAI_API_KEY:
+    try:
+        from openai import OpenAI
+        client = OpenAI(api_key=OPENAI_API_KEY)
+        logger.info("OpenAI client initialized successfully")
+    except Exception as e:
+        logger.error(f"Failed to initialize OpenAI client: {str(e)}")
+else:
+    logger.warning("OPENAI_API_KEY not provided, OpenAI features will be disabled")
 
 @csrf_exempt
 def submit_quiz(request):
@@ -46,33 +53,102 @@ def submit_quiz(request):
 
 
 def get_movie_suggestions(answers):
+    # A fallback list of keywords to use if OpenAI is not available
+    fallback_keywords = [
+        "action", "adventure", "comedy", "drama", "thriller", 
+        "romance", "horror", "fantasy", "sci-fi", "animation",
+        "mystery", "western", "musical", "documentary", "crime"
+    ]
     
-    # Open ai stuff below
+    # Define predefined mappings for common quiz answers
+    common_mappings = {
+        "highbrow": "classic",
+        "decent": "drama",
+        "average": "comedy",
+        "silly": "family",
+        "cheesy": "romantic comedy",
+        "happy": "comedy",
+        "sad": "drama",
+        "thrilling": "thriller",
+        "nostalgic": "classic",
+        "inspiring": "documentary",
+        "aliens": "sci-fi",
+        "superheroes": "superhero",
+        "animals": "family",
+        "historical": "history",
+        "everyday people": "drama"
+    }
     
-    chat_completion = client.chat.completions.create(
-    messages=[
-        {
-            "role": "user",
-            "content": f'reduce these words describing a type of movie: ({answers}) down to one word',
-        }
-    ],
-    model="gpt-3.5-turbo",
-)
-    keyword = chat_completion.choices[0].message.content
-
-    print("result from open ai:", keyword)
+    try:
+        # Try to use OpenAI if available
+        if client:
+            chat_completion = client.chat.completions.create(
+                messages=[
+                    {
+                        "role": "user",
+                        "content": f'reduce these words describing a type of movie: ({answers}) down to one word',
+                    }
+                ],
+                model="gpt-3.5-turbo",
+            )
+            keyword = chat_completion.choices[0].message.content
+            logger.info(f"OpenAI generated keyword: {keyword}")
+        else:
+            # Try to use the mapping for known answers
+            for answer in answers:
+                if answer in common_mappings:
+                    keyword = common_mappings[answer]
+                    logger.info(f"Using mapped keyword for '{answer}': {keyword}")
+                    break
+            else:
+                # If no mapping found, use a random fallback keyword
+                keyword = random.choice(fallback_keywords)
+                logger.info(f"Using random fallback keyword: {keyword}")
+    except Exception as e:
+        # If there's any error with OpenAI, use a fallback approach
+        logger.error(f"Error using OpenAI: {str(e)}")
+        
+        # Try to use mappings first
+        for answer in answers:
+            if answer in common_mappings:
+                keyword = common_mappings[answer]
+                logger.info(f"Using fallback mapped keyword for '{answer}': {keyword}")
+                break
+        else:
+            # If all else fails, pick a random keyword
+            keyword = random.choice(fallback_keywords)
+            logger.info(f"Using random fallback keyword due to error: {keyword}")
     
     # Make request to TMDb API to fetch movie suggestions based on genre
-    url = f'https://api.themoviedb.org/3/search/movie?api_key={TMDB_API_KEY}&query={keyword}&include_adult=false'
-    
-    print('filled in url ',url)
-    
-    response = requests.get(url)
-    if response.status_code == 200:
-        data = response.json()
-        # Extract movie suggestions from API response
-        movies = data.get('results', [])
-        return movies
-    else:
-        # If API request fails, return an empty list
+    if not TMDB_API_KEY:
+        logger.error("TMDB_API_KEY not provided, cannot fetch movies")
+        return []
+        
+    try:
+        url = f'https://api.themoviedb.org/3/search/movie?api_key={TMDB_API_KEY}&query={keyword}&include_adult=false'
+        logger.info(f"Making TMDB API request with keyword: {keyword}")
+        
+        response = requests.get(url)
+        if response.status_code == 200:
+            data = response.json()
+            # Extract movie suggestions from API response
+            movies = data.get('results', [])
+            logger.info(f"TMDB API returned {len(movies)} movies")
+            return movies
+        else:
+            logger.error(f"TMDB API request failed with status code: {response.status_code}")
+            # Try a popular movies fallback if search fails
+            fallback_url = f'https://api.themoviedb.org/3/movie/popular?api_key={TMDB_API_KEY}&include_adult=false'
+            fallback_response = requests.get(fallback_url)
+            
+            if fallback_response.status_code == 200:
+                fallback_data = fallback_response.json()
+                fallback_movies = fallback_data.get('results', [])
+                logger.info(f"Fallback to popular movies returned {len(fallback_movies)} movies")
+                return fallback_movies
+            else:
+                logger.error(f"TMDB fallback API request also failed with status code: {fallback_response.status_code}")
+                return []
+    except Exception as e:
+        logger.error(f"Error making TMDB API request: {str(e)}")
         return []

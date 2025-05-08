@@ -24,10 +24,31 @@ const MovieList = ({
     async function fetchMovies() {
       try {
         const apiBaseUrl = getApiBaseUrl();
-        const response = await axios.get(`${apiBaseUrl}/api/movies/movies/`);
+        console.log(`Fetching movies from API URL: ${apiBaseUrl}/api/movies/movies/`);
+        
+        const response = await axios.get(`${apiBaseUrl}/api/movies/movies/`, {
+          timeout: 10000 // 10 second timeout
+        });
+        
+        console.log(`Received ${response.data.length} movies from API`);
         setMovies(response.data);
+        
+        // Debug first few movies if available
+        if (response.data.length > 0) {
+          console.log("Sample movies:", response.data.slice(0, 3));
+        }
       } catch (error) {
         console.error("Error fetching movies:", error);
+        console.error("Error details:", error.response || "No response data");
+        
+        // Try to fetch debug info
+        try {
+          const apiBaseUrl = getApiBaseUrl();
+          const debugResponse = await axios.get(`${apiBaseUrl}/debug/`);
+          console.log("Backend debug info:", debugResponse.data);
+        } catch (debugError) {
+          console.error("Failed to fetch debug info:", debugError);
+        }
       }
     }
     fetchMovies();
