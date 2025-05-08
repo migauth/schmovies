@@ -43,17 +43,17 @@ python manage.py migrate --noinput
 # Collect static files
 python manage.py collectstatic --noinput
 
-# Check if there are movies in the database
-MOVIE_COUNT=$(python manage.py fetch_movies --count | grep "Total movies in database:" | awk '{print $5}')
-echo "Current movie count: $MOVIE_COUNT"
+# Try to run the fetch_movies command to check movie count
+echo "Checking for existing movies..."
+python manage.py fetch_movies --count || echo "Command failed, proceeding anyway"
 
-# If there are no movies, fetch them
-if [ "$MOVIE_COUNT" -lt 10 ]; then
-  echo "Populating database with movies..."
-  python manage.py fetch_movies
-else
-  echo "Database already has movies, skipping fetch"
-fi
+# Run the database initialization script, which will only populate if needed
+echo "Running database initialization script..."
+python init_db.py || echo "Init script failed, proceeding anyway"
+
+# Check movie count again to confirm
+echo "Verifying movie count..."
+python manage.py fetch_movies --count || echo "Command failed, proceeding anyway"
 
 # Start gunicorn
 exec gunicorn schmovies.wsgi:application --bind 0.0.0.0:${PORT:-8000}

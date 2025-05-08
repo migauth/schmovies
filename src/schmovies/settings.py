@@ -52,6 +52,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'schmovies.middleware.CorsMiddleware',  # Custom CORS middleware as a fallback
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -187,12 +188,16 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Configure CORS to allow requests from Netlify
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = True  # This will allow any origin
 CORS_ALLOW_CREDENTIALS = True
+
+# These specific origins are also explicitly allowed
+# This is a backup in case CORS_ALLOW_ALL_ORIGINS is not working
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "https://schmovies.netlify.app",
-    "https://schmovies-app.netlify.app",  # Add additional Netlify domains if needed
+    "https://schmovies-app.netlify.app",
+    "https://schmovieslive.netlify.app",
 ]
 
 # Additional CORS settings

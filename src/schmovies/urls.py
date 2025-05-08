@@ -79,6 +79,27 @@ def debug_info(request):
     
     return JsonResponse(debug_data)
 
+def movies_json(request):
+    """Direct JSON endpoint for movies that bypasses DRF"""
+    from django.http import JsonResponse
+    from movies.models.movie import Movie
+    
+    # Add CORS headers directly
+    response = JsonResponse(list(Movie.objects.values()), safe=False)
+    response["Access-Control-Allow-Origin"] = "*"
+    response["Access-Control-Allow-Methods"] = "GET, OPTIONS"
+    response["Access-Control-Allow-Headers"] = "Content-Type"
+    return response
+
+def movies_options(request):
+    """Handle OPTIONS requests for movies endpoint"""
+    from django.http import HttpResponse
+    response = HttpResponse()
+    response["Access-Control-Allow-Origin"] = "*"
+    response["Access-Control-Allow-Methods"] = "GET, OPTIONS"
+    response["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+    return response
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/movies/', include('movies.urls')),
@@ -86,6 +107,8 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('health/', health_check, name='health_check'),
     path('debug/', debug_info, name='debug_info'),
+    path('movies.json', movies_json, name='movies_json'),
+    path('movies.json/options', movies_options, name='movies_options'),
 ]
 
 # Serve static files in development
