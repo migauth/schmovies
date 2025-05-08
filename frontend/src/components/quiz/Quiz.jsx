@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { getApiBaseUrl } from '../../utils/apiConfig';
 import GenreQuestion from './GenreQuestion';
 import MoodQuestion from './MoodQuestion';
 import CharactersQuestion from './CharactersQuestion';
@@ -38,7 +39,8 @@ const Quiz = ({
     // Check if it's the last question
     if (currentQuestionIndex === answers.length - 1) {
       try {
-        const response = await axios.post('http://127.0.0.1:8000/quiz/submit-quiz/', { answers: answers });
+        const apiBaseUrl = getApiBaseUrl();
+        const response = await axios.post(`${apiBaseUrl}/quiz/submit-quiz/`, { answers: answers });
         setResults(response.data.recommendations);
         setIsPopupOpen(true);
       } catch (error) {

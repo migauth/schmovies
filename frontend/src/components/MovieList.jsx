@@ -3,6 +3,7 @@ import axios from "axios";
 import MoviePopup from "./MoviePopup";
 import PopularMovies from "./PopularMovies";
 import NewReleases from "./NewReleases";
+import { getApiBaseUrl } from '../utils/apiConfig';
 import "../styles/MovieList.scss";
 
 const MovieList = ({
@@ -21,11 +22,8 @@ const MovieList = ({
   useEffect(() => {
     async function fetchMovies() {
       try {
-        // Determine API URL based on environment
-const apiUrl = process.env.NODE_ENV === 'production' 
-  ? "/api/movies/movies/" 
-  : "http://localhost:8000/api/movies/movies/";
-const response = await axios.get(apiUrl);
+        const apiBaseUrl = getApiBaseUrl();
+        const response = await axios.get(`${apiBaseUrl}/api/movies/movies/`);
         setMovies(response.data);
       } catch (error) {
         console.error("Error fetching movies:", error);

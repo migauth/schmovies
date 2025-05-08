@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { getApiBaseUrl } from '../utils/apiConfig';
 import '../styles/Login.scss';
 
 const Login = ({ onLoginSuccess }) => {
@@ -11,8 +12,9 @@ const Login = ({ onLoginSuccess }) => {
     e.preventDefault();
 
     try {
+      const apiBaseUrl = getApiBaseUrl();
       const response = await axios.post(
-        'http://127.0.0.1:8000/users/login/',
+        `${apiBaseUrl}/users/login/`,
         { username, password }
       );
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { getApiBaseUrl } from '../utils/apiConfig';
 import '../styles/Register.scss'; // Import the SCSS file
 
 
@@ -22,7 +23,8 @@ const Registration = () => {
     e.preventDefault();
     console.log('Form Data:', formData); // Add this console log
     try {
-      const response = await axios.post('http://127.0.0.1:8000/users/register/', formData);
+      const apiBaseUrl = getApiBaseUrl();
+      const response = await axios.post(`${apiBaseUrl}/users/register/`, formData);
       console.log('Registration successful:', response.data);
       setRegistered(true);
       window.location = '/'; // Redirect to the home page
