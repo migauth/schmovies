@@ -83,13 +83,30 @@ def movies_json(request):
     """Direct JSON endpoint for movies that bypasses DRF"""
     from django.http import JsonResponse
     from movies.models.movie import Movie
+    import logging
     
-    # Add CORS headers directly
-    response = JsonResponse(list(Movie.objects.values()), safe=False)
-    response["Access-Control-Allow-Origin"] = "*"
-    response["Access-Control-Allow-Methods"] = "GET, OPTIONS"
-    response["Access-Control-Allow-Headers"] = "Content-Type"
-    return response
+    logger = logging.getLogger(__name__)
+    logger.info(f"movies_json view called for path: {request.path}")
+    
+    try:
+        # Get all movies from the database
+        movies = list(Movie.objects.values())
+        logger.info(f"Successfully retrieved {len(movies)} movies from database")
+        
+        # Add CORS headers directly
+        response = JsonResponse(movies, safe=False)
+        response["Access-Control-Allow-Origin"] = "*"
+        response["Access-Control-Allow-Methods"] = "GET, OPTIONS"
+        response["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+        return response
+    except Exception as e:
+        logger.error(f"Error retrieving movies: {str(e)}")
+        # Return error with CORS headers
+        response = JsonResponse({"error": f"Failed to retrieve movies: {str(e)}"}, status=500)
+        response["Access-Control-Allow-Origin"] = "*"
+        response["Access-Control-Allow-Methods"] = "GET, OPTIONS"
+        response["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+        return response
 
 def movies_options(request):
     """Handle OPTIONS requests for movies endpoint"""
@@ -103,6 +120,9 @@ def movies_options(request):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/movies/', include('movies.urls')),
+    # Add direct movies endpoint without relying on the movies app URL inclusion
+    path('api/movies/movies/', movies_json, name='movies_direct'),
+    path('api/movies/movies', movies_json, name='movies_direct_no_slash'),
     path('quiz/', include('quiz.urls')),
     path('users/', include('users.urls')),
     path('health/', health_check, name='health_check'),

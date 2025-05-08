@@ -52,6 +52,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'schmovies.middleware.SimpleMoviesMiddleware',  # Special middleware for movies endpoint
     'schmovies.middleware.CorsMiddleware',  # Custom CORS middleware as a fallback
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -187,18 +188,35 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Configure CORS to allow requests from Netlify
+# Configure CORS to allow requests from everywhere
 CORS_ALLOW_ALL_ORIGINS = True  # This will allow any origin
 CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True   # Another setting that does the same thing
 
-# These specific origins are also explicitly allowed
-# This is a backup in case CORS_ALLOW_ALL_ORIGINS is not working
+# Add specific important domains
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "https://schmovies.netlify.app",
     "https://schmovies-app.netlify.app",
     "https://schmovieslive.netlify.app",
 ]
+
+# Allow all headers and methods
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
+
+# Extended CORS configuration
+CORS_EXPOSE_HEADERS = ['Content-Type', 'X-CSRFToken']
+CORS_PREFLIGHT_MAX_AGE = 86400  # 24 hours
 
 # Additional CORS settings
 CORS_ALLOW_METHODS = [
