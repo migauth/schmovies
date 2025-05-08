@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { getApiBaseUrl } from '../../utils/apiConfig';
-import { fetchWithProxy } from '../../utils/corsProxy';
+import { fetchWithProxy, postWithProxy } from '../../utils/corsProxy';
 import GenreQuestion from './GenreQuestion';
 import MoodQuestion from './MoodQuestion';
 import CharactersQuestion from './CharactersQuestion';
@@ -41,67 +41,96 @@ const Quiz = ({
 
     // Check if it's the last question
     if (currentQuestionIndex === answers.length - 1) {
-      console.log("Quiz completed, using fallback recommendations");
-      
-      // Get relevant movies based on the user's answers
-      let filteredMovies = [];
-      
-      // Check what genre the user selected
-      const genreAnswer = answers[0].selectedAnswer.toLowerCase();
-      if (genreAnswer.includes('action') || genreAnswer.includes('adventure')) {
-        filteredMovies = fallbackMovies.filter(movie => 
-          movie.genre.toLowerCase().includes('action') || 
-          movie.genre.toLowerCase().includes('adventure')
-        );
-      } else if (genreAnswer.includes('comedy')) {
-        filteredMovies = fallbackMovies.filter(movie => 
-          movie.genre.toLowerCase().includes('comedy')
-        );
-      } else if (genreAnswer.includes('drama')) {
-        filteredMovies = fallbackMovies.filter(movie => 
-          movie.genre.toLowerCase().includes('drama')
-        );
-      } else if (genreAnswer.includes('sci') || genreAnswer.includes('fantasy')) {
-        filteredMovies = fallbackMovies.filter(movie => 
-          movie.genre.toLowerCase().includes('sci-fi') || 
-          movie.genre.toLowerCase().includes('fantasy')
-        );
-      }
-      
-      // If no matches or too few matches, use cheese level to determine
-      if (filteredMovies.length < 3) {
-        const cheeseAnswer = answers[3].selectedAnswer.toLowerCase();
-        if (cheeseAnswer === 'cheesy' || cheeseAnswer === 'silly') {
+      try {
+        const apiBaseUrl = getApiBaseUrl();
+        const quizEndpoint = `${apiBaseUrl}/quiz/submit-quiz/`;
+        
+        console.log("Quiz completed, submitting answers to API");
+        console.log("Quiz answers:", answers);
+        
+        try {
+          // Try to submit quiz using our improved proxy utility
+          const apiResponse = await postWithProxy(quizEndpoint, { answers });
+          
+          if (apiResponse && apiResponse.recommendations && 
+              Array.isArray(apiResponse.recommendations) && 
+              apiResponse.recommendations.length > 0) {
+            
+            console.log(`Successfully got ${apiResponse.recommendations.length} movie recommendations from API`);
+            setResults(apiResponse.recommendations);
+            setIsPopupOpen(true);
+            return;
+          } else {
+            console.warn('API returned empty or invalid recommendations');
+            throw new Error('Invalid API recommendations');
+          }
+        } catch (apiError) {
+          console.error('Failed to get recommendations from API:', apiError);
+          throw apiError; // Fall through to local filtering
+        }
+      } catch (error) {
+        console.log("Using local fallback recommendations instead");
+        
+        // Get relevant movies based on the user's answers
+        let filteredMovies = [];
+        
+        // Check what genre the user selected
+        const genreAnswer = answers[0].selectedAnswer.toLowerCase();
+        if (genreAnswer.includes('action') || genreAnswer.includes('adventure')) {
+          filteredMovies = fallbackMovies.filter(movie => 
+            movie.genre.toLowerCase().includes('action') || 
+            movie.genre.toLowerCase().includes('adventure')
+          );
+        } else if (genreAnswer.includes('comedy')) {
           filteredMovies = fallbackMovies.filter(movie => 
             movie.genre.toLowerCase().includes('comedy')
           );
-        } else if (cheeseAnswer === 'highbrow') {
+        } else if (genreAnswer.includes('drama')) {
           filteredMovies = fallbackMovies.filter(movie => 
             movie.genre.toLowerCase().includes('drama')
           );
+        } else if (genreAnswer.includes('sci') || genreAnswer.includes('fantasy')) {
+          filteredMovies = fallbackMovies.filter(movie => 
+            movie.genre.toLowerCase().includes('sci-fi') || 
+            movie.genre.toLowerCase().includes('fantasy')
+          );
         }
-      }
-      
-      // If still no matches, just use all movies
-      if (filteredMovies.length < 3) {
-        filteredMovies = fallbackMovies;
-      }
-      
-      // Limit to 5 random results
-      let quizResults = filteredMovies;
-      if (filteredMovies.length > 5) {
-        // Get 5 random movies from the filtered list
-        quizResults = [];
-        const indices = new Set();
-        while (indices.size < 5) {
-          indices.add(Math.floor(Math.random() * filteredMovies.length));
+        
+        // If no matches or too few matches, use cheese level to determine
+        if (filteredMovies.length < 3) {
+          const cheeseAnswer = answers[3].selectedAnswer.toLowerCase();
+          if (cheeseAnswer === 'cheesy' || cheeseAnswer === 'silly') {
+            filteredMovies = fallbackMovies.filter(movie => 
+              movie.genre.toLowerCase().includes('comedy')
+            );
+          } else if (cheeseAnswer === 'highbrow') {
+            filteredMovies = fallbackMovies.filter(movie => 
+              movie.genre.toLowerCase().includes('drama')
+            );
+          }
         }
-        indices.forEach(index => quizResults.push(filteredMovies[index]));
+        
+        // If still no matches, just use all movies
+        if (filteredMovies.length < 3) {
+          filteredMovies = fallbackMovies;
+        }
+        
+        // Limit to 5 random results
+        let quizResults = filteredMovies;
+        if (filteredMovies.length > 5) {
+          // Get 5 random movies from the filtered list
+          quizResults = [];
+          const indices = new Set();
+          while (indices.size < 5) {
+            indices.add(Math.floor(Math.random() * filteredMovies.length));
+          }
+          indices.forEach(index => quizResults.push(filteredMovies[index]));
+        }
+        
+        console.log(`Selected ${quizResults.length} movies for quiz results`);
+        setResults(quizResults);
+        setIsPopupOpen(true);
       }
-      
-      console.log(`Selected ${quizResults.length} movies for quiz results`);
-      setResults(quizResults);
-      setIsPopupOpen(true);
     } else {
       // Move to the next question
       setCurrentQuestionIndex(currentQuestionIndex + 1);

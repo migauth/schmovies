@@ -2,71 +2,147 @@
  * CORS Proxy utility
  * 
  * This utility provides a way to make API calls to endpoints that have CORS issues.
- * It routes requests through public CORS proxies that add the necessary headers.
+ * It uses a reliable public CORS proxy or adds additional headers to direct requests.
  */
 
-// List of public CORS proxies to try
-const CORS_PROXIES = [
-  'https://corsproxy.io/?',
-  'https://cors-anywhere.herokuapp.com/',
-  'https://api.allorigins.win/raw?url=',
-];
+// Our primary proxy for CORS-enabled requests
+const PRIMARY_PROXY = 'https://proxy.cors.sh/';
+
+// API key for cors.sh if needed (leave blank if not required)
+const CORS_API_KEY = '';
 
 /**
- * Creates a proxied URL by adding a CORS proxy in front of the original URL
- * Tries multiple proxies in order if specified
+ * Makes a GET request to an API using CORS proxy or direct call with fallback
  * 
- * @param {string} url - The original URL to proxy
- * @param {number} proxyIndex - Index of proxy to use (defaults to 0)
- * @returns {string} The proxied URL
+ * @param {string} url - The API URL to call
+ * @param {Object} options - Additional fetch options
+ * @returns {Promise<any>} - The JSON response from the API
  */
-export const createProxiedUrl = (url, proxyIndex = 0) => {
-  // Make sure we don't exceed the available proxies
-  const safeIndex = proxyIndex % CORS_PROXIES.length;
+export const fetchWithProxy = async (url, options = {}) => {
+  console.log(`Fetching data from: ${url}`);
   
-  // For the allorigins proxy, we need to encode the URL
-  if (CORS_PROXIES[safeIndex].includes('allorigins')) {
-    return `${CORS_PROXIES[safeIndex]}${encodeURIComponent(url)}`;
+  // Define headers
+  const headers = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    'x-cors-api-key': CORS_API_KEY,
+    ...options.headers
+  };
+  
+  try {
+    // First try direct request with credentials: 'omit' to avoid CORS preflight
+    console.log("Attempting direct API request");
+    const directResponse = await fetch(url, {
+      ...options,
+      credentials: 'omit',
+      mode: 'cors',
+      headers
+    });
+    
+    if (directResponse.ok) {
+      const data = await directResponse.json();
+      console.log("Direct API request successful");
+      return data;
+    }
+    
+    throw new Error(`Direct request failed with status: ${directResponse.status}`);
+  } catch (directError) {
+    console.warn("Direct request failed:", directError);
+    
+    // Try using the CORS proxy
+    try {
+      console.log(`Trying CORS proxy: ${PRIMARY_PROXY}${url}`);
+      const proxyResponse = await fetch(`${PRIMARY_PROXY}${url}`, {
+        ...options,
+        headers: {
+          ...headers,
+          'Origin': 'https://schmovieslive.netlify.app'
+        }
+      });
+      
+      if (!proxyResponse.ok) {
+        throw new Error(`Proxy request failed with status: ${proxyResponse.status}`);
+      }
+      
+      const data = await proxyResponse.json();
+      console.log("Proxy request successful");
+      return data;
+    } catch (proxyError) {
+      console.error("CORS proxy request failed:", proxyError);
+      throw proxyError;
+    }
   }
-  
-  // For other proxies, we can just concatenate
-  return `${CORS_PROXIES[safeIndex]}${url}`;
 };
 
 /**
- * Fetch data from a URL using a CORS proxy
- * Automatically tries multiple proxies if one fails
+ * Makes a POST request to an API using CORS proxy or direct call with fallback
  * 
- * @param {string} url - The original URL to fetch
- * @param {Object} options - Fetch options
- * @returns {Promise<any>} - Resolves to the fetched data (parsed JSON)
+ * @param {string} url - The API URL to call
+ * @param {Object} data - The data to send
+ * @param {Object} options - Additional fetch options
+ * @returns {Promise<any>} - The JSON response from the API
  */
-export const fetchWithProxy = async (url, options = {}) => {
-  // Try each proxy in order
-  for (let i = 0; i < CORS_PROXIES.length; i++) {
+export const postWithProxy = async (url, data, options = {}) => {
+  console.log(`Posting data to: ${url}`);
+  
+  // Define headers
+  const headers = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    'x-cors-api-key': CORS_API_KEY,
+    ...options.headers
+  };
+  
+  try {
+    // First try direct request
+    console.log("Attempting direct API POST request");
+    const directResponse = await fetch(url, {
+      ...options,
+      method: 'POST',
+      credentials: 'omit',
+      mode: 'cors',
+      headers,
+      body: JSON.stringify(data)
+    });
+    
+    if (directResponse.ok) {
+      const responseData = await directResponse.json();
+      console.log("Direct API POST request successful");
+      return responseData;
+    }
+    
+    throw new Error(`Direct POST request failed with status: ${directResponse.status}`);
+  } catch (directError) {
+    console.warn("Direct POST request failed:", directError);
+    
+    // Try using the CORS proxy
     try {
-      const proxiedUrl = createProxiedUrl(url, i);
-      console.log(`Trying proxy ${i + 1}/${CORS_PROXIES.length}: ${proxiedUrl}`);
+      console.log(`Trying CORS proxy for POST: ${PRIMARY_PROXY}${url}`);
+      const proxyResponse = await fetch(`${PRIMARY_PROXY}${url}`, {
+        ...options,
+        method: 'POST',
+        headers: {
+          ...headers,
+          'Origin': 'https://schmovieslive.netlify.app'
+        },
+        body: JSON.stringify(data)
+      });
       
-      const response = await fetch(proxiedUrl, options);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      if (!proxyResponse.ok) {
+        throw new Error(`Proxy POST request failed with status: ${proxyResponse.status}`);
       }
       
-      return await response.json();
-    } catch (error) {
-      console.warn(`Proxy ${i + 1} failed:`, error);
-      
-      // If this is the last proxy, rethrow the error
-      if (i === CORS_PROXIES.length - 1) {
-        throw error;
-      }
-      // Otherwise try the next proxy
+      const responseData = await proxyResponse.json();
+      console.log("Proxy POST request successful");
+      return responseData;
+    } catch (proxyError) {
+      console.error("CORS proxy POST request failed:", proxyError);
+      throw proxyError;
     }
   }
 };
 
 export default {
-  createProxiedUrl,
-  fetchWithProxy
+  fetchWithProxy,
+  postWithProxy
 };
