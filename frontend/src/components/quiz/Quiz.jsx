@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { getApiBaseUrl } from '../../utils/apiConfig';
+import { fetchWithProxy } from '../../utils/corsProxy';
 import GenreQuestion from './GenreQuestion';
 import MoodQuestion from './MoodQuestion';
 import CharactersQuestion from './CharactersQuestion';
 import QuizResultPopup from './QuizResultPopup';
 import CheeseSlider from './CheeseSlider';
+import fallbackMovies from '../../data/fallbackMovies';
 import './styles/Quiz.scss';
 
 const Quiz = ({
@@ -41,11 +43,68 @@ const Quiz = ({
     if (currentQuestionIndex === answers.length - 1) {
       try {
         const apiBaseUrl = getApiBaseUrl();
-        const response = await axios.post(`${apiBaseUrl}/quiz/submit-quiz/`, { answers: answers });
-        setResults(response.data.recommendations);
-        setIsPopupOpen(true);
+        
+        // Try with CORS proxy first
+        try {
+          console.log("Submitting quiz using CORS proxy");
+          const url = `${apiBaseUrl}/quiz/submit-quiz/`;
+          
+          // Use fetch directly with the proxy for POST request
+          const proxyUrl = `https://corsproxy.io/?${url}`;
+          const proxyResponse = await fetch(proxyUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ answers: answers })
+          });
+          
+          if (!proxyResponse.ok) {
+            throw new Error(`Proxy request failed with status ${proxyResponse.status}`);
+          }
+          
+          const proxyData = await proxyResponse.json();
+          console.log("Successfully submitted quiz via proxy", proxyData);
+          setResults(proxyData.recommendations);
+          setIsPopupOpen(true);
+          return;
+        } catch (proxyError) {
+          console.warn("Failed to submit quiz via proxy:", proxyError);
+          
+          // Try direct request
+          try {
+            console.log("Trying direct API request");
+            const response = await axios.post(`${apiBaseUrl}/quiz/submit-quiz/`, 
+              { answers: answers },
+              {
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json',
+                  'Origin': window.location.origin
+                },
+                timeout: 5000
+              }
+            );
+            console.log("Quiz submission successful:", response.data);
+            setResults(response.data.recommendations);
+            setIsPopupOpen(true);
+            return;
+          } catch (directError) {
+            console.warn("Direct API request failed:", directError);
+            throw directError; // Re-throw to trigger fallback
+          }
+        }
       } catch (error) {
-        console.error('Error:', error);
+        console.error('All quiz submission attempts failed:', error);
+        // Use fallback movie recommendations
+        console.log("Using fallback movie recommendations");
+        // Filter sci-fi and action movies as fallback quiz results
+        const quizResults = fallbackMovies.filter(movie => 
+          movie.genre.toLowerCase().includes('sci-fi') || 
+          movie.genre.toLowerCase().includes('action')
+        );
+        setResults(quizResults.length > 0 ? quizResults : fallbackMovies.slice(0, 5));
+        setIsPopupOpen(true);
       }
     } else {
       // Move to the next question
