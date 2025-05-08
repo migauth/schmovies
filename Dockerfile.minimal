@@ -28,11 +28,17 @@ ENV PORT=8000
 # Expose port
 EXPOSE 8000
 
-# Create a simple server file that will immediately respond to any request
-RUN echo 'import http.server\nimport socketserver\n\nclass Handler(http.server.SimpleHTTPRequestHandler):\n    def do_GET(self):\n        self.send_response(200)\n        self.send_header("Content-type", "text/html")\n        self.end_headers()\n        self.wfile.write("OK".encode())\n\nhandler = Handler\nwith socketserver.TCPServer(("", 8000), handler) as httpd:\n    print("Serving at port", 8000)\n    httpd.serve_forever()' > simple_server.py
+# Create startup script
+RUN echo '#!/bin/bash\n\
+echo "Starting migrations..."\n\
+python manage.py migrate\n\
+echo "Collecting static files..."\n\
+python manage.py collectstatic --noinput\n\
+echo "Populating database with movies..."\n\
+python manage.py shell -c "from movies.services import fetch_and_save_all_movies; fetch_and_save_all_movies()" || true\n\
+echo "Starting Django server..."\n\
+gunicorn --bind 0.0.0.0:$PORT schmovies.wsgi\n\
+' > start.sh && chmod +x start.sh
 
-# Start script that will run Django migrations and then start the app
-RUN echo '#!/bin/bash\necho "Starting migrations..."\npython manage.py migrate\necho "Collecting static files..."\npython manage.py collectstatic --noinput\necho "Starting Django server..."\ngunicorn --bind 0.0.0.0:$PORT schmovies.wsgi' > start.sh && chmod +x start.sh
-
-# Start the simple server for Railway's health check
-CMD python simple_server.py
+# Start the Django application
+CMD ./start.sh

@@ -75,7 +75,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'schmovies.wsgi.application'
 
-CSRF_COOKIE_SECURE = True
+# Security settings for production
+CSRF_COOKIE_SECURE = not DEBUG  # Only use secure cookies in production
+SESSION_COOKIE_SECURE = not DEBUG  # Only use secure session in production
+SECURE_SSL_REDIRECT = False  # Disable SSL redirect as Railway handles it
 
 
 # Database
