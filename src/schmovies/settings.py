@@ -19,8 +19,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
+import os
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-d%xu6!rp-8lq=7m9szn(b3d^4cx3$mdm!o8v0#kf3+@4yw%e=v'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -82,7 +84,6 @@ CSRF_COOKIE_SECURE = True
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 from decouple import config
-import os
 from dotenv import load_dotenv
 
 load_dotenv()
