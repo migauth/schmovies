@@ -11,7 +11,7 @@ const Registration = () => {
     password2: ''
   });
   const [error, setError] = useState('');
-  const [registered, setRegistered] = useState(false); // New state to track registration status
+  const [, setRegistered] = useState(false); // New state to track registration status
 
   const handleChange = (e) => {
     const { name, value } = e.target;
