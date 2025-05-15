@@ -23,7 +23,7 @@ const Quiz = ({
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [results, setResults] = useState([]);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [currentResultIndex, setCurrentResultIndex] = useState(0);
+  const [, setCurrentResultIndex] = useState(0);
 
 
   const handleAnswerChange = (selectedAnswer) => {
