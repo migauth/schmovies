@@ -17,11 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, reverse_lazy
 from django.contrib.auth import views as auth_views
+from django.shortcuts import redirect
 
 
-
+def redirect_to_movies(request):
+    return redirect('/api/movies/')
 
 urlpatterns = [
+    path('', redirect_to_movies),
     path('admin/', admin.site.urls),
     path('api/movies/', include('movies.urls')),
     path('quiz/', include('quiz.urls')),
