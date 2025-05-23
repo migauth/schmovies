@@ -9,7 +9,7 @@ except Exception as e:
     print("WSGI error:", e)
     sys.exit(1)
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'your_project.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'schmovies.settings')
 application = get_wsgi_application()
 
 
