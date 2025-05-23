@@ -3,6 +3,15 @@
 import os
 import sys
 
+try:
+    from django.core.wsgi import get_wsgi_application
+except Exception as e:
+    print("WSGI error:", e)
+    sys.exit(1)
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'your_project.settings')
+application = get_wsgi_application()
+
 
 def main():
     """Run administrative tasks."""
