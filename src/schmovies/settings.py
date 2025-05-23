@@ -92,16 +92,26 @@ OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 print("TMDB_API_KEY here: ",TMDB_API_KEY) # Add this line to check if the key is being loaded
 print("OPENAI_API_KEY here: ",OPENAI_API_KEY) # Add this line to check if the key is being loaded
 
+
+import dj_database_url
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': 'db',
-        'PORT': config('DB_PORT'),
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL')
+    )
 }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': config('DB_NAME'),
+#         'USER': config('DB_USER'),
+#         'PASSWORD': config('DB_PASSWORD'),
+#         'HOST': 'db',
+#         'PORT': config('DB_PORT'),
+#     }
+# }
 
 
 
