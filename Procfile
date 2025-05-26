@@ -1,1 +1,1 @@
-web: gunicorn app:app
+web: gunicorn schmovies.wsgi:application --chdir src
