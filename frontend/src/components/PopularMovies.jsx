@@ -10,8 +10,7 @@ const PopularMovies = ({
   setFavouriteMovies,
   currentUser }) => {
 
-      const popularMovies = movies.filter((movie) => movie.popularity >= "400");
-
+  // const popularMovies = movies.filter((movie) => movie.popularity >= "400");
 
   return (
     <div className="movie-category">
@@ -19,7 +18,7 @@ const PopularMovies = ({
         <h2>Popular Movies</h2>
       </div>
       <div className="movie-list-container">
-        {popularMovies.map((movie) => (
+        {movies.map((movie) => (
           <MovieItem
             key={movie.id}
             movie={movie}

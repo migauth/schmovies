@@ -37,7 +37,7 @@ class MovieListAPIView(APIView):
                         'genre': movie['genres'],
                         'release_year': movie['release_date'][:4],
                         'poster_url': f"https://image.tmdb.org/t/p/w500{movie['poster_path']}",
-                        'popularity': movie['popularity']
+                        # 'popularity': movie['popularity']
                     }
                 )
             # Fetch movies from the database and serialize
