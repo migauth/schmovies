@@ -23,7 +23,7 @@ const Quiz = ({
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [results, setResults] = useState([]);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [, setCurrentResultIndex] = useState(0);
+  const [currentResultIndex, setCurrentResultIndex] = useState(0);
 
 
   const handleAnswerChange = (selectedAnswer) => {
@@ -39,7 +39,7 @@ const Quiz = ({
     if (currentQuestionIndex === answers.length - 1) {
       try {
         const response = await axios.post('http://127.0.0.1:8000/quiz/submit-quiz/', { answers: answers });
-        setResults(response.data.recommendations);
+        setCurrentResultIndex(Math.floor(Math.random() * response.data.recommendations.length));
         setIsPopupOpen(true);
       } catch (error) {
         console.error('Error:', error);
@@ -109,7 +109,7 @@ const Quiz = ({
       </form>
       {isPopupOpen && results.length > 0 && (
         <QuizResultPopup
-          movie={results[Math.floor(Math.random() * results.length)]}
+          movie={results[currentResultIndex]}
           handleRestartQuiz={handleRestartQuiz}
           closePopup={closePopup}
           onNext={handleNextMovieResult}
