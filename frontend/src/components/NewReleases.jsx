@@ -11,7 +11,7 @@ const NewReleases = ({
   currentUser
 }) => {
 
-  const movies2024 = movies.filter((movie) => movie.release_year === "2024");
+  const movies2024 = movies.filter((movie) => movie.release_year >= "2025");
 
   return (
     <div className="movie-category">
