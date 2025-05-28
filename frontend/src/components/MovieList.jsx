@@ -21,7 +21,7 @@ const MovieList = ({
   useEffect(() => {
     async function fetchMovies() {
       try {
-        const response = await axios.get("https://schmovies-cc8d8692549b.herokuapp.com/quiz/submit-quiz/");
+        const response = await axios.get("https://schmovies-cc8d8692549b.herokuapp.com/api/movies/");
         setMovies(response.data);
       } catch (error) {
         console.error("Error fetching movies:", error);

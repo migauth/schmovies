@@ -38,7 +38,7 @@ const Quiz = ({
     // Check if it's the last question
     if (currentQuestionIndex === answers.length - 1) {
       try {
-        const response = await axios.post('http://127.0.0.1:8000/quiz/submit-quiz/', { answers: answers });
+        const response = await axios.post('https://schmovies-cc8d8692549b.herokuapp.com/quiz/submit-quiz/', { answers: answers });
         setResults(response.data.recommendations);
         setCurrentResultIndex(Math.floor(Math.random() * response.data.recommendations.length));
         setIsPopupOpen(true);
