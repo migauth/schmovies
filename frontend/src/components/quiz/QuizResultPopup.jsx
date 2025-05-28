@@ -12,7 +12,7 @@ function QuizResultPopup({
   // Base URL for TMDb API images
   const baseUrl = "https://image.tmdb.org/t/p/w500/";
 
-  console.log(movie);
+  // console.log(movie);
 
   // Fallback image path
   const fallbackImage = "/images/reelAndHeartIcon2.png";
