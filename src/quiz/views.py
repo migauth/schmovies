@@ -39,7 +39,7 @@ def submit_quiz(request):
         recommendations = get_movie_suggestions(selected_answers)
 
         # Return movie recommendations as a JSON response
-        return JsonResponse({'recommendations': recommendations})
+        return JsonResponse({'recommendations': recommendations[:10]})
 
     # If the request method is not POST, return an error
     return JsonResponse({'error': 'Method not allowed'}, status=405)
