@@ -24,6 +24,7 @@ const Quiz = ({
   const [results, setResults] = useState([]);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [currentResultIndex, setCurrentResultIndex] = useState(0);
+  const [hasSubmitted, setHasSubmitted] = useState(false)
 
 
   const handleAnswerChange = (selectedAnswer) => {
@@ -35,8 +36,12 @@ const Quiz = ({
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    if (hasSubmitted) return;
+
+
     // Check if it's the last question
     if (currentQuestionIndex === answers.length - 1) {
+      setHasSubmitted(true);
       try {
         const response = await axios.post('https://schmovies-cc8d8692549b.herokuapp.com/quiz/submit-quiz/', { answers: answers });
         setResults(response.data.recommendations);
@@ -44,6 +49,7 @@ const Quiz = ({
         setIsPopupOpen(true);
       } catch (error) {
         console.error('Error:', error);
+        setHasSubmitted(false)
       }
     } else {
       // Move to the next question
@@ -65,6 +71,7 @@ const Quiz = ({
     setCurrentQuestionIndex(0);
     setResults([]);
     setIsPopupOpen(false);
+    setHasSubmitted(false)
   };
 
   const closePopup = () => {
