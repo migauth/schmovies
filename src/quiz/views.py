@@ -58,7 +58,9 @@ def get_movie_suggestions(answers):
     ],
     model="gpt-3.5-turbo",
 )
-    keyword = chat_completion.choices[0].message.content
+    keyword = chat_completion.choices[0].message.content.strip().split()[0].lower()
+    print("Sanitized keyword:", keyword)
+
 
     print("result from open ai:", keyword)
     
@@ -72,6 +74,7 @@ def get_movie_suggestions(answers):
         data = response.json()
         # Extract movie suggestions from API response
         movies = data.get('results', [])
+        print(f"Fetched {len(movies)} movies from TMDB.")
         return movies
     else:
         # If API request fails, return an empty list
