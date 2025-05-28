@@ -1,17 +1,13 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import GenreQuestion from './GenreQuestion';
-import MoodQuestion from './MoodQuestion';
-import CharactersQuestion from './CharactersQuestion';
-import QuizResultPopup from './QuizResultPopup';
-import CheeseSlider from './CheeseSlider';
-import './styles/Quiz.scss';
+import React, { useState } from "react";
+import axios from "axios";
+import GenreQuestion from "./GenreQuestion";
+import MoodQuestion from "./MoodQuestion";
+import CharactersQuestion from "./CharactersQuestion";
+import QuizResultPopup from "./QuizResultPopup";
+import CheeseSlider from "./CheeseSlider";
+import "./styles/Quiz.scss";
 
-const Quiz = ({
-  addToFavourites,
-  removeFromFavourites,
-  currentUser,
-}) => {
+const Quiz = ({ addToFavourites, removeFromFavourites, currentUser }) => {
   const initialAnswers = [
     { question: "Genre Preference", selectedAnswer: "" },
     { question: "Mood", selectedAnswer: "" },
@@ -24,8 +20,7 @@ const Quiz = ({
   const [results, setResults] = useState([]);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [currentResultIndex, setCurrentResultIndex] = useState(0);
-  const [hasSubmitted, setHasSubmitted] = useState(false)
-
+  const [hasSubmitted, setHasSubmitted] = useState(false);
 
   const handleAnswerChange = (selectedAnswer) => {
     const newAnswers = [...answers];
@@ -35,21 +30,30 @@ const Quiz = ({
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log("Submit clicked");
 
-    if (hasSubmitted) return;
-
+    if (hasSubmitted) {
+      console.log("Already submitted, skipping");
+      return;
+    }
 
     // Check if it's the last question
     if (currentQuestionIndex === answers.length - 1) {
       setHasSubmitted(true);
       try {
-        const response = await axios.post('https://schmovies-cc8d8692549b.herokuapp.com/quiz/submit-quiz/', { answers: answers });
+        const response = await axios.post(
+          "https://schmovies-cc8d8692549b.herokuapp.com/quiz/submit-quiz/",
+          { answers: answers }
+        );
+        console.log("API response:", response.data);
         setResults(response.data.recommendations);
-        setCurrentResultIndex(Math.floor(Math.random() * response.data.recommendations.length));
+        setCurrentResultIndex(
+          Math.floor(Math.random() * response.data.recommendations.length)
+        );
         setIsPopupOpen(true);
       } catch (error) {
-        console.error('Error:', error);
-        setHasSubmitted(false)
+        console.error("Error:", error);
+        setHasSubmitted(false);
       }
     } else {
       // Move to the next question
@@ -71,7 +75,7 @@ const Quiz = ({
     setCurrentQuestionIndex(0);
     setResults([]);
     setIsPopupOpen(false);
-    setHasSubmitted(false)
+    setHasSubmitted(false);
   };
 
   const closePopup = () => {
@@ -82,13 +86,33 @@ const Quiz = ({
     const currentQuestion = answers[currentQuestionIndex];
     switch (currentQuestion.question) {
       case "Genre Preference":
-        return <GenreQuestion question={currentQuestion} onChange={handleAnswerChange} />;
+        return (
+          <GenreQuestion
+            question={currentQuestion}
+            onChange={handleAnswerChange}
+          />
+        );
       case "Mood":
-        return <MoodQuestion question={currentQuestion} onChange={handleAnswerChange} />;
+        return (
+          <MoodQuestion
+            question={currentQuestion}
+            onChange={handleAnswerChange}
+          />
+        );
       case "Main Characters":
-        return <CharactersQuestion question={currentQuestion} onChange={handleAnswerChange} />;
+        return (
+          <CharactersQuestion
+            question={currentQuestion}
+            onChange={handleAnswerChange}
+          />
+        );
       case "Cheese":
-        return <CheeseSlider question={currentQuestion} onChange={handleAnswerChange} />;
+        return (
+          <CheeseSlider
+            question={currentQuestion}
+            onChange={handleAnswerChange}
+          />
+        );
       default:
         return null;
     }
