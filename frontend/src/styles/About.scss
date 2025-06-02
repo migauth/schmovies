@@ -3,7 +3,7 @@ $lime: "Limelight", sans-serif;
 
 .about-info {
   display: flex;
-
+  flex-direction: column;
   margin: 0 10%;
   font-size: 1.5em;
 }

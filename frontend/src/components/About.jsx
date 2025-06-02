@@ -6,22 +6,22 @@ function About() {
   return (
     <div className="about-info">
       <p>
-        Welcome to our movie app, a cinematic journey designed to cater to every
-        film enthusiast's needs. Dive into the world of new releases and popular
-        movies, all curated from the vast TMDB database. Our app is not just
-        about browsing; it's about discovering. With a simple yet engaging
-        interface, you can effortlessly navigate through the latest additions to
-        the silver screen and explore the timeless classics that have stood the
-        test of time. But that's not all. We've taken the movie experience to a
-        whole new level with our unique quiz feature. Answer a few questions
-        about your movie preferences, and let our AI engine do the magic. It
-        will analyze your responses and generate a personalized movie
-        recommendation, ensuring you find the perfect film to watch. And for
-        those who love to keep track of their favorites, our app offers a login
-        feature. Add movies to your personal favorites collection, and revisit
-        them anytime, anywhere. Whether you're in the mood for a heartwarming
-        drama, an action-packed thriller, or a light-hearted comedy, our app is
-        your go-to destination for a memorable movie night.
+        Welcome to our movie app — the final project for our course in
+        Lighthouse Labs. Built using the TMDB API, this app lets users browse
+        new releases, popular titles, and timeless classics. It features a
+        clean, intuitive interface for easy navigation, a fun quiz that
+        generates personalized movie recommendations using AI, and a login
+        system to save your favorite films. Whether you're into thrillers,
+        comedies, or dramas, our app helps you find the perfect movie for your
+        next watch!
+      </p>
+      <p>
+        Visit the github repo at:{" "}
+        <span>
+          <a href="https://github.com/migauth/schmovies">
+            https://github.com/migauth/schmovies
+          </a>
+        </span>
       </p>
     </div>
   );

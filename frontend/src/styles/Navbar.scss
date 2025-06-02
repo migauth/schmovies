@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Limelight&display=swap');
-
+$lime: "Limelight", sans-serif;
 
 .navbar_links {
   opacity: 0; /* Initially hide the buttons */
@@ -67,13 +67,15 @@
 .navbar_login-btn,
 .navbar_logout-btn,
 .navbar_register-btn {
-  background-color: #ff0000;
-  color: black;
-  border-color: yellow;
+  background-color: black;
+  color: white;
+  border-color: red;
   padding: 0.5rem 1rem;
   cursor: pointer;
   border-radius: 5px;
-  font-family: "Press Start 2P"; /* Uses the Press Start 2P font */
+  font-family: sans-serif; /* Uses the Press Start 2P font */
+  font-weight: 700;
+  font-size: larger;
   
   &:hover {
     background-color: yellow;
