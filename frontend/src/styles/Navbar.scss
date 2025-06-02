@@ -92,6 +92,15 @@ $lime: "Limelight", sans-serif;
 
   .logo {
     width: 300px;
+
+    &:hover {
+    // border: solid yellow;
+    animation: wiggleLogo 0.5s infinite; // Animation definition
+    width: 300px;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: inset;
+  }
   }
 
   .quiz-btn{
