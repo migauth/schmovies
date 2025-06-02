@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Limelight&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Limelight&display=swap");
 $lime: "Limelight", sans-serif;
 
 .navbar_links {
@@ -8,7 +8,7 @@ $lime: "Limelight", sans-serif;
   transition: opacity 0.3s ease-in-out; /* Add transition effect */
   display: flex; /* Ensure it's a flex container to apply gap */
   gap: 1rem; /* Apply gap between child elements */
-  
+
   &.fade-in {
     opacity: 1; /* Show the buttons when fade-in class is applied */
   }
@@ -18,7 +18,7 @@ $lime: "Limelight", sans-serif;
   display: flex;
   flex-direction: row-reverse;
   padding: 1rem;
-  
+
   &__links {
     display: flex;
     align-items: flex-end;
@@ -32,7 +32,7 @@ $lime: "Limelight", sans-serif;
   animation: wiggleLogo 0.3s ease-in-out; // Animation definition
   border: solid rgba(255, 255, 0, 0);
   padding-bottom: 20px;
-  
+
   &:hover {
     // border: solid yellow;
     animation: wiggleLogo 0.5s infinite; // Animation definition
@@ -76,7 +76,7 @@ $lime: "Limelight", sans-serif;
   font-family: sans-serif; /* Uses the Press Start 2P font */
   font-weight: 700;
   font-size: larger;
-  
+
   &:hover {
     background-color: yellow;
     color: black;
@@ -85,10 +85,8 @@ $lime: "Limelight", sans-serif;
 
 @media screen and (max-width: 600px) {
   .navbar {
-  display: flex;
-  justify-content: center ;
-  border: solid white;
+    display: flex;
+    justify-content: center;
+    font-size: small;
+  }
 }
-
-}
-
